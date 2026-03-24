@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegulatorIA — Agentes IA Gratuitos de Pre-Registro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#5AAD2D;--green-dark:#2B5A14;--green-light:#e8f5e0;--white:#ffffff;--gray:#f5f5f5;--text:#333}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--green-dark) 0%,#1a5a10 40%,var(--green) 100%);color:var(--white);padding:3rem 2rem;text-align:center}
+.hero h1{font-size:2.5rem;font-weight:800;letter-spacing:-1px;margin-bottom:.5rem}
+.hero h1 span{color:#a8e06c}
+.hero .tagline{font-size:1.1rem;opacity:.9;max-width:600px;margin:0 auto .5rem}
+.hero .badge{display:inline-block;background:rgba(255,255,255,.15);padding:.3rem 1rem;border-radius:20px;font-size:.85rem;margin-top:.5rem;backdrop-filter:blur(4px)}
+.container{max-width:1000px;margin:0 auto;padding:2rem 1rem}
+.section-title{text-align:center;color:var(--green-dark);font-size:1.5rem;font-weight:700;margin-bottom:.3rem}
+.section-sub{text-align:center;color:#777;font-size:.95rem;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem}
+.agent-card{background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.agent-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+.agent-card .card-header{padding:1.5rem 1.5rem 1rem;background:linear-gradient(135deg,var(--green-light),#f0fae8)}
+.agent-card .card-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:.8rem}
+.icon-classify{background:linear-gradient(135deg,#4CAF50,#81C784)}
+.icon-checklist{background:linear-gradient(135deg,#2196F3,#64B5F6)}
+.icon-ingredient{background:linear-gradient(135deg,#FF9800,#FFB74D)}
+.agent-card h3{color:var(--green-dark);font-size:1.15rem;margin-bottom:.3rem}
+.agent-card .card-body{padding:1rem 1.5rem;flex:1;display:flex;flex-direction:column}
+.agent-card .card-body p{font-size:.9rem;color:#666;line-height:1.5;flex:1}
+.agent-card .features{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0}
+.feature-tag{background:var(--green-light);color:var(--green-dark);padding:.2rem .6rem;border-radius:12px;font-size:.75rem;font-weight:600}
+.agent-card .card-btn{display:block;background:var(--green);color:var(--white);text-align:center;padding:.85rem;font-size:1rem;font-weight:600;text-decoration:none;transition:background .2s;border-radius:0 0 16px 16px;margin-top:auto}
+.agent-card .card-btn:hover{background:var(--green-dark)}
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.phase{background:var(--white);border-radius:12px;padding:1.2rem;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.phase .phase-num{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin-bottom:.5rem}
+.phase-free .phase-num{background:var(--green);color:var(--white)}
+.phase-paid .phase-num{background:#e0e0e0;color:#999}
+.phase h4{font-size:.95rem;margin-bottom:.3rem}
+.phase-free h4{color:var(--green-dark)}
+.phase-paid h4{color:#999}
+.phase p{font-size:.8rem;color:#888;line-height:1.4}
+.phase-free{border:2px solid var(--green)}
+.phase-paid{border:2px solid #e0e0e0}
+.free-badge{background:var(--green);color:var(--white);padding:.15rem .5rem;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:.3rem;vertical-align:middle}
+.paid-badge{background:#e0e0e0;color:#999;padding:.15rem .5rem;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:.3rem;vertical-align:middle}
+.cta-section{background:linear-gradient(135deg,var(--green-dark),#1a4010);color:var(--white);border-radius:16px;padding:3rem 2rem;text-align:center;margin:2rem 0}
+.cta-section h2{font-size:1.6rem;margin-bottom:.5rem}
+.cta-section p{font-size:1rem;opacity:.9;max-width:500px;margin:0 auto 1.2rem}
+.cta-btn{display:inline-block;background:var(--white);color:var(--green-dark);padding:.85rem 2rem;border-radius:8px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:background .2s,transform .1s}
+.cta-btn:hover{background:#e8f5e0;transform:scale(1.02)}
+.stats{display:flex;justify-content:center;gap:3rem;margin:1.5rem 0}
+.stat{text-align:center}
+.stat .num{font-size:2rem;font-weight:800;color:var(--green)}
+.stat .label{font-size:.8rem;color:#888}
+footer{text-align:center;padding:2rem 1rem;color:#888;font-size:.85rem;border-top:1px solid #e0e0e0;margin-top:2rem}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media(max-width:700px){.hero h1{font-size:1.8rem}.phases{grid-template-columns:1fr}.stats{flex-direction:column;gap:1rem}.agents-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hero">
+<h1>Regulator<span>IA</span></h1>
+<p class="tagline">Primera consultoría de registro de agroquímicos con IA en Latinoamérica</p>
+<span class="badge">3 Agentes Gratuitos de Pre-Registro · 6 Países LATAM</span>
+</div>
+<div class="container">
+<div class="stats">
+<div class="stat"><div class="num">11</div><div class="label">Agentes IA</div></div>
+<div class="stat"><div class="num">6</div><div class="label">Países LATAM</div></div>
+<div class="stat"><div class="num">3</div><div class="label">Fases de registro</div></div>
+</div>
+<h2 class="section-title">Agentes Gratuitos</h2>
+<p class="section-sub">Herramientas de inteligencia artificial para explorar, planificar y evaluar tu registro de agroquímicos antes de invertir.</p>
+<div class="agents-grid">
+<div class="agent-card">
+  <div class="card-header">
+    <div class="card-icon icon-classify">🏷️</div>
+    <h3>Clasificación Regulatoria</h3>
+  </div>
+  <div class="card-body">
+    <p>Describe tu producto y obtén su clasificación regulatoria probable, la regulación aplicable y la documentación requerida en cada país.</p>
+    <div class="features">
+      <span class="feature-tag">Plaguicidas</span>
+      <span class="feature-tag">Fertilizantes</span>
+      <span class="feature-tag">Biológicos</span>
+      <span class="feature-tag">Coadyuvantes</span>
+      <span class="feature-tag">6 países</span>
+    </div>
+  </div>
+  <a href="agente-clasificacion.html" class="card-btn">Clasificar mi producto →</a>
+</div>
+<div class="agent-card">
+  <div class="card-header">
+    <div class="card-icon icon-checklist">📋</div>
+    <h3>Checklist de Requisitos</h3>
+  </div>
+  <div class="card-body">
+    <p>Genera un checklist completo de documentos, plazos estimados y costos de tasas gubernamentales para tu registro, por país y tipo de producto.</p>
+    <div class="features">
+      <span class="feature-tag">Checklist interactivo</span>
+      <span class="feature-tag">Cronograma</span>
+      <span class="feature-tag">Costos</span>
+      <span class="feature-tag">Exportable</span>
+    </div>
+  </div>
+  <a href="agente-checklist.html" class="card-btn">Generar mi checklist →</a>
+</div>
+<div class="agent-card">
+  <div class="card-header">
+    <div class="card-icon icon-ingredient">🧪</div>
+    <h3>Consulta de Ingredientes</h3>
+  </div>
+  <div class="card-body">
+    <p>Consulta el estado regulatorio de ingredientes activos por país: registrado, restringido o prohibido. Incluye LMRs, monografías y alternativas.</p>
+    <div class="features">
+      <span class="feature-tag">18+ ingredientes</span>
+      <span class="feature-tag">LMRs</span>
+      <span class="feature-tag">Monografías</span>
+      <span class="feature-tag">Alternativas</span>
+    </div>
+  </div>
+  <a href="agente-ingredientes.html" class="card-btn">Consultar ingrediente →</a>
+</div>
+</div>
+<h2 class="section-title">Las 3 Fases de RegulatorIA</h2>
+<p class="section-sub">11 agentes IA especializados que cubren todo el ciclo de vida del registro de agroquímicos.</p>
+<div class="phases">
+<div class="phase phase-free">
+  <div class="phase-num">1</div>
+  <h4>Pre-Registro <span class="free-badge">GRATIS</span></h4>
+  <p>3 agentes: Clasificación, Checklist, Ingredientes. Evalúa viabilidad antes de invertir.</p>
+</div>
+<div class="phase phase-paid">
+  <div class="phase-num">2</div>
+  <h4>Registro <span class="paid-badge">PRO</span></h4>
+  <p>4 agentes: Preparación de dossier, revisión documental, seguimiento regulatorio, gestión de observaciones.</p>
+</div>
+<div class="phase phase-paid">
+  <div class="phase-num">3</div>
+  <h4>Post-Registro <span class="paid-badge">PRO</span></h4>
+  <p>4 agentes: Monitoreo de cumplimiento, renovaciones, modificaciones, vigilancia regulatoria.</p>
+</div>
+</div>
+<div class="cta-section">
+<h2>¿Listo para registrar tu producto?</h2>
+<p>Pasa de la exploración a la acción. Nuestros 11 agentes IA gestionan todo el proceso en Chile, Colombia, Perú, México, Brasil y Argentina.</p>
+<a href="https://regulatoria.cl" target="_blank" class="cta-btn">Agenda tu consulta en regulatoria.cl</a>
+</div>
+</div>
+<footer>
+<p>© 2026 <a href="https://regulatoria.cl" target="_blank">RegulatorIA</a> — Primera consultoría de registro de agroquímicos con IA en LATAM</p>
+<p style="margin-top:.3rem">Datos regulatorios de referencia. Consultar fuentes oficiales para información vinculante: <a href="https://www.sag.gob.cl" target="_blank">SAG</a> · <a href="https://www.ica.gov.co" target="_blank">ICA</a> · <a href="https://www.gob.pe/senasa" target="_blank">SENASA Perú</a> · <a href="https://www.gob.mx/cofepris" target="_blank">COFEPRIS</a> · <a href="https://www.gov.br/agricultura" target="_blank">MAPA Brasil</a> · <a href="https://www.argentina.gob.ar/senasa" target="_blank">SENASA Argentina</a></p>
+</footer>
+</body>
+</html>
