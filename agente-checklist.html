@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegulatorIA - Agente de Checklist de Requisitos</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#5AAD2D;--green-dark:#2B5A14;--green-light:#e8f5e0;--white:#ffffff;--gray:#f5f5f5;--text:#333;--shadow:0 2px 12px rgba(0,0,0,0.08)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--gray);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:var(--white);padding:1.2rem 2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+header .logo{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px}
+header .logo span{color:#a8e06c}
+header .subtitle{font-size:.85rem;opacity:.85;margin-left:auto}
+.back-link{color:var(--white);text-decoration:none;font-size:.85rem;opacity:.8;transition:opacity .2s}
+.back-link:hover{opacity:1}
+.container{max-width:850px;width:100%;margin:1.5rem auto;padding:0 1rem;flex:1}
+.card{background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:2rem;margin-bottom:1.5rem}
+.card h2{color:var(--green-dark);margin-bottom:.5rem;font-size:1.3rem}
+.card p.desc{color:#666;font-size:.9rem;margin-bottom:1.5rem;line-height:1.5}
+label{display:block;font-weight:600;margin-bottom:.4rem;font-size:.9rem;color:var(--green-dark)}
+select,input{width:100%;padding:.7rem .9rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.95rem;font-family:inherit;transition:border-color .2s;background:var(--white)}
+select:focus,input:focus{outline:none;border-color:var(--green)}
+.field-group{margin-bottom:1.2rem}
+.btn{background:var(--green);color:var(--white);border:none;padding:.75rem 1.8rem;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .2s,transform .1s;display:inline-block}
+.btn:hover{background:var(--green-dark);transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.secondary{background:#999}
+.btn.secondary:hover{background:#666}
+.btn-group{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+.checklist{margin:1.5rem 0}
+.checklist-item{background:var(--gray);padding:1rem;border-radius:8px;margin-bottom:.8rem;display:flex;align-items:flex-start;gap:1rem;border-left:4px solid #ddd}
+.checklist-item input[type="checkbox"]{width:20px;height:20px;margin-top:.2rem;cursor:pointer;flex-shrink:0}
+.checklist-item.checked{background:var(--green-light);border-left-color:var(--green)}
+.checklist-item label{margin-bottom:0;cursor:pointer;flex:1}
+.checklist-item.checked label{color:var(--green-dark)}
+.item-details{font-size:.85rem;color:#666;margin-top:.3rem;margin-left:20px}
+.results{background:var(--green-light);border:2px solid var(--green);border-radius:8px;padding:1.5rem;margin-top:1.5rem;display:none}
+.results.show{display:block}
+.results h3{color:var(--green-dark);margin-bottom:1rem}
+.progress-bar{width:100%;height:10px;background:#e0e0e0;border-radius:10px;margin:1rem 0;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);width:0%;transition:width .3s}
+.results-summary{background:var(--white);padding:1rem;border-radius:6px;margin-bottom:1rem;border-left:4px solid var(--green)}
+.alert{padding:1rem;border-radius:8px;margin-bottom:1.5rem;display:none;border-left:4px solid}
+.alert.show{display:block}
+.alert.info{background:#d1ecf1;color:#0c5460;border-left-color:#17a2b8}
+.alert.warning{background:#fff3cd;color:#856404;border-left-color:#ffc107}
+footer{background:#f0f0f0;padding:2rem;text-align:center;color:#666;font-size:.9rem;margin-top:auto}
+</style>
+</head>
+<body>
+<header>
+<span class="logo">Regulatorio<span>IA</span></span>
+<span class="subtitle">Checklist de Requisitos</span>
+<a href="/" class="back-link">← Volver</a>
+</header>
+<div class="container">
+<div class="card">
+<h2>Checklist de Requisitos Regulatorios</h2>
+<p class="desc">Verifica los requisitos necesarios para tu producto según la categoría regulatoria.</p>
+<div id="alert" class="alert"></div>
+<div class="field-group">
+<label for="productType">Tipo de Producto</label>
+<select id="productType" onchange="updateChecklist()">
+<option value="">Selecciona un tipo...</option>
+<option value="medicament">Medicamento</option>
+<option value="cosmetic">Cosmético</option>
+<option value="supplement">Suplemento Dietético</option>
+<option value="food">Alimento</option>
+<option value="medical-device">Dispositivo Médico</option>
+</select>
+</div>
+<div class="field-group">
+<label for="country">País de Regulación</label>
+<select id="country" onchange="updateChecklist()">
+<option value="">Selecciona un país...</option>
+<option value="mexico">México (COFEPRIS)</option>
+<option value="usa">Estados Unidos (FDA)</option>
+<option value="eu">Unión Europea (EMA)</option>
+<option value="argentina">Argentina (ANMAT)</option>
+<option value="brazil">Brasil (ANVISA)</option>
+</select>
+</div>
+<div id="checklistContainer" class="checklist"></div>
+<div id="results" class="results">
+<h3>Resumen de Requisitos</h3>
+<div id="resultsContent"></div>
+<div class="btn-group">
+<button class="btn" onclick="copyChecklist()">Copiar Checklist</button>
+<button class="btn secondary" onclick="resetChecklist()">Limpiar</button>
+</div>
+</div>
+<div class="btn-group">
+<button class="btn" onclick="generateReport()">Generar Reporte</button>
+<button class="btn secondary" onclick="resetChecklist()">Limpiar Formulario</button>
+</div>
+</div>
+<footer>
+<p>RegulatorIA - Herramienta de Checklist Regulatoria | Versión 1.0</p>
+<p>Nota: Este checklist proporciona orientación general. Consulta con expertos regulatorios para una evaluación completa.</p>
+</footer>
+<script>
+const checklistData = {
+medicament: {
+mexico: [
+{ id: 'formulacion', text: 'Formulación estable y definida', details: 'Especificaciones técnicas del producto' },
+{ id: 'fabricante', text: 'Datos del fabricante certificado', details: 'Información de la empresa productora' },
+{ id: 'ensayos', text: 'Ensayos de estabilidad completados', details: 'Estudios de larga duración' },
+{ id: 'biodisponibilidad', text: 'Estudios de biodisponibilidad', details: 'Si aplicable para el tipo de producto' },
+{ id: 'ensayos-clinicos', text: 'Ensayos clínicos controlados', details: 'Para productos nuevos' },
+{ id: 'etiquetado', text: 'Etiquetado en español', details: 'Conforme a normativas' },
+{ id: 'farmacovigilancia', text: 'Plan de farmacovigilancia', details: 'Monitoreo post-comercialización' },
+],
+usa: [
+{ id: 'formulation', text: 'Formulation documented', details: 'Complete chemical composition' },
+{ id: 'manufacturer', text: 'FDA-compliant manufacturer', details: 'Current Good Manufacturing Practice (cGMP)' },
+{ id: 'stability', text: 'Stability data (3, 6, 9, 12 months)', details: 'Long-term stability studies' },
+{ id: 'nda', text: 'NDA or ANDA submission ready', details: 'New Drug Application or Abbreviated NDA' },
+{ id: 'clinical-data', text: 'Phase III clinical trial data', details: 'Evidence of efficacy and safety' },
+{ id: 'labeling', text: 'FDA-compliant labeling', details: 'Including black box warnings if needed' },
+{ id: 'pharmacovigilance', text: 'MedWatch safety reporting plan', details: 'Adverse event monitoring' },
+],
+eu: [
+{ id: 'dossier', text: 'Complete CTD dossier', details: 'Common Technical Document format' },
+{ id: 'manufacturing', text: 'Manufacturing data (Module 3)', details: 'Chemistry, Manufacturing & Controls' },
+{ id: 'nonclinical', text: 'Non-clinical data (Module 4)', details: 'Pharmacology and toxicology studies' },
+{ id: 'clinical', text: 'Clinical data (Module 5)', details: 'Clinical pharmacology and efficacy/safety' },
+{ id: 'pbrpd', text: 'Periodic Benefit-Risk Evaluation Report', details: 'Risk management plan' },
+{ id: 'labeling-eu', text: 'EU-compliant SmPC & labeling', details: 'Summary of Product Characteristics' },
+],
+},
+cosmetic: {
+mexico: [
+{ id: 'ingredientes-mx', text: 'Lista de ingredientes completa', details: 'Nomenclatura INCI' },
+{ id: 'fabricante-mx', text: 'Datos del fabricante', details: 'Registro y ubicación' },
+{ id: 'estabilidad-mx', text: 'Pruebas de estabilidad', details: 'Mínimo 3 lotes' },
+{ id: 'seguridad-mx', text: 'Evaluación de seguridad', details: 'Según ISO 29701' },
+{ id: 'etiquetado-mx', text: 'Etiquetado conforme', details: 'Instrucciones de uso en español' },
+],
+usa: [
+{ id: 'ingredients-us', text: 'Complete ingredient list (INCI)', details: 'FDA-compliant format' },
+{ id: 'facility-registration', text: 'Cosmetic Facility Registration', details: 'FDA form 722' },
+{ id: 'safety-data', text: 'Safety substantiation', details: 'Hypoallergenic & non-irritating claims' },
+{ id: 'labeling-us', text: 'US-compliant labeling', details: 'Principal display panel requirements' },
+],
+eu: [
+{ id: 'restricted-substances', text: 'No prohibited EU substances', details: 'Verify against Annexes II-VI' },
+{ id: 'safety-assessment', text: 'Safety Assessment Report', details: 'EU Regulation (EC) 1223/2009' },
+{ id: 'ingredients-eu', text: 'Full ingredient list (INCI)', details: 'With concentration if ≥1%' },
+{ id: 'notification', text: 'CPNP notification ready', details: 'Cosmetics Products Notification Portal' },
+],
+},
+supplement: {
+mexico: [
+{ id: 'ingredientes-sup', text: 'Ingredientes naturales/sintéticos permitidos', details: 'Conforme a la normativa' },
+{ id: 'dosificacion', text: 'Dosificación establecida', details: 'Con sustento científico' },
+{ id: 'advertencias', text: 'Advertencias y contraindicaciones', details: 'Población vulnerable' },
+{ id: 'fabricante-sup', text: 'Fabricante certificado', details: 'Registro ante COFEPRIS' },
+],
+usa: [
+{ id: 'qualified-claims', text: 'Qualified health claims substantiation', details: 'FDA review letters' },
+{ id: 'structure-function', text: 'Structure/function claims documentation', details: 'Not disease claims' },
+{ id: 'ingredients-dshea', text: 'DSHEA-compliant ingredients', details: 'Dietary Supplement Health & Education Act' },
+{ id: 'supplement-facts', text: 'Supplement Facts label', details: 'Per FDA labeling requirements' },
+],
+},
+};
+function updateChecklist() {
+const productType = document.getElementById('productType').value;
+const country = document.getElementById('country').value;
+const container = document.getElementById('checklistContainer');
+if(!productType || !country) {
+container.innerHTML = '<p style="color:#999;">Selecciona tipo de producto y país para ver el checklist</p>';
+return;
+}
+const checklistKey = productType;
+const countryKey = country;
+const items = checklistData[checklistKey]?.[countryKey] || [];
+if(!items.length) {
+container.innerHTML = '<p style="color:#999;">No hay checklist disponible para esta combinación</p>';
+return;
+}
+container.innerHTML = items.map((item, idx) => `
+<div class="checklist-item" id="item-${item.id}">
+<input type="checkbox" data-item-id="${item.id}" onchange="updateProgress()">
+<div>
+<label for="check-${item.id}">${item.text}</label>
+<div class="item-details">${item.details}</div>
+</div>
+</div>
+`).join('');
+updateProgress();
+}
+function updateProgress() {
+const items = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+const checked = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked').length;
+const total = items.length;
+const percentage = total ? (checked / total) * 100 : 0;
+items.forEach(item => {
+const parent = item.closest('.checklist-item');
+if(item.checked) {
+parent.classList.add('checked');
+} else {
+parent.classList.remove('checked');
+}
+});
+if(total > 0) {
+const resultsDiv = document.getElementById('results');
+resultsDiv.classList.add('show');
+document.getElementById('resultsContent').innerHTML = `
+<div class="progress-bar">
+<div class="progress-fill" style="width: ${percentage}%"></div>
+</div>
+<div class="results-summary">
+<strong>Progreso: ${checked} de ${total} items completados (${Math.round(percentage)}%)</strong>
+<p style="margin-top: .5rem; font-size: .9rem; color: #666;">
+${percentage === 100 ? '✓ Todos los requisitos están checados' : `Faltan ${total - checked} items por revisar`}
+</p>
+</div>
+`;
+}
+}
+function generateReport() {
+const productType = document.getElementById('productType').value;
+const country = document.getElementById('country').value;
+if(!productType || !country) {
+alert('Por favor selecciona tipo de producto y país');
+return;
+}
+const items = document.querySelectorAll('.checklist-item');
+let report = `Reporte de Checklist Regulatorio\n`;
+report += `Tipo de Producto: ${productType}\n`;
+report += `País: ${country}\n`;
+report += `Fecha: ${new Date().toLocaleDateString('es-MX')}\n`;
+report += `\n=== ITEMS ===\n`;
+items.forEach((item, idx) => {
+const checkbox = item.querySelector('input[type="checkbox"]');
+const label = item.querySelector('label').textContent;
+const status = checkbox.checked ? '[✓]' : '[ ]';
+report += `${status} ${label}\n`;
+});
+alert('Reporte generado. Cópialo desde el checklist.');
+}
+function copyChecklist() {
+const productType = document.getElementById('productType').value;
+const country = document.getElementById('country').value;
+if(!productType || !country) {
+alert('Por favor selecciona tipo de producto y país');
+return;
+}
+const items = document.querySelectorAll('.checklist-item');
+let text = `CHECKLIST - ${productType.toUpperCase()} (${country})\n\n`;
+items.forEach(item => {
+const checkbox = item.querySelector('input[type="checkbox"]');
+const label = item.querySelector('label').textContent;
+const status = checkbox.checked ? '[✓]' : '[ ]';
+text += `${status} ${label}\n`;
+});
+navigator.clipboard.writeText(text).then(() => alert('Checklist copiado al portapapeles.'));
+}
+</script>
+</body>
+</html>
