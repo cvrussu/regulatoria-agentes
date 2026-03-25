@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCOUT — Monitor de Inteligencia Regulatoria | RegulatorIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a2e;line-height:1.6}
+.gradient-bar{height:4px;background:linear-gradient(90deg,#667eea,#764ba2)}
+.header{padding:2rem 2rem 1.5rem;border-bottom:1px solid #e8e8f0}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.logo{display:flex;align-items:center;gap:.75rem}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem}
+.logo-text h1{font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text span{font-size:.75rem;color:#888;font-weight:500;letter-spacing:.5px}
+.badge{padding:.35rem .85rem;border-radius:20px;font-size:.7rem;font-weight:600;background:linear-gradient(135deg,#667eea20,#764ba220);color:#667eea;border:1px solid #667eea30}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+.controls{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.control-group{flex:1;min-width:220px}
+.control-group label{display:block;font-size:.75rem;font-weight:600;color:#667eea;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.4rem}
+.control-group select{width:100%;padding:.65rem 1rem;border:1.5px solid #e0e0ee;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;color:#1a1a2e;background:#fafaff;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.control-group select:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px #667eea15}
+.btn-search{align-self:flex-end;padding:.65rem 2rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;white-space:nowrap}
+.btn-search:hover{transform:translateY(-1px);box-shadow:0 4px 15px #667eea40}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:#fafaff;border:1px solid #e8e8f0;border-radius:12px;padding:1.2rem;text-align:center;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-number{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.75rem;color:#888;font-weight:500;margin-top:.2rem}
+.feed{display:flex;flex-direction:column;gap:.75rem}
+.alert-card{background:#fff;border:1px solid #e8e8f0;border-radius:10px;padding:1.2rem 1.5rem;display:flex;gap:1.2rem;align-items:flex-start;transition:box-shadow .2s,border-color .2s}
+.alert-card:hover{box-shadow:0 4px 20px rgba(102,126,234,.1);border-color:#667eea30}
+.risk-badge{flex-shrink:0;padding:.3rem .7rem;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;min-width:55px;text-align:center}
+.risk-alto{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+.risk-medio{background:#fef3c7;color:#d97706;border:1px solid #fcd34d}
+.risk-bajo{background:#d1fae5;color:#059669;border:1px solid #6ee7b7}
+.alert-content{flex:1}
+.alert-meta{display:flex;gap:.6rem;align-items:center;margin-bottom:.35rem;flex-wrap:wrap}
+.alert-country{font-size:.7rem;font-weight:600;color:#667eea;background:#667eea10;padding:.15rem .5rem;border-radius:4px}
+.alert-type{font-size:.7rem;font-weight:500;color:#764ba2;background:#764ba210;padding:.15rem .5rem;border-radius:4px}
+.alert-date{font-size:.7rem;color:#aaa;margin-left:auto}
+.alert-title{font-size:.92rem;font-weight:600;color:#1a1a2e;margin-bottom:.25rem}
+.alert-desc{font-size:.82rem;color:#666;line-height:1.5}
+.cta-banner{margin-top:2.5rem;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:14px;padding:2rem 2.5rem;color:#fff;text-align:center}
+.cta-banner h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.cta-banner p{font-size:.9rem;opacity:.9;margin-bottom:1rem}
+.cta-banner a{color:#fff;font-weight:700;text-decoration:underline;font-size:1rem}
+.filter-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-tag{padding:.3rem .75rem;border-radius:20px;font-size:.72rem;font-weight:500;cursor:pointer;border:1px solid #e0e0ee;background:#fff;color:#555;transition:all .2s}
+.filter-tag.active,.filter-tag:hover{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent}
+.no-results{text-align:center;padding:3rem;color:#aaa;font-size:.95rem}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.live-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;display:inline-block;margin-right:.4rem;animation:pulse 1.5s infinite}
+@media(max-width:768px){.container{padding:1rem}.controls{flex-direction:column}.alert-card{flex-direction:column;gap:.6rem}.alert-date{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="gradient-bar"></div>
+<div class="header">
+<div class="header-inner">
+<div class="logo">
+<div class="logo-icon">S</div>
+<div class="logo-text">
+<h1>SCOUT</h1>
+<span>MONITOR DE INTELIGENCIA REGULATORIA</span>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:1rem">
+<span class="badge"><span class="live-dot"></span>Feed en Vivo</span>
+<span class="badge">RegulatorIA</span>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="controls">
+<div class="control-group">
+<label>País / Autoridad</label>
+<select id="countrySelect">
+<option value="all">Todos los países</option>
+<option value="CL">Chile — SAG</option>
+<option value="AR">Argentina — SENASA</option>
+<option value="BR">Brasil — ANVISA / IBAMA / MAPA</option>
+<option value="CO">Colombia — ICA</option>
+<option value="PE">Perú — SENASA</option>
+<option value="MX">México — COFEPRIS</option>
+<option value="UY">Uruguay — MGAP</option>
+<option value="PY">Paraguay — SENAVE</option>
+<option value="EU">Unión Europea — EFSA</option>
+<option value="US">Estados Unidos — EPA</option>
+</select>
+</div>
+<div class="control-group">
+<label>Tipo de Producto</label>
+<select id="productSelect">
+<option value="all">Todos los productos</option>
+<option value="herbicida">Herbicida</option>
+<option value="insecticida">Insecticida</option>
+<option value="fungicida">Fungicida</option>
+<option value="fertilizante">Fertilizante</option>
+<option value="biopesticida">Biopesticida</option>
+<option value="coadyuvante">Coadyuvante</option>
+</select>
+</div>
+<div class="control-group">
+<label>Nivel de Riesgo</label>
+<select id="riskSelect">
+<option value="all">Todos los niveles</option>
+<option value="alto">Alto</option>
+<option value="medio">Medio</option>
+<option value="bajo">Bajo</option>
+</select>
+</div>
+<button class="btn-search" onclick="filterAlerts()">Filtrar</button>
+</div>
+
+<div class="stats" id="statsContainer"></div>
+
+<div class="filter-tags" id="filterTags">
+<span class="filter-tag active" data-filter="all" onclick="quickFilter(this)">Todas</span>
+<span class="filter-tag" data-filter="nuevo_lmr" onclick="quickFilter(this)">Nuevos LMR</span>
+<span class="filter-tag" data-filter="prohibicion" onclick="quickFilter(this)">Prohibiciones</span>
+<span class="filter-tag" data-filter="requisito" onclick="quickFilter(this)">Nuevos Requisitos</span>
+<span class="filter-tag" data-filter="plazo" onclick="quickFilter(this)">Cambios de Plazo</span>
+<span class="filter-tag" data-filter="consulta" onclick="quickFilter(this)">Consultas Públicas</span>
+<span class="filter-tag" data-filter="registro" onclick="quickFilter(this)">Registros</span>
+</div>
+
+<div class="feed" id="alertFeed"></div>
+
+<div class="cta-banner">
+<h3>¿Necesita monitoreo regulatorio en tiempo real?</h3>
+<p>SCOUT Pro ofrece alertas automatizadas, análisis predictivo y reportes personalizados para su portafolio.</p>
+<a href="mailto:proyectos@uranoia.cl">proyectos@uranoia.cl</a>
+</div>
+</div>
+
+<script>
+const alerts=[
+{id:1,country:"CL",authority:"SAG",type:"herbicida",category:"nuevo_lmr",risk:"alto",date:"2026-03-22",title:"Nuevos LMR para glifosato en cereales",desc:"SAG publica resolución exenta modificando los límites máximos de residuos de glifosato en trigo (0.05 mg/kg) y maíz (0.1 mg/kg). Entrada en vigencia: 90 días."},
+{id:2,country:"BR",authority:"ANVISA",type:"insecticida",category:"prohibicion",risk:"alto",date:"2026-03-21",title:"Brasil prohíbe clorpirifos en cultivos alimentarios",desc:"ANVISA RDC 952/2026 establece la prohibición total de clorpirifos en cultivos de consumo humano directo. Período de transición de 12 meses para agotar stock."},
+{id:3,country:"EU",authority:"EFSA",type:"fungicida",category:"nuevo_lmr",risk:"alto",date:"2026-03-20",title:"EFSA reduce LMR de mancozeb en frutas de pepita",desc:"Reglamento (UE) 2026/487 establece nuevos LMR para mancozeb: manzanas 0.03 mg/kg (antes 2.0), peras 0.03 mg/kg. Aplicable desde 01/07/2026."},
+{id:4,country:"AR",authority:"SENASA",type:"herbicida",category:"requisito",risk:"medio",date:"2026-03-20",title:"Argentina exige nuevo estudio de destino ambiental para herbicidas",desc:"Resolución SENASA 145/2026 incorpora requisito de estudio de lixiviación en suelos según protocolo OECD 312 para todos los herbicidas en proceso de renovación."},
+{id:5,country:"MX",authority:"COFEPRIS",type:"insecticida",category:"prohibicion",risk:"alto",date:"2026-03-19",title:"México avanza en restricción de neonicotinoides",desc:"COFEPRIS publica anteproyecto de NOM para restricción de imidacloprid, clothianidin y thiamethoxam en cultivos de polinización abierta. Consulta pública por 60 días."},
+{id:6,country:"US",authority:"EPA",type:"herbicida",category:"nuevo_lmr",risk:"medio",date:"2026-03-19",title:"EPA propone tolerancias revisadas para dicamba",desc:"EPA Federal Register Notice propone reducción de tolerancias de dicamba en soja (10→5 ppm) y algodón (8→3 ppm). Período de comentarios abierto hasta mayo 2026."},
+{id:7,country:"CO",authority:"ICA",type:"fungicida",category:"registro",risk:"bajo",date:"2026-03-18",title:"Colombia aprueba nuevo biofungicida a base de Trichoderma",desc:"ICA otorga registro nacional No. 7823 para producto biológico con Trichoderma harzianum cepa T-22 para control de Botrytis en flores de exportación."},
+{id:8,country:"PE",authority:"SENASA",type:"insecticida",category:"plazo",risk:"medio",date:"2026-03-18",title:"Perú extiende plazo para renovación de registros de insecticidas",desc:"SENASA Perú publica Resolución Directoral ampliando en 180 días el plazo para renovación de registros de insecticidas organofosforados vencidos en 2025."},
+{id:9,country:"CL",authority:"SAG",type:"biopesticida",category:"requisito",risk:"bajo",date:"2026-03-17",title:"SAG simplifica requisitos para registro de biopesticidas",desc:"Nueva resolución SAG establece vía fast-track para registro de productos biológicos con menos de 3 ingredientes activos y categoría toxicológica IV."},
+{id:10,country:"UY",authority:"MGAP",type:"herbicida",category:"consulta",risk:"medio",date:"2026-03-17",title:"Uruguay abre consulta sobre uso de paraquat",desc:"MGAP/DGSA publica consulta pública sobre restricciones adicionales al uso de paraquat en cultivos extensivos. Plazo: 45 días desde publicación."},
+{id:11,country:"PY",authority:"SENAVE",type:"fertilizante",category:"requisito",risk:"bajo",date:"2026-03-16",title:"Paraguay actualiza normas de etiquetado para fertilizantes",desc:"SENAVE Resolución 89/2026 establece nuevos requisitos de etiquetado para fertilizantes foliares incluyendo declaración de metales pesados y microplásticos."},
+{id:12,country:"BR",authority:"IBAMA",type:"herbicida",category:"requisito",risk:"alto",date:"2026-03-16",title:"IBAMA exige evaluación de riesgo para polinizadores",desc:"Instrucción Normativa IBAMA 12/2026 requiere evaluación de riesgo Tier II para polinizadores en todos los herbicidas con acción sistémica aplicados pre-emergencia."},
+{id:13,country:"EU",authority:"EFSA",type:"insecticida",category:"prohibicion",risk:"alto",date:"2026-03-15",title:"UE no renueva aprobación de cipermetrina",desc:"Reglamento de Ejecución (UE) 2026/501 confirma la no renovación de cipermetrina. Último día de uso: 31/12/2026. Productos deben retirarse antes del 30/06/2027."},
+{id:14,country:"AR",authority:"SENASA",type:"fungicida",category:"nuevo_lmr",risk:"medio",date:"2026-03-15",title:"Argentina armoniza LMR de azoxistrobina con Codex",desc:"SENASA Resolución 152/2026 adopta LMR de Codex Alimentarius para azoxistrobina en 15 cultivos incluyendo soja (0.5 mg/kg) y maní (0.1 mg/kg)."},
+{id:15,country:"CL",authority:"SAG",type:"insecticida",category:"prohibicion",risk:"alto",date:"2026-03-14",title:"Chile prohíbe fipronil en formulaciones para uso agrícola",desc:"SAG Resolución Exenta 1287/2026 cancela todos los registros de fipronil para uso agrícola. Productos deben retirarse del mercado en 180 días."},
+{id:16,country:"MX",authority:"COFEPRIS",type:"fungicida",category:"registro",risk:"bajo",date:"2026-03-14",title:"COFEPRIS actualiza guía de datos para registro de fungicidas",desc:"Nueva guía técnica COFEPRIS-GT-042 detalla requisitos de datos de eficacia para fungicidas en cultivos de exportación (aguacate, berries, tomate)."},
+{id:17,country:"US",authority:"EPA",type:"biopesticida",category:"registro",risk:"bajo",date:"2026-03-13",title:"EPA aprueba nuevo biopesticida basado en RNA de interferencia",desc:"EPA registra primer producto comercial con dsRNA para control de escarabajo de la papa de Colorado. Clasificado como biopesticida con exención de tolerancia."},
+{id:18,country:"CO",authority:"ICA",type:"herbicida",category:"plazo",risk:"medio",date:"2026-03-13",title:"ICA modifica calendario de renovación de registros",desc:"Resolución ICA 3847/2026 establece nuevo cronograma escalonado para renovación de registros de herbicidas por grupo químico. Primer grupo: ácidos ariloxialcanoicos."},
+{id:19,country:"PE",authority:"SENASA",type:"fertilizante",category:"requisito",risk:"bajo",date:"2026-03-12",title:"Perú regula fertilizantes orgánicos certificados",desc:"SENASA Perú aprueba reglamento técnico para fertilizantes orgánicos con criterios de certificación alineados con estándares NOP y EU Organic."},
+{id:20,country:"BR",authority:"MAPA",type:"herbicida",category:"registro",risk:"bajo",date:"2026-03-12",title:"MAPA registra 15 nuevos genéricos de glifosato",desc:"Ato MAPA 48/2026 publica registro de 15 nuevos productos técnicos y formulados de glifosato sal de potasio. Incluye formulaciones SL y WG."},
+{id:21,country:"EU",authority:"EFSA",type:"herbicida",category:"consulta",risk:"alto",date:"2026-03-11",title:"EFSA abre consulta sobre evaluación de glifosato post-2027",desc:"EFSA inicia consulta pública sobre el borrador de evaluación de riesgo de glifosato para el período 2027-2042. Plazo de comentarios: 60 días."},
+{id:22,country:"UY",authority:"MGAP",type:"insecticida",category:"nuevo_lmr",risk:"medio",date:"2026-03-11",title:"Uruguay adopta nuevos LMR para lambda-cihalotrina",desc:"MGAP Decreto 67/026 establece LMR armonizados con MERCOSUR para lambda-cihalotrina en hortalizas de hoja (0.3 mg/kg) y frutas cítricas (0.2 mg/kg)."},
+{id:23,country:"CL",authority:"SAG",type:"fungicida",category:"requisito",risk:"medio",date:"2026-03-10",title:"SAG implementa registro electrónico obligatorio de aplicaciones",desc:"A partir de julio 2026, todas las aplicaciones de fungicidas en uva de mesa para exportación deben registrarse en plataforma digital SAG-Trace."},
+{id:24,country:"AR",authority:"SENASA",type:"coadyuvante",category:"requisito",risk:"medio",date:"2026-03-10",title:"Argentina regula coadyuvantes como categoría independiente",desc:"Resolución SENASA 160/2026 crea categoría de registro específica para coadyuvantes de uso agrícola con requisitos diferenciados de datos toxicológicos."},
+{id:25,country:"PY",authority:"SENAVE",type:"insecticida",category:"prohibicion",risk:"alto",date:"2026-03-09",title:"Paraguay restringe metamidofós en zona fronteriza",desc:"SENAVE prohíbe uso de metamidofós en franja de 50 km de zona fronteriza con Brasil por armonización regulatoria bilateral. Vigencia inmediata."},
+{id:26,country:"MX",authority:"COFEPRIS",type:"fertilizante",category:"registro",risk:"bajo",date:"2026-03-09",title:"México simplifica registro de bioestimulantes",desc:"COFEPRIS Acuerdo 2026-FER-003 establece procedimiento simplificado para registro de bioestimulantes a base de aminoácidos, ácidos húmicos y extractos de algas."},
+{id:27,country:"BR",authority:"ANVISA",type:"fungicida",category:"nuevo_lmr",risk:"medio",date:"2026-03-08",title:"ANVISA revisa LMR de carbendazim en cítricos",desc:"RDC 960/2026 reduce LMR de carbendazim en naranja (2.0→0.1 mg/kg) y limón (1.0→0.05 mg/kg) alineándose con tendencia internacional de restricción."},
+{id:28,country:"US",authority:"EPA",type:"insecticida",category:"nuevo_lmr",risk:"medio",date:"2026-03-08",title:"EPA finaliza tolerancias para spiromesifen en nuevos cultivos",desc:"EPA establece tolerancias para spiromesifen en frambuesas (2.5 ppm), arándanos (3.0 ppm) y fresas (1.5 ppm) tras petición del registrante."},
+{id:29,country:"CO",authority:"ICA",type:"biopesticida",category:"consulta",risk:"bajo",date:"2026-03-07",title:"Colombia consulta reglamento de bioinsumos",desc:"ICA publica para consulta pública el proyecto de resolución que establece requisitos diferenciados para registro de bioinsumos (biocontroladores, biofertilizantes, bioestimulantes)."},
+{id:30,country:"EU",authority:"EFSA",type:"coadyuvante",category:"requisito",risk:"medio",date:"2026-03-07",title:"UE establece requisitos de datos para co-formulantes",desc:"Reglamento (UE) 2026/522 exige evaluación toxicológica independiente de co-formulantes en PPP con concentración superior al 5% v/v en producto formulado."},
+{id:31,country:"CL",authority:"SAG",type:"herbicida",category:"plazo",risk:"medio",date:"2026-03-06",title:"SAG extiende vigencia de registros de herbicidas PSMA",desc:"Resolución SAG amplía en 24 meses la vigencia de registros de herbicidas con ingredientes activos en programa de revisión PSMA hasta completar evaluación."},
+{id:32,country:"AR",authority:"SENASA",type:"insecticida",category:"nuevo_lmr",risk:"alto",date:"2026-03-06",title:"Argentina reduce drásticamente LMR de acefato",desc:"SENASA Resolución 168/2026 reduce LMR de acefato en soja de 1.0 a 0.01 mg/kg (LOQ). Impacto significativo en programa de control de chinche verde."},
+{id:33,country:"PE",authority:"SENASA",type:"herbicida",category:"prohibicion",risk:"alto",date:"2026-03-05",title:"Perú prohíbe importación de paraquat",desc:"SENASA Perú publica Decreto Supremo prohibiendo la importación de paraquat a partir de enero 2027. Uso permitido hasta agotar stock registrado."},
+{id:34,country:"BR",authority:"IBAMA",type:"coadyuvante",category:"requisito",risk:"bajo",date:"2026-03-05",title:"IBAMA publica guía de evaluación ambiental de adyuvantes",desc:"Guía técnica IBAMA establece metodología para evaluación de riesgo ambiental de adyuvantes/coadyuvantes con foco en tensioactivos y solventes orgánicos."},
+{id:35,country:"MX",authority:"COFEPRIS",type:"insecticida",category:"nuevo_lmr",risk:"medio",date:"2026-03-04",title:"México armoniza LMR con Codex para aguacate",desc:"COFEPRIS adopta LMR de Codex para 23 ingredientes activos en aguacate Hass, incluyendo abamectina (0.01 mg/kg) y spinosad (0.3 mg/kg)."},
+{id:36,country:"UY",authority:"MGAP",type:"fungicida",category:"registro",risk:"bajo",date:"2026-03-04",title:"Uruguay aprueba primer fungicida biológico para arroz",desc:"MGAP registra producto a base de Bacillus subtilis para control de Pyricularia en arroz. Primera alternativa biológica aprobada para este cultivo en Uruguay."},
+{id:37,country:"PY",authority:"SENAVE",type:"herbicida",category:"consulta",risk:"bajo",date:"2026-03-03",title:"Paraguay consulta actualización de lista de plaguicidas prohibidos",desc:"SENAVE abre consulta pública para actualización del listado de plaguicidas prohibidos y restringidos, incorporando decisiones del Convenio de Rotterdam 2025."},
+{id:38,country:"EU",authority:"EFSA",type:"biopesticida",category:"registro",risk:"bajo",date:"2026-03-03",title:"UE aprueba sustancia activa de bajo riesgo: Bacillus amyloliquefaciens cepa QST 713",desc:"Reglamento (UE) 2026/538 incluye B. amyloliquefaciens cepa QST 713 como sustancia de bajo riesgo. Período de aprobación: 15 años."},
+{id:39,country:"US",authority:"EPA",type:"fungicida",category:"plazo",risk:"medio",date:"2026-03-02",title:"EPA posterga decisión de registro de clorotalonil",desc:"EPA anuncia extensión de 12 meses para decisión final sobre registro de clorotalonil pendiente de evaluación de efectos en especies amenazadas."},
+{id:40,country:"CO",authority:"ICA",type:"insecticida",category:"nuevo_lmr",risk:"medio",date:"2026-03-02",title:"Colombia establece LMR para flupyradifurone en café",desc:"ICA Resolución 4102/2026 establece LMR para flupyradifurone en café verde (0.4 mg/kg) y café tostado (0.6 mg/kg) para programa de control de broca."},
+{id:41,country:"CL",authority:"SAG",type:"fertilizante",category:"requisito",risk:"bajo",date:"2026-03-01",title:"SAG publica norma de calidad para fertilizantes biológicos",desc:"Nueva norma SAG establece criterios de calidad, viabilidad y pureza para inoculantes microbianos y biofertilizantes. Recuento mínimo: 1×10⁸ UFC/mL."},
+{id:42,country:"AR",authority:"SENASA",type:"biopesticida",category:"registro",risk:"bajo",date:"2026-03-01",title:"Argentina habilita registro por equivalencia para biológicos",desc:"Resolución SENASA 175/2026 permite registro por equivalencia de productos biológicos ya aprobados en países con autoridades de referencia reconocidas (EPA, EFSA)."},
+{id:43,country:"BR",authority:"ANVISA",type:"herbicida",category:"prohibicion",risk:"alto",date:"2026-02-28",title:"ANVISA confirma cancelación de 2,4-D sales amina",desc:"ANVISA RDC 975/2026 cancela registros de formulaciones de 2,4-D sal amina. Formulaciones éster y sal colina mantienen registros vigentes con restricciones."},
+{id:44,country:"MX",authority:"COFEPRIS",type:"herbicida",category:"prohibicion",risk:"alto",date:"2026-02-27",title:"México confirma fase final de prohibición de glifosato",desc:"DOF publica decreto confirmando prohibición total de glifosato para uso agrícola a partir de enero 2027. Se mantiene uso en áreas no agrícolas hasta 2028."},
+{id:45,country:"EU",authority:"EFSA",type:"insecticida",category:"requisito",risk:"medio",date:"2026-02-26",title:"UE actualiza documento guía de evaluación de riesgo para abejas",desc:"EFSA publica EFSA Guidance 2026 actualizando metodología de evaluación de riesgo para abejas melíferas, abejorros y abejas solitarias con nuevos endpoints."},
+{id:46,country:"PE",authority:"SENASA",type:"fungicida",category:"nuevo_lmr",risk:"medio",date:"2026-02-25",title:"Perú actualiza LMR para espiroxamina en uva",desc:"SENASA Perú establece nuevo LMR de espiroxamina en uva de mesa (0.5 mg/kg) alineado con requisitos de mercado de destino China."},
+{id:47,country:"US",authority:"EPA",type:"coadyuvante",category:"requisito",risk:"bajo",date:"2026-02-24",title:"EPA finaliza regla sobre surfactantes PFAS en adyuvantes",desc:"EPA prohíbe uso de surfactantes que contengan PFAS en adyuvantes de aplicación agrícola. Período de cumplimiento: 24 meses."}
+];
+
+let currentAlerts=[...alerts];
+let activeCategory="all";
+
+function renderStats(data){
+const c=document.getElementById("statsContainer");
+const total=data.length;
+const alto=data.filter(a=>a.risk==="alto").length;
+const medio=data.filter(a=>a.risk==="medio").length;
+const bajo=data.filter(a=>a.risk==="bajo").length;
+const countries=new Set(data.map(a=>a.country)).size;
+c.innerHTML=`
+<div class="stat-card"><div class="stat-number">${total}</div><div class="stat-label">Alertas Totales</div></div>
+<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#dc2626">${alto}</div><div class="stat-label">Riesgo Alto</div></div>
+<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#d97706">${medio}</div><div class="stat-label">Riesgo Medio</div></div>
+<div class="stat-card"><div class="stat-number" style="-webkit-text-fill-color:#059669">${bajo}</div><div class="stat-label">Riesgo Bajo</div></div>
+<div class="stat-card"><div class="stat-number">${countries}</div><div class="stat-label">Países Afectados</div></div>`;
+}
+
+function renderFeed(data){
+const f=document.getElementById("alertFeed");
+if(!data.length){f.innerHTML='<div class="no-results">No se encontraron alertas con los filtros seleccionados.</div>';return;}
+f.innerHTML=data.map(a=>`
+<div class="alert-card">
+<span class="risk-badge risk-${a.risk}">${a.risk}</span>
+<div class="alert-content">
+<div class="alert-meta">
+<span class="alert-country">${a.country} — ${a.authority}</span>
+<span class="alert-type">${a.type}</span>
+<span class="alert-date">${a.date}</span>
+</div>
+<div class="alert-title">${a.title}</div>
+<div class="alert-desc">${a.desc}</div>
+</div>
+</div>`).join("");
+}
+
+function filterAlerts(){
+const country=document.getElementById("countrySelect").value;
+const product=document.getElementById("productSelect").value;
+const risk=document.getElementById("riskSelect").value;
+let filtered=alerts.filter(a=>{
+if(country!=="all"&&a.country!==country) return false;
+if(product!=="all"&&a.type!==product) return false;
+if(risk!=="all"&&a.risk!==risk) return false;
+if(activeCategory!=="all"&&a.category!==activeCategory) return false;
+return true;
+});
+currentAlerts=filtered;
+renderStats(filtered);
+renderFeed(filtered);
+}
+
+function quickFilter(el){
+document.querySelectorAll(".filter-tag").forEach(t=>t.classList.remove("active"));
+el.classList.add("active");
+activeCategory=el.dataset.filter;
+filterAlerts();
+}
+
+renderStats(alerts);
+renderFeed(alerts);
+</script>
+</body>
+</html>
