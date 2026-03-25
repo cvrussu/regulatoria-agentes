@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COMPASS — Diagnóstico Regulatorio IA | RegulatorIA</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--g1:#6366f1;--g2:#8b5cf6;--g3:#a855f7;--text:#1e293b;--muted:#64748b;--light:#f1f5f9;--white:#fff;--border:#e2e8f0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--white);color:var(--text);line-height:1.6}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+.header{background:linear-gradient(135deg,var(--g1),var(--g3));color:white;padding:32px 24px;text-align:center}
+.header h1{font-size:1.8em;font-weight:800;margin-bottom:4px}
+.header p{opacity:0.85;font-size:0.92em}
+.badge{display:inline-block;background:rgba(255,255,255,0.2);padding:4px 14px;border-radius:100px;font-size:0.78em;font-weight:700;margin-bottom:12px}
+.container{max-width:900px;margin:0 auto;padding:24px}
+.form-section{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px}
+.form-section h3{font-size:1.1em;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+label{font-size:0.85em;font-weight:600;color:var(--muted);display:block;margin-bottom:4px}
+select,input{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.92em;color:var(--text);background:var(--white);transition:border-color 0.2s}
+select:focus,input:focus{outline:none;border-color:var(--g1);box-shadow:0 0 0 3px rgba(99,102,241,0.1)}
+.btn{background:linear-gradient(135deg,var(--g1),var(--g3));color:white;border:none;padding:14px 28px;border-radius:12px;font-size:1em;font-weight:700;cursor:pointer;width:100%;transition:all 0.3s;margin-top:8px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.3)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+#results{display:none}
+.result-header{background:linear-gradient(135deg,rgba(99,102,241,0.05),rgba(168,85,247,0.05));border-radius:14px;padding:24px;margin-bottom:20px;border:1px solid rgba(99,102,241,0.1)}
+.result-header h2{font-size:1.3em;margin-bottom:8px}
+.result-stats{display:flex;gap:16px;flex-wrap:wrap}
+.stat{background:white;border-radius:10px;padding:12px 16px;border:1px solid var(--border);flex:1;min-width:120px;text-align:center}
+.stat .num{font-size:1.4em;font-weight:800;color:var(--g1)}
+.stat .lbl{font-size:0.75em;color:var(--muted)}
+.req-group{margin-bottom:16px}
+.req-group-title{font-weight:700;font-size:0.95em;padding:10px 14px;background:var(--light);border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.req-group-title:hover{background:#e8ecf1}
+.req-group-title .count{font-size:0.78em;background:var(--g1);color:white;padding:2px 8px;border-radius:100px}
+.req-list{padding:0 14px}
+.req-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--light);font-size:0.88em}
+.req-item:last-child{border-bottom:none}
+.req-code{font-weight:700;color:var(--g1);min-width:90px;font-size:0.82em}
+.req-name{flex:1}
+.req-priority{font-size:0.72em;font-weight:700;padding:2px 8px;border-radius:4px}
+.pri-critical{background:#fee2e2;color:#dc2626}
+.pri-required{background:#fef3c7;color:#92400e}
+.pri-optional{background:#d1fae5;color:#065f46}
+.download-btn{background:white;border:1.5px solid var(--g1);color:var(--g1);padding:10px 20px;border-radius:10px;font-weight:600;cursor:pointer;font-size:0.9em;transition:all 0.2s;margin-top:12px}
+.download-btn:hover{background:var(--g1);color:white}
+.cta-box{background:linear-gradient(135deg,var(--g1),var(--g3));color:white;border-radius:14px;padding:24px;text-align:center;margin-top:20px}
+.cta-box h3{margin-bottom:8px}
+.cta-box a{color:white;text-decoration:underline;font-weight:600}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:0.82em}
+footer a{color:var(--g1);text-decoration:none}
+.loading{display:none;text-align:center;padding:40px}
+.spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--g1);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}.result-stats{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">🧭 AGENTE GRATUITO</div>
+<h1>COMPASS — El Navegador</h1>
+<p>Diagnóstico regulatorio instantáneo. Selecciona tu producto y mercado.</p>
+</div>
+
+<div class="container">
+<div class="form-section">
+<h3>🧭 Configuración del Análisis</h3>
+<div class="form-row">
+<div>
+<label>Tipo de Producto</label>
+<select id="productType">
+<option value="">Seleccionar...</option>
+<option value="fungicida">Fungicida</option>
+<option value="herbicida">Herbicida</option>
+<option value="insecticida">Insecticida</option>
+<option value="acaricida">Acaricida</option>
+<option value="nematicida">Nematicida</option>
+<option value="regulador">Regulador de Crecimiento</option>
+<option value="fertilizante">Fertilizante</option>
+<option value="bioestimulante">Bioestimulante</option>
+<option value="bioplaguicida">Bioplaguicida</option>
+<option value="coadyuvante">Coadyuvante</option>
+</select>
+</div>
+<div>
+<label>Formulación</label>
+<select id="formulation">
+<option value="">Seleccionar...</option>
+<option value="EC">EC — Concentrado Emulsionable</option>
+<option value="SC">SC — Suspensión Concentrada</option>
+<option value="WP">WP — Polvo Mojable</option>
+<option value="WG">WG — Granulado Dispersable</option>
+<option value="GR">GR — Granulado</option>
+<option value="SL">SL — Concentrado Soluble</option>
+<option value="EW">EW — Emulsión Aceite/Agua</option>
+<option value="CS">CS — Suspensión Capsular</option>
+<option value="SE">SE — Suspoemulsión</option>
+<option value="otro">Otra formulación</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div>
+<label>País de Registro</label>
+<select id="country">
+<option value="">Seleccionar...</option>
+<option value="chile">Chile (SAG)</option>
+<option value="argentina">Argentina (SENASA)</option>
+<option value="brasil">Brasil (ANVISA/IBAMA/MAPA)</option>
+<option value="colombia">Colombia (ICA)</option>
+<option value="peru">Perú (SENASA)</option>
+<option value="mexico">México (COFEPRIS)</option>
+<option value="uruguay">Uruguay (MGAP)</option>
+<option value="paraguay">Paraguay (SENAVE)</option>
+<option value="eu">Unión Europea (EFSA)</option>
+<option value="usa">Estados Unidos (EPA)</option>
+</select>
+</div>
+<div>
+<label>Nombre del Ingrediente Activo (opcional)</label>
+<input type="text" id="activeIngredient" placeholder="Ej: Azoxistrobina, Glifosato...">
+</div>
+</div>
+<div class="form-row">
+<div>
+<label>¿Es un registro nuevo o renovación?</label>
+<select id="regType">
+<option value="nuevo">Registro Nuevo</option>
+<option value="renovacion">Renovación</option>
+<option value="ampliacion">Ampliación de Uso</option>
+<option value="importacion">Registro de Importación</option>
+</select>
+</div>
+<div>
+<label>¿Tiene datos propietarios?</label>
+<select id="ownData">
+<option value="si">Sí — Estudios propios</option>
+<option value="parcial">Parcial — Algunos propios</option>
+<option value="no">No — Usará datos publicados/genéricos</option>
+</select>
+</div>
+</div>
+<button class="btn" onclick="analyze()">🔍 Generar Diagnóstico Regulatorio</button>
+</div>
+
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<p>Analizando requisitos regulatorios...</p>
+<p style="font-size:0.82em;color:var(--muted)">COMPASS está consultando las normativas vigentes</p>
+</div>
+
+<div id="results">
+<div class="result-header">
+<h2 id="resultTitle"></h2>
+<p id="resultDesc" style="color:var(--muted);font-size:0.9em;margin-bottom:12px"></p>
+<div class="result-stats">
+<div class="stat"><div class="num" id="totalReqs">0</div><div class="lbl">Requisitos Totales</div></div>
+<div class="stat"><div class="num" id="criticalReqs">0</div><div class="lbl">Críticos</div></div>
+<div class="stat"><div class="num" id="estimatedTime">0</div><div class="lbl">Meses Estimados</div></div>
+<div class="stat"><div class="num" id="estimatedCost">0</div><div class="lbl">Costo Estimado</div></div>
+</div>
+</div>
+<div id="reqGroups"></div>
+<button class="download-btn" onclick="downloadReport()">📄 Descargar Reporte PDF</button>
+<div class="cta-box">
+<h3>¿Necesitas ayuda con tu registro?</h3>
+<p>Nuestros 11 agentes de IA pueden armar tu dossier 5x más rápido.</p>
+<p style="margin-top:8px"><a href="mailto:proyectos@uranoia.cl?subject=Consulta%20RegulatorIA%20-%20COMPASS">📧 Agendar Reunión Gratuita</a></p>
+</div>
+</div>
+</div>
+
+<footer>
+<p>🧭 COMPASS by <a href="https://cvrussu.github.io/regulatoria-agentes/">RegulatorIA</a> — Herramienta gratuita de diagnóstico regulatorio</p>
+<p>© 2026 <a href="https://uranoia.cl">Urano IA</a> | proyectos@uranoia.cl</p>
+</footer>
+
+<script>
+const DB = {
+chile: {
+  authority: "SAG (Servicio Agrícola y Ganadero)",
+  law: "Decreto Ley 3.557, Resolución N° 1.557/2014",
+  groups: [
+    {name:"Identidad del Producto",items:[
+      {code:"CL-ID-01",name:"Nombre común y químico del ingrediente activo (IUPAC/CAS)",priority:"critical"},
+      {code:"CL-ID-02",name:"Estructura molecular y fórmula empírica",priority:"critical"},
+      {code:"CL-ID-03",name:"Número CAS y número ISO del ingrediente activo",priority:"critical"},
+      {code:"CL-ID-04",name:"Especificaciones técnicas del ingrediente activo (pureza mínima)",priority:"required"},
+      {code:"CL-ID-05",name:"Identidad y contenido de impurezas relevantes",priority:"required"},
+      {code:"CL-ID-06",name:"Composición cuali-cuantitativa completa del formulado",priority:"critical"},
+      {code:"CL-ID-07",name:"Certificado de composición del fabricante",priority:"required"},
+    ]},
+    {name:"Propiedades Físico-Químicas",items:[
+      {code:"CL-FQ-01",name:"Punto de fusión/ebullición",priority:"required"},
+      {code:"CL-FQ-02",name:"Presión de vapor a 20-25°C",priority:"required"},
+      {code:"CL-FQ-03",name:"Solubilidad en agua y solventes orgánicos",priority:"required"},
+      {code:"CL-FQ-04",name:"Coeficiente de partición n-octanol/agua (Log Pow)",priority:"required"},
+      {code:"CL-FQ-05",name:"Estabilidad al almacenamiento (14 días a 54°C o 2 años a T ambiente)",priority:"critical"},
+      {code:"CL-FQ-06",name:"pH de la formulación (1% en agua)",priority:"required"},
+      {code:"CL-FQ-07",name:"Densidad relativa o aparente",priority:"required"},
+      {code:"CL-FQ-08",name:"Constante de Henry",priority:"optional"},
+    ]},
+    {name:"Toxicología (Salud Humana)",items:[
+      {code:"CL-TOX-01",name:"Toxicidad aguda oral — OECD 423/425 (DL50)",priority:"critical"},
+      {code:"CL-TOX-02",name:"Toxicidad aguda dermal — OECD 402 (DL50)",priority:"critical"},
+      {code:"CL-TOX-03",name:"Toxicidad aguda inhalatoria — OECD 403 (CL50)",priority:"critical"},
+      {code:"CL-TOX-04",name:"Irritación ocular — OECD 405",priority:"critical"},
+      {code:"CL-TOX-05",name:"Irritación dérmica — OECD 404",priority:"critical"},
+      {code:"CL-TOX-06",name:"Sensibilización cutánea — OECD 406/429",priority:"critical"},
+      {code:"CL-TOX-07",name:"Toxicidad subcrónica oral 90 días — OECD 408",priority:"required"},
+      {code:"CL-TOX-08",name:"Genotoxicidad in vitro (Ames, Aberraciones cromosómicas) — OECD 471, 473",priority:"required"},
+      {code:"CL-TOX-09",name:"Toxicidad reproductiva — OECD 414, 416",priority:"required"},
+      {code:"CL-TOX-10",name:"Estudios de metabolismo en mamíferos",priority:"optional"},
+    ]},
+    {name:"Ecotoxicología",items:[
+      {code:"CL-ECO-01",name:"Toxicidad aguda en peces — OECD 203 (CL50 96h)",priority:"critical"},
+      {code:"CL-ECO-02",name:"Toxicidad aguda en Daphnia magna — OECD 202 (CE50 48h)",priority:"critical"},
+      {code:"CL-ECO-03",name:"Toxicidad en algas — OECD 201 (CE50 72h)",priority:"critical"},
+      {code:"CL-ECO-04",name:"Toxicidad aguda en abejas — OECD 213, 214",priority:"required"},
+      {code:"CL-ECO-05",name:"Toxicidad en aves — OECD 205 (DL50 oral aguda)",priority:"required"},
+      {code:"CL-ECO-06",name:"Toxicidad en organismos del suelo (lombrices) — OECD 207",priority:"required"},
+    ]},
+    {name:"Destino Ambiental",items:[
+      {code:"CL-AMB-01",name:"Hidrólisis en función del pH — OECD 111",priority:"required"},
+      {code:"CL-AMB-02",name:"Fotólisis en agua — OECD 316",priority:"required"},
+      {code:"CL-AMB-03",name:"Degradación en suelo (DT50, DT90) — OECD 307",priority:"required"},
+      {code:"CL-AMB-04",name:"Adsorción/Desorción en suelos (Koc) — OECD 106",priority:"required"},
+      {code:"CL-AMB-05",name:"Biodegradabilidad — OECD 301",priority:"optional"},
+    ]},
+    {name:"Eficacia Biológica",items:[
+      {code:"CL-EFC-01",name:"Ensayos de eficacia (mínimo 2 temporadas, 3 localidades)",priority:"critical"},
+      {code:"CL-EFC-02",name:"Fitotoxicidad en cultivos objetivo",priority:"required"},
+      {code:"CL-EFC-03",name:"Datos de residuos en cosecha — OECD 509",priority:"critical"},
+      {code:"CL-EFC-04",name:"Propuesta de LMRs (Límites Máximos de Residuos)",priority:"critical"},
+      {code:"CL-EFC-05",name:"Periodo de carencia propuesto",priority:"critical"},
+    ]},
+    {name:"Etiquetado y SDS",items:[
+      {code:"CL-ETQ-01",name:"Proyecto de etiqueta según NCh 2190 y GHS/CLP",priority:"critical"},
+      {code:"CL-ETQ-02",name:"Hoja de Datos de Seguridad (SDS) 16 secciones — NCh 2245",priority:"critical"},
+      {code:"CL-ETQ-03",name:"Pictogramas GHS correspondientes",priority:"required"},
+      {code:"CL-ETQ-04",name:"Instrucciones de primeros auxilios",priority:"required"},
+      {code:"CL-ETQ-05",name:"Información de almacenamiento y transporte",priority:"required"},
+    ]},
+  ]
+},
+argentina: {
+  authority: "SENASA (Servicio Nacional de Sanidad y Calidad Agroalimentaria)",
+  law: "Decreto 3489/58, Resolución SENASA 350/99, 302/2012",
+  groups: [
+    {name:"Identidad y Propiedades",items:[
+      {code:"AR-ID-01",name:"Identidad completa del principio activo (IUPAC, CAS, ISO)",priority:"critical"},
+      {code:"AR-ID-02",name:"Composición cuali-cuantitativa del formulado comercial",priority:"critical"},
+      {code:"AR-ID-03",name:"Propiedades físico-químicas completas del TC y formulado",priority:"required"},
+      {code:"AR-ID-04",name:"Especificación técnica FAO/OMS si disponible",priority:"required"},
+      {code:"AR-ID-05",name:"Métodos analíticos para i.a. y residuos",priority:"required"},
+    ]},
+    {name:"Toxicología",items:[
+      {code:"AR-TOX-01",name:"Batería completa de toxicidad aguda (oral, dermal, inhalatoria, ocular, dérmica, sensibilización)",priority:"critical"},
+      {code:"AR-TOX-02",name:"Toxicidad subcrónica 90 días",priority:"required"},
+      {code:"AR-TOX-03",name:"Toxicidad crónica y carcinogenicidad",priority:"required"},
+      {code:"AR-TOX-04",name:"Genotoxicidad (batería in vitro e in vivo)",priority:"required"},
+      {code:"AR-TOX-05",name:"Toxicidad reproductiva y teratogenia",priority:"required"},
+      {code:"AR-TOX-06",name:"Neurotoxicidad (si aplica)",priority:"optional"},
+    ]},
+    {name:"Ecotoxicología y Medio Ambiente",items:[
+      {code:"AR-ECO-01",name:"Toxicidad en organismos acuáticos (peces, dafnia, algas)",priority:"critical"},
+      {code:"AR-ECO-02",name:"Toxicidad en abejas y polinizadores",priority:"required"},
+      {code:"AR-ECO-03",name:"Toxicidad en aves y mamíferos silvestres",priority:"required"},
+      {code:"AR-ECO-04",name:"Comportamiento ambiental (hidrólisis, fotólisis, suelo)",priority:"required"},
+      {code:"AR-ECO-05",name:"Evaluación de riesgo ambiental",priority:"required"},
+    ]},
+    {name:"Eficacia y Residuos",items:[
+      {code:"AR-EFC-01",name:"Ensayos de eficacia (mínimo 6-8 ensayos en 2 campañas)",priority:"critical"},
+      {code:"AR-EFC-02",name:"Estudios de residuos supervisados en Argentina",priority:"critical"},
+      {code:"AR-EFC-03",name:"LMRs propuestos según Codex/país",priority:"critical"},
+      {code:"AR-EFC-04",name:"Período de carencia",priority:"critical"},
+    ]},
+    {name:"Documentación Legal",items:[
+      {code:"AR-DOC-01",name:"Poder notarial del representante legal",priority:"critical"},
+      {code:"AR-DOC-02",name:"Certificado de registro en país de origen",priority:"required"},
+      {code:"AR-DOC-03",name:"Proyecto de marbete (etiqueta) según Res. 350/99",priority:"critical"},
+      {code:"AR-DOC-04",name:"Hoja de Seguridad (SDS) en español",priority:"critical"},
+    ]},
+  ]
+},
+brasil: {
+  authority: "ANVISA + IBAMA + MAPA (sistema tripartito)",
+  law: "Lei 7.802/89, Decreto 4.074/2002, RDC Nº 294/2019",
+  groups: [
+    {name:"Registro MAPA (Eficacia Agronómica)",items:[
+      {code:"BR-MAPA-01",name:"Ensayos de eficacia agronómica (mínimo 8 ensayos, 2 safras)",priority:"critical"},
+      {code:"BR-MAPA-02",name:"Fitotoxicidad en culturas alvo",priority:"required"},
+      {code:"BR-MAPA-03",name:"Requerimento de Registro Especial (RET)",priority:"critical"},
+      {code:"BR-MAPA-04",name:"Composição completa do produto formulado",priority:"critical"},
+    ]},
+    {name:"Registro ANVISA (Salud Humana)",items:[
+      {code:"BR-ANV-01",name:"Batería toxicológica aguda completa (6 estudios)",priority:"critical"},
+      {code:"BR-ANV-02",name:"Toxicidade subcrônica e crônica",priority:"critical"},
+      {code:"BR-ANV-03",name:"Genotoxicidade e carcinogenicidade",priority:"critical"},
+      {code:"BR-ANV-04",name:"Toxicidade reprodutiva e do desenvolvimento",priority:"required"},
+      {code:"BR-ANV-05",name:"Neurotoxicidade e imunotoxicidade",priority:"required"},
+      {code:"BR-ANV-06",name:"Estudos de resíduos e IDA/ArfD",priority:"critical"},
+      {code:"BR-ANV-07",name:"Avaliação de risco dietético",priority:"required"},
+    ]},
+    {name:"Registro IBAMA (Medio Ambiente)",items:[
+      {code:"BR-IBA-01",name:"PPA - Potencial de Periculosidade Ambiental",priority:"critical"},
+      {code:"BR-IBA-02",name:"Ecotoxicidade aquática (peixes, dáfnias, algas)",priority:"critical"},
+      {code:"BR-IBA-03",name:"Toxicidade em abelhas e organismos do solo",priority:"required"},
+      {code:"BR-IBA-04",name:"Destino e comportamento ambiental completo",priority:"critical"},
+      {code:"BR-IBA-05",name:"Avaliação de risco ambiental (ERA)",priority:"required"},
+    ]},
+    {name:"Documentação Legal",items:[
+      {code:"BR-DOC-01",name:"Procuração do representante legal no Brasil",priority:"critical"},
+      {code:"BR-DOC-02",name:"Certificado de registro no país de origem",priority:"required"},
+      {code:"BR-DOC-03",name:"Projeto de rótulo e bula conforme normas ANVISA",priority:"critical"},
+      {code:"BR-DOC-04",name:"FISPQ (Ficha de Informações de Segurança)",priority:"critical"},
+    ]},
+  ]
+},
+eu: {
+  authority: "EFSA + Comisión Europea + Estados Miembros",
+  law: "Reglamento (CE) 1107/2009, Reglamento (UE) 283/2013, 284/2013",
+  groups: [
+    {name:"Identidad (Annex II, Part A, Section 1)",items:[
+      {code:"EU-ID-01",name:"Identidad del principio activo según Reg. 283/2013",priority:"critical"},
+      {code:"EU-ID-02",name:"Especificación técnica FAO equivalente",priority:"required"},
+      {code:"EU-ID-03",name:"Propiedades físico-químicas completas",priority:"critical"},
+      {code:"EU-ID-04",name:"Métodos analíticos validados (producto, residuos, aire, agua, suelo)",priority:"critical"},
+    ]},
+    {name:"Toxicología (Annex II, Part A, Section 5)",items:[
+      {code:"EU-TOX-01",name:"Batería aguda completa (oral, dermal, inhalatoria, irritación, sensibilización)",priority:"critical"},
+      {code:"EU-TOX-02",name:"Toxicidad subcrónica oral 90 días (rata y perro)",priority:"critical"},
+      {code:"EU-TOX-03",name:"Genotoxicidad in vitro e in vivo (batería completa)",priority:"critical"},
+      {code:"EU-TOX-04",name:"Toxicidad crónica 2 años + carcinogenicidad (rata)",priority:"critical"},
+      {code:"EU-TOX-05",name:"Toxicidad reproductiva multigeneracional",priority:"critical"},
+      {code:"EU-TOX-06",name:"Toxicidad del desarrollo (rata y conejo)",priority:"critical"},
+      {code:"EU-TOX-07",name:"Neurotoxicidad aguda y subaguda",priority:"required"},
+      {code:"EU-TOX-08",name:"Propiedades de alteración endocrina (ED assessment)",priority:"critical"},
+      {code:"EU-TOX-09",name:"Metabolismo en mamíferos",priority:"required"},
+      {code:"EU-TOX-10",name:"Evaluación de riesgo operador (AOEL/AAOEL)",priority:"critical"},
+    ]},
+    {name:"Residuos (Annex II, Part A, Section 6)",items:[
+      {code:"EU-RES-01",name:"Metabolismo en plantas (3 cultivos representativos)",priority:"critical"},
+      {code:"EU-RES-02",name:"Ensayos de residuos supervisados (8 ensayos/cultivo en zona norte y sur)",priority:"critical"},
+      {code:"EU-RES-03",name:"Estudios de procesamiento (factor de procesamiento)",priority:"required"},
+      {code:"EU-RES-04",name:"Metabolismo en animales de producción (si LMR>0.01 en forraje)",priority:"required"},
+      {code:"EU-RES-05",name:"Propuesta de MRL y evaluación de riesgo dietético",priority:"critical"},
+    ]},
+    {name:"Destino y Comportamiento Ambiental (Section 7)",items:[
+      {code:"EU-AMB-01",name:"Degradación en suelo (laboratorio y campo)",priority:"critical"},
+      {code:"EU-AMB-02",name:"Movilidad en suelo (adsorción, lisimetría)",priority:"critical"},
+      {code:"EU-AMB-03",name:"Degradación en agua/sedimento",priority:"critical"},
+      {code:"EU-AMB-04",name:"Fotólisis en agua y suelo",priority:"required"},
+      {code:"EU-AMB-05",name:"Modelización PEC (suelo, agua superficial, agua subterránea)",priority:"critical"},
+    ]},
+    {name:"Ecotoxicología (Section 8)",items:[
+      {code:"EU-ECO-01",name:"Toxicidad en aves (aguda y reproductiva)",priority:"critical"},
+      {code:"EU-ECO-02",name:"Toxicidad en organismos acuáticos (peces, invertebrados, algas, plantas)",priority:"critical"},
+      {code:"EU-ECO-03",name:"Toxicidad en abejas (aguda, crónica, larvas) — OECD 213, 214, 237, 245, 246",priority:"critical"},
+      {code:"EU-ECO-04",name:"Toxicidad en artrópodos beneficiarios",priority:"required"},
+      {code:"EU-ECO-05",name:"Toxicidad en lombrices y organismos del suelo",priority:"required"},
+      {code:"EU-ECO-06",name:"Evaluación de riesgo ambiental (ERA) completa",priority:"critical"},
+    ]},
+    {name:"Eficacia (Annex III, Section 6)",items:[
+      {code:"EU-EFC-01",name:"Ensayos de eficacia según EPPO guidelines",priority:"critical"},
+      {code:"EU-EFC-02",name:"Resistencia: estrategia de manejo y grupo IRAC/FRAC/HRAC",priority:"required"},
+      {code:"EU-EFC-03",name:"Selectividad en cultivos",priority:"required"},
+    ]},
+  ]
+},
+usa: {
+  authority: "EPA (Environmental Protection Agency)",
+  law: "FIFRA, 40 CFR Part 158",
+  groups: [
+    {name:"Product Chemistry (40 CFR §158.320)",items:[
+      {code:"US-PC-01",name:"Product identity and composition",priority:"critical"},
+      {code:"US-PC-02",name:"Physical/chemical properties",priority:"critical"},
+      {code:"US-PC-03",name:"Certified limits of active ingredient",priority:"critical"},
+      {code:"US-PC-04",name:"Analytical methods for enforcement",priority:"required"},
+    ]},
+    {name:"Toxicology (40 CFR §158.340)",items:[
+      {code:"US-TOX-01",name:"Acute toxicity battery (6 studies: oral, dermal, inhalation, eye, skin, sensitization)",priority:"critical"},
+      {code:"US-TOX-02",name:"Subchronic toxicity (90-day rat, 90-day dog)",priority:"critical"},
+      {code:"US-TOX-03",name:"Chronic toxicity/carcinogenicity (rat 2yr, mouse 18mo)",priority:"critical"},
+      {code:"US-TOX-04",name:"Developmental toxicity (rat and rabbit)",priority:"critical"},
+      {code:"US-TOX-05",name:"Reproduction study (2-generation rat)",priority:"critical"},
+      {code:"US-TOX-06",name:"Mutagenicity battery",priority:"critical"},
+      {code:"US-TOX-07",name:"Neurotoxicity (acute and subchronic)",priority:"required"},
+      {code:"US-TOX-08",name:"Immunotoxicity",priority:"required"},
+      {code:"US-TOX-09",name:"Metabolism and pharmacokinetics (ADME)",priority:"required"},
+      {code:"US-TOX-10",name:"Dermal penetration study",priority:"optional"},
+    ]},
+    {name:"Residue Chemistry (40 CFR §158.1400)",items:[
+      {code:"US-RES-01",name:"Plant metabolism studies",priority:"critical"},
+      {code:"US-RES-02",name:"Magnitude of residue field trials",priority:"critical"},
+      {code:"US-RES-03",name:"Processing studies",priority:"required"},
+      {code:"US-RES-04",name:"Livestock feeding studies (if applicable)",priority:"required"},
+      {code:"US-RES-05",name:"Tolerance petition with risk assessment",priority:"critical"},
+    ]},
+    {name:"Environmental Fate (40 CFR §158.1300)",items:[
+      {code:"US-EF-01",name:"Hydrolysis, photolysis (soil and aqueous)",priority:"critical"},
+      {code:"US-EF-02",name:"Aerobic/anaerobic soil metabolism",priority:"critical"},
+      {code:"US-EF-03",name:"Mobility: column leaching, adsorption/desorption",priority:"required"},
+      {code:"US-EF-04",name:"Aquatic metabolism (aerobic and anaerobic)",priority:"required"},
+      {code:"US-EF-05",name:"Terrestrial field dissipation",priority:"required"},
+    ]},
+    {name:"Ecological Effects (40 CFR §158.630)",items:[
+      {code:"US-ECO-01",name:"Avian acute oral and dietary toxicity",priority:"critical"},
+      {code:"US-ECO-02",name:"Avian reproduction",priority:"required"},
+      {code:"US-ECO-03",name:"Freshwater fish and invertebrate acute toxicity",priority:"critical"},
+      {code:"US-ECO-04",name:"Estuarine/marine organism toxicity",priority:"required"},
+      {code:"US-ECO-05",name:"Honey bee acute contact and oral toxicity",priority:"critical"},
+      {code:"US-ECO-06",name:"Non-target plant toxicity (seedling emergence, vegetative vigor)",priority:"required"},
+    ]},
+  ]
+},
+colombia:{authority:"ICA",law:"Resolución ICA 3759/2003",groups:[{name:"Requisitos Generales ICA",items:[{code:"CO-01",name:"Batería toxicológica aguda completa",priority:"critical"},{code:"CO-02",name:"Ecotoxicología básica (peces, dafnia, algas, abejas)",priority:"critical"},{code:"CO-03",name:"Destino ambiental (suelo, agua)",priority:"required"},{code:"CO-04",name:"Eficacia biológica (mín. 4 ensayos en Colombia)",priority:"critical"},{code:"CO-05",name:"Estudios de residuos",priority:"critical"},{code:"CO-06",name:"Registro sanitario INVIMA (si aplica)",priority:"required"},{code:"CO-07",name:"Etiqueta y FDS según normas colombianas",priority:"critical"}]}]},
+peru:{authority:"SENASA Perú",law:"D.S. 001-2015-MINAGRI",groups:[{name:"Requisitos SENASA Perú",items:[{code:"PE-01",name:"Toxicología aguda completa",priority:"critical"},{code:"PE-02",name:"Ecotoxicología (acuática, abejas, aves)",priority:"critical"},{code:"PE-03",name:"Comportamiento ambiental",priority:"required"},{code:"PE-04",name:"Eficacia (ensayos locales)",priority:"critical"},{code:"PE-05",name:"Residuos y LMR",priority:"critical"},{code:"PE-06",name:"Certificado de libre venta del país de origen",priority:"required"},{code:"PE-07",name:"Etiqueta y HDS según NTP",priority:"critical"}]}]},
+mexico:{authority:"COFEPRIS + SEMARNAT",law:"Ley General de Salud, LGEEPA, NOM-232-SSA1",groups:[{name:"Requisitos COFEPRIS/SEMARNAT",items:[{code:"MX-01",name:"Dictamen toxicológico (COFEPRIS)",priority:"critical"},{code:"MX-02",name:"Evaluación ambiental (SEMARNAT)",priority:"critical"},{code:"MX-03",name:"Batería tox aguda + subcrónica",priority:"critical"},{code:"MX-04",name:"Ecotoxicología completa",priority:"required"},{code:"MX-05",name:"Eficacia agronómica (ensayos en México)",priority:"critical"},{code:"MX-06",name:"Estudios de residuos y LMR",priority:"critical"},{code:"MX-07",name:"Etiqueta según NOM-232-SSA1",priority:"critical"},{code:"MX-08",name:"HDS según NOM-018-STPS",priority:"critical"}]}]},
+uruguay:{authority:"MGAP-DGSA",law:"Decreto 149/977",groups:[{name:"Requisitos MGAP Uruguay",items:[{code:"UY-01",name:"Toxicología aguda completa",priority:"critical"},{code:"UY-02",name:"Ecotoxicología básica",priority:"required"},{code:"UY-03",name:"Eficacia biológica local",priority:"critical"},{code:"UY-04",name:"Residuos y carencia",priority:"critical"},{code:"UY-05",name:"Etiqueta y FDS",priority:"critical"},{code:"UY-06",name:"Certificado de registro en país de origen",priority:"required"}]}]},
+paraguay:{authority:"SENAVE",law:"Ley 3742/09",groups:[{name:"Requisitos SENAVE Paraguay",items:[{code:"PY-01",name:"Toxicología aguda completa",priority:"critical"},{code:"PY-02",name:"Ecotoxicología",priority:"required"},{code:"PY-03",name:"Eficacia agronómica",priority:"critical"},{code:"PY-04",name:"Residuos",priority:"critical"},{code:"PY-05",name:"Etiqueta y FDS",priority:"critical"},{code:"PY-06",name:"Registro en país de origen",priority:"required"}]}]}
+};
+
+const timeEstimates = {chile:8,argentina:12,brasil:18,colombia:10,peru:10,mexico:14,uruguay:6,paraguay:6,eu:36,usa:24};
+const costEstimates = {chile:"$15K-30K",argentina:"$20K-40K",brasil:"$40K-80K",colombia:"$15K-25K",peru:"$12K-22K",mexico:"$25K-50K",uruguay:"$10K-18K",paraguay:"$8K-15K",eu:"$80K-200K",usa:"$60K-150K"};
+
+function analyze(){
+  const prod = document.getElementById('productType').value;
+  const country = document.getElementById('country').value;
+  const form = document.getElementById('formulation').value;
+  const ai = document.getElementById('activeIngredient').value;
+
+  if(!prod || !country || !form){alert('Por favor completa todos los campos obligatorios');return}
+
+  document.getElementById('loading').style.display='block';
+  document.getElementById('results').style.display='none';
+
+  setTimeout(()=>{
+    const data = DB[country];
+    if(!data){alert('País no disponible aún');document.getElementById('loading').style.display='none';return}
+
+    let totalItems = 0;
+    let criticalItems = 0;
+    data.groups.forEach(g => {
+      g.items.forEach(i => {
+        totalItems++;
+        if(i.priority === 'critical') criticalItems++;
+      });
+    });
+
+    const prodNames = {fungicida:"Fungicida",herbicida:"Herbicida",insecticida:"Insecticida",acaricida:"Acaricida",nematicida:"Nematicida",regulador:"Regulador de Crecimiento",fertilizante:"Fertilizante",bioestimulante:"Bioestimulante",bioplaguicida:"Bioplaguicida",coadyuvante:"Coadyuvante"};
+    const countryNames = {chile:"Chile",argentina:"Argentina",brasil:"Brasil",colombia:"Colombia",peru:"Perú",mexico:"México",uruguay:"Uruguay",paraguay:"Paraguay",eu:"Unión Europea",usa:"Estados Unidos"};
+
+    document.getElementById('resultTitle').textContent = `Diagnóstico: ${prodNames[prod]} ${form} ${ai ? '('+ai+')' : ''} en ${countryNames[country]}`;
+    document.getElementById('resultDesc').textContent = `Autoridad: ${data.authority} | Marco legal: ${data.law}`;
+    document.getElementById('totalReqs').textContent = totalItems;
+    document.getElementById('criticalReqs').textContent = criticalItems;
+    document.getElementById('estimatedTime').textContent = timeEstimates[country] + ' meses';
+    document.getElementById('estimatedCost').textContent = costEstimates[country];
+
+    const groupsHtml = data.groups.map(g => {
+      const items = g.items.map(i => `
+        <div class="req-item">
+          <span class="req-code">${i.code}</span>
+          <span class="req-name">${i.name}</span>
+          <span class="req-priority pri-${i.priority}">${i.priority==='critical'?'CRÍTICO':i.priority==='required'?'REQUERIDO':'OPCIONAL'}</span>
+        </div>
+      `).join('');
+      return `
+        <div class="req-group">
+          <div class="req-group-title" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            ${g.name}
+            <span class="count">${g.items.length} requisitos</span>
+          </div>
+          <div class="req-list">${items}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('reqGroups').innerHTML = groupsHtml;
+    document.getElementById('loading').style.display='none';
+    document.getElementById('results').style.display='block';
+    document.getElementById('results').scrollIntoView({behavior:'smooth'});
+  }, 2000);
+}
+
+function downloadReport(){
+  alert('Para descargar el reporte completo en PDF, contacta a nuestro equipo: proyectos@uranoia.cl\n\nIncluiremos un análisis detallado con:\n• Lista completa de requisitos\n• Estimación de costos por estudio\n• Cronograma sugerido\n• Recomendaciones QSAR (PREDICT)');
+}
+</script>
+</body>
+</html>
