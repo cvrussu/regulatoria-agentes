@@ -3,155 +3,699 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegulatorIA — Agentes IA Gratuitos de Pre-Registro</title>
+<title>RegulatorIA — La Primera Consultora de Agroquímicos con IA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--green:#5AAD2D;--green-dark:#2B5A14;--green-light:#e8f5e0;--white:#ffffff;--gray:#f5f5f5;--text:#333}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
-.hero{background:linear-gradient(135deg,var(--green-dark) 0%,#1a5a10 40%,var(--green) 100%);color:var(--white);padding:3rem 2rem;text-align:center}
-.hero h1{font-size:2.5rem;font-weight:800;letter-spacing:-1px;margin-bottom:.5rem}
-.hero h1 span{color:#a8e06c}
-.hero .tagline{font-size:1.1rem;opacity:.9;max-width:600px;margin:0 auto .5rem}
-.hero .badge{display:inline-block;background:rgba(255,255,255,.15);padding:.3rem 1rem;border-radius:20px;font-size:.85rem;margin-top:.5rem;backdrop-filter:blur(4px)}
-.container{max-width:1000px;margin:0 auto;padding:2rem 1rem}
-.section-title{text-align:center;color:var(--green-dark);font-size:1.5rem;font-weight:700;margin-bottom:.3rem}
-.section-sub{text-align:center;color:#777;font-size:.95rem;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
-.agents-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem}
-.agent-card{background:var(--white);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
-.agent-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,0.12)}
-.agent-card .card-header{padding:1.5rem 1.5rem 1rem;background:linear-gradient(135deg,var(--green-light),#f0fae8)}
-.agent-card .card-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:.8rem}
-.icon-classify{background:linear-gradient(135deg,#4CAF50,#81C784)}
-.icon-checklist{background:linear-gradient(135deg,#2196F3,#64B5F6)}
-.icon-ingredient{background:linear-gradient(135deg,#FF9800,#FFB74D)}
-.agent-card h3{color:var(--green-dark);font-size:1.15rem;margin-bottom:.3rem}
-.agent-card .card-body{padding:1rem 1.5rem;flex:1;display:flex;flex-direction:column}
-.agent-card .card-body p{font-size:.9rem;color:#666;line-height:1.5;flex:1}
-.agent-card .features{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0}
-.feature-tag{background:var(--green-light);color:var(--green-dark);padding:.2rem .6rem;border-radius:12px;font-size:.75rem;font-weight:600}
-.agent-card .card-btn{display:block;background:var(--green);color:var(--white);text-align:center;padding:.85rem;font-size:1rem;font-weight:600;text-decoration:none;transition:background .2s;border-radius:0 0 16px 16px;margin-top:auto}
-.agent-card .card-btn:hover{background:var(--green-dark)}
-.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
-.phase{background:var(--white);border-radius:12px;padding:1.2rem;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
-.phase .phase-num{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin-bottom:.5rem}
-.phase-free .phase-num{background:var(--green);color:var(--white)}
-.phase-paid .phase-num{background:#e0e0e0;color:#999}
-.phase h4{font-size:.95rem;margin-bottom:.3rem}
-.phase-free h4{color:var(--green-dark)}
-.phase-paid h4{color:#999}
-.phase p{font-size:.8rem;color:#888;line-height:1.4}
-.phase-free{border:2px solid var(--green)}
-.phase-paid{border:2px solid #e0e0e0}
-.free-badge{background:var(--green);color:var(--white);padding:.15rem .5rem;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:.3rem;vertical-align:middle}
-.paid-badge{background:#e0e0e0;color:#999;padding:.15rem .5rem;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:.3rem;vertical-align:middle}
-.cta-section{background:linear-gradient(135deg,var(--green-dark),#1a4010);color:var(--white);border-radius:16px;padding:3rem 2rem;text-align:center;margin:2rem 0}
-.cta-section h2{font-size:1.6rem;margin-bottom:.5rem}
-.cta-section p{font-size:1rem;opacity:.9;max-width:500px;margin:0 auto 1.2rem}
-.cta-btn{display:inline-block;background:var(--white);color:var(--green-dark);padding:.85rem 2rem;border-radius:8px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:background .2s,transform .1s}
-.cta-btn:hover{background:#e8f5e0;transform:scale(1.02)}
-.stats{display:flex;justify-content:center;gap:3rem;margin:1.5rem 0}
-.stat{text-align:center}
-.stat .num{font-size:2rem;font-weight:800;color:var(--green)}
-.stat .label{font-size:.8rem;color:#888}
-footer{text-align:center;padding:2rem 1rem;color:#888;font-size:.85rem;border-top:1px solid #e0e0e0;margin-top:2rem}
-footer a{color:var(--green);text-decoration:none}
-footer a:hover{text-decoration:underline}
-@media(max-width:700px){.hero h1{font-size:1.8rem}.phases{grid-template-columns:1fr}.stats{flex-direction:column;gap:1rem}.agents-grid{grid-template-columns:1fr}}
+:root{
+  --g1:#6366f1;--g2:#8b5cf6;--g3:#a855f7;--g4:#ec4899;
+  --text:#1e293b;--muted:#64748b;--light:#f1f5f9;--white:#ffffff;
+  --card:#ffffff;--border:#e2e8f0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;line-height:1.6}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* GRADIENT MESH BACKGROUND */
+.mesh-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.07}
+.mesh-bg .blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float 20s ease-in-out infinite}
+.mesh-bg .blob:nth-child(1){width:600px;height:600px;background:var(--g1);top:-10%;left:-5%;animation-delay:0s}
+.mesh-bg .blob:nth-child(2){width:500px;height:500px;background:var(--g3);top:30%;right:-10%;animation-delay:-5s}
+.mesh-bg .blob:nth-child(3){width:400px;height:400px;background:var(--g4);bottom:10%;left:20%;animation-delay:-10s}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.95)}}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:1000;backdrop-filter:blur(20px);background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(0,0,0,0.06);transition:all 0.3s}
+nav .nav-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+nav .logo{font-weight:800;font-size:1.3em;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav .logo span{font-weight:400;opacity:0.7}
+nav .nav-links{display:flex;gap:28px;align-items:center}
+nav .nav-links a{text-decoration:none;color:var(--muted);font-size:0.9em;font-weight:500;transition:color 0.2s}
+nav .nav-links a:hover{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--g1),var(--g3));color:white!important;-webkit-text-fill-color:white!important;padding:8px 20px;border-radius:8px;font-weight:600;transition:transform 0.2s,box-shadow 0.2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(99,102,241,0.4)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:120px 24px 80px}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-text{max-width:560px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.1));border:1px solid rgba(99,102,241,0.2);border-radius:100px;padding:6px 16px;font-size:0.82em;font-weight:600;color:var(--g1);margin-bottom:20px}
+.hero-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--g1);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.5)}}
+.hero h1{font-size:3.2em;font-weight:900;line-height:1.1;margin-bottom:16px;letter-spacing:-0.03em}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:shimmer 3s linear infinite}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+.hero p{font-size:1.15em;color:var(--muted);margin-bottom:28px;line-height:1.7}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--g1),var(--g3));color:white;border:none;padding:14px 28px;border-radius:12px;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.4)}
+.btn-secondary{background:transparent;color:var(--text);border:1.5px solid var(--border);padding:14px 28px;border-radius:12px;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-secondary:hover{border-color:var(--g1);color:var(--g1)}
+.hero-stats{display:flex;gap:32px;margin-top:36px}
+.hero-stat .num{font-size:1.8em;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stat .label{font-size:0.82em;color:var(--muted)}
+
+/* CAROUSEL */
+.carousel-container{position:relative;width:100%;max-width:520px;aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.1)}
+.carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease;display:flex;align-items:center;justify-content:center;padding:40px}
+.carousel-slide.active{opacity:1}
+.carousel-slide:nth-child(1){background:linear-gradient(135deg,#667eea,#764ba2)}
+.carousel-slide:nth-child(2){background:linear-gradient(135deg,#f093fb,#f5576c)}
+.carousel-slide:nth-child(3){background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.carousel-slide:nth-child(4){background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.slide-content{text-align:center;color:white}
+.slide-icon{font-size:3em;margin-bottom:16px}
+.slide-title{font-size:1.4em;font-weight:700;margin-bottom:8px}
+.slide-desc{font-size:0.92em;opacity:0.9;max-width:320px;margin:0 auto}
+.carousel-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s}
+.carousel-dot.active{background:white;width:24px;border-radius:4px}
+
+/* SECTION COMMON */
+section{position:relative;z-index:1;padding:100px 24px}
+.section-header{text-align:center;max-width:700px;margin:0 auto 60px}
+.section-label{display:inline-block;font-size:0.82em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--g1);margin-bottom:12px}
+.section-header h2{font-size:2.4em;font-weight:800;letter-spacing:-0.02em;margin-bottom:14px}
+.section-header p{font-size:1.05em;color:var(--muted);line-height:1.7}
+
+/* ORCHESTRATOR */
+#orchestrator{background:var(--light)}
+.orch-wrapper{max-width:1000px;margin:0 auto;position:relative}
+.orch-center{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;margin:0 auto;position:relative;z-index:2;box-shadow:0 0 0 6px rgba(99,102,241,0.15),0 0 0 12px rgba(99,102,241,0.08),0 20px 60px rgba(99,102,241,0.3);animation:glow 3s ease-in-out infinite;cursor:pointer;transition:transform 0.3s}
+.orch-center:hover{transform:scale(1.05)}
+@keyframes glow{0%,100%{box-shadow:0 0 0 6px rgba(99,102,241,0.15),0 0 0 12px rgba(99,102,241,0.08),0 20px 60px rgba(99,102,241,0.3)}50%{box-shadow:0 0 0 8px rgba(99,102,241,0.25),0 0 0 16px rgba(99,102,241,0.12),0 20px 80px rgba(99,102,241,0.45)}}
+.orch-center .icon{font-size:2.4em;margin-bottom:4px}
+.orch-center .name{font-weight:700;font-size:0.9em}
+.orch-center .sub{font-size:0.7em;opacity:0.8}
+
+.phase-ring{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:40px}
+.phase-group{text-align:center}
+.phase-label{font-size:0.75em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;padding:4px 16px;border-radius:100px;display:inline-block}
+.phase-label.pre{background:rgba(99,102,241,0.1);color:var(--g1)}
+.phase-label.reg{background:rgba(168,85,247,0.1);color:var(--g3)}
+.phase-label.post{background:rgba(236,72,153,0.1);color:var(--g4)}
+.agents-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.agent-card{width:130px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g1),var(--g3));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
+.agent-card:hover{transform:translateY(-4px);border-color:var(--g1);box-shadow:0 8px 24px rgba(99,102,241,0.12)}
+.agent-card:hover::before{transform:scaleX(1)}
+.agent-card .agent-icon{font-size:1.8em;margin-bottom:8px}
+.agent-card .agent-name{font-weight:700;font-size:0.82em;margin-bottom:2px}
+.agent-card .agent-role{font-size:0.7em;color:var(--muted)}
+.agent-card .free-tag{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#10b981,#34d399);color:white;font-size:0.6em;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase}
+
+/* Connection lines SVG */
+.orch-lines{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* AGENT DETAIL MODAL */
+.agent-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
+.agent-modal.show{display:flex}
+.modal-content{background:white;border-radius:20px;max-width:520px;width:100%;padding:36px;position:relative;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--light);cursor:pointer;font-size:1.1em;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.modal-close:hover{background:var(--border)}
+.modal-phase{font-size:0.75em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.modal-icon{font-size:2.4em;margin-bottom:8px}
+.modal-title{font-size:1.5em;font-weight:800;margin-bottom:4px}
+.modal-subtitle{color:var(--muted);font-size:0.9em;margin-bottom:16px}
+.modal-problem{background:rgba(239,68,68,0.05);border-left:3px solid #ef4444;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:0.9em}
+.modal-solution{background:rgba(34,197,94,0.05);border-left:3px solid #22c55e;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:0.9em}
+.modal-tech{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.modal-tech span{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.08));color:var(--g2);font-size:0.78em;font-weight:600;padding:4px 10px;border-radius:6px}
+
+/* PRICING */
+#pricing{background:var(--white)}
+.pricing-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.pricing-card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden;transition:all 0.3s}
+.pricing-card.ai{border-color:var(--g1);box-shadow:0 8px 30px rgba(99,102,241,0.1)}
+.pricing-card .pricing-badge{position:absolute;top:20px;right:20px;font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px;border-radius:6px}
+.pricing-card.trad .pricing-badge{background:#fee2e2;color:#dc2626}
+.pricing-card.ai .pricing-badge{background:linear-gradient(135deg,var(--g1),var(--g3));color:white}
+.pricing-card h3{font-size:1.3em;font-weight:800;margin-bottom:6px;margin-top:12px}
+.pricing-card .pricing-sub{color:var(--muted);font-size:0.88em;margin-bottom:24px}
+.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--light)}
+.pricing-row:last-child{border-bottom:none}
+.pricing-row .metric{font-size:0.9em;color:var(--muted)}
+.pricing-row .value{font-weight:700;font-size:0.95em}
+.pricing-row .value.bad{color:#dc2626}
+.pricing-row .value.good{color:#059669;background:rgba(5,150,105,0.08);padding:2px 10px;border-radius:6px}
+.pricing-row .value.great{background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.05em}
+.pricing-bottom{margin-top:20px;text-align:center}
+.pricing-bottom .btn-primary{width:100%;justify-content:center}
+
+/* PROCESS */
+#process{background:var(--light)}
+.process-steps{max-width:800px;margin:0 auto;position:relative}
+.process-line{position:absolute;left:28px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--g1),var(--g3),var(--g4))}
+.process-step{display:flex;gap:24px;margin-bottom:32px;position:relative}
+.step-dot{width:56px;height:56px;border-radius:50%;background:var(--card);border:2px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0;z-index:1;transition:all 0.3s}
+.process-step:hover .step-dot{background:linear-gradient(135deg,var(--g1),var(--g3));border-color:transparent;transform:scale(1.1)}
+.process-step:hover .step-dot span{filter:brightness(10)}
+.step-content{background:var(--card);border-radius:16px;padding:20px 24px;flex:1;border:1px solid var(--border);transition:all 0.3s}
+.process-step:hover .step-content{border-color:var(--g1);box-shadow:0 4px 20px rgba(99,102,241,0.08)}
+.step-content h4{font-weight:700;margin-bottom:4px}
+.step-content p{font-size:0.9em;color:var(--muted)}
+.step-time{display:inline-block;font-size:0.75em;font-weight:700;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.1));color:var(--g2);padding:3px 10px;border-radius:100px;margin-top:6px}
+
+/* CTA SECTION */
+#cta{background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));padding:80px 24px;text-align:center;color:white;position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.08);top:-100px;right:-50px}
+#cta::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05);bottom:-60px;left:-30px}
+#cta h2{font-size:2.2em;font-weight:800;margin-bottom:12px;position:relative;z-index:1}
+#cta p{opacity:0.9;margin-bottom:28px;font-size:1.05em;position:relative;z-index:1}
+#cta .btn-white{background:white;color:var(--g1);border:none;padding:16px 36px;border-radius:12px;font-size:1.05em;font-weight:700;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:1}
+#cta .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
+
+/* FOOTER */
+footer{background:var(--text);color:white;padding:40px 24px;text-align:center}
+footer p{opacity:0.6;font-size:0.85em}
+footer a{color:var(--g3);text-decoration:none}
+
+/* MOUSE FOLLOWER */
+.mouse-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,0.08),transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left 0.15s ease,top 0.15s ease}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-text{max-width:100%}
+  .hero-buttons{justify-content:center}
+  .hero-stats{justify-content:center}
+  .carousel-container{max-width:100%;margin:0 auto}
+  .pricing-grid{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+}
+@media(max-width:600px){
+  .hero h1{font-size:2.2em}
+  .agents-grid{gap:8px}
+  .agent-card{width:100px;padding:12px 8px}
+}
+
+/* PARTICLES */
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--g1);opacity:0.3;animation:drift 15s linear infinite}
+@keyframes drift{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
 </style>
 </head>
 <body>
-<div class="hero">
-<h1>Regulator<span>IA</span></h1>
-<p class="tagline">Primera consultoría de registro de agroquímicos con IA en Latinoamérica</p>
-<span class="badge">3 Agentes Gratuitos de Pre-Registro · 6 Países LATAM</span>
+
+<div class="mesh-bg">
+  <div class="blob"></div><div class="blob"></div><div class="blob"></div>
 </div>
-<div class="container">
-<div class="stats">
-<div class="stat"><div class="num">11</div><div class="label">Agentes IA</div></div>
-<div class="stat"><div class="num">6</div><div class="label">Países LATAM</div></div>
-<div class="stat"><div class="num">3</div><div class="label">Fases de registro</div></div>
-</div>
-<h2 class="section-title">Agentes Gratuitos</h2>
-<p class="section-sub">Herramientas de inteligencia artificial para explorar, planificar y evaluar tu registro de agroquímicos antes de invertir.</p>
-<div class="agents-grid">
-<div class="agent-card">
-  <div class="card-header">
-    <div class="card-icon icon-classify">🏷️</div>
-    <h3>Clasificación Regulatoria</h3>
-  </div>
-  <div class="card-body">
-    <p>Describe tu producto y obtén su clasificación regulatoria probable, la regulación aplicable y la documentación requerida en cada país.</p>
-    <div class="features">
-      <span class="feature-tag">Plaguicidas</span>
-      <span class="feature-tag">Fertilizantes</span>
-      <span class="feature-tag">Biológicos</span>
-      <span class="feature-tag">Coadyuvantes</span>
-      <span class="feature-tag">6 países</span>
+<div class="mouse-glow" id="mouseGlow"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Regulator<span>.IA</span></div>
+    <div class="nav-links">
+      <a href="#orchestrator">Agentes IA</a>
+      <a href="#process">Cómo Funciona</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#cta" class="nav-cta">Agendar Demo</a>
     </div>
   </div>
-  <a href="agente-clasificacion.html" class="card-btn">Clasificar mi producto →</a>
-</div>
-<div class="agent-card">
-  <div class="card-header">
-    <div class="card-icon icon-checklist">📋</div>
-    <h3>Checklist de Requisitos</h3>
-  </div>
-  <div class="card-body">
-    <p>Genera un checklist completo de documentos, plazos estimados y costos de tasas gubernamentales para tu registro, por país y tipo de producto.</p>
-    <div class="features">
-      <span class="feature-tag">Checklist interactivo</span>
-      <span class="feature-tag">Cronograma</span>
-      <span class="feature-tag">Costos</span>
-      <span class="feature-tag">Exportable</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="particles" id="particles"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><span class="pulse"></span> Primera en Latinoamérica</div>
+      <h1>La primera consultora de registro de agroquímicos <span class="gradient">impulsada por IA</span></h1>
+      <p>11 agentes de inteligencia artificial especializados que transforman meses de trámites regulatorios en días. De la molécula al mercado, sin fricciones.</p>
+      <div class="hero-buttons">
+        <a href="#cta" class="btn-primary">Agendar Reunión →</a>
+        <a href="#orchestrator" class="btn-secondary">Ver Agentes IA</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num">3-5x</div>
+          <div class="label">Más rápido</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">50%</div>
+          <div class="label">Menos costo</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num">11</div>
+          <div class="label">Agentes IA</div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-container">
+      <div class="carousel-slide active">
+        <div class="slide-content">
+          <div class="slide-icon">🧪</div>
+          <div class="slide-title">Predicción Toxicológica</div>
+          <div class="slide-desc">QSAR con redes neuronales. Resultados en segundos, no en meses de laboratorio.</div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-content">
+          <div class="slide-icon">📋</div>
+          <div class="slide-title">Dossier Inteligente</div>
+          <div class="slide-desc">Armamos tu expediente regulatorio con IA que clasifica, audita y optimiza.</div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-content">
+          <div class="slide-icon">🌎</div>
+          <div class="slide-title">Expansión Global</div>
+          <div class="slide-desc">Registro en Chile, Brasil, Argentina, UE... Un solo dossier, múltiples mercados.</div>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-content">
+          <div class="slide-icon">🛡️</div>
+          <div class="slide-title">Vigilancia 24/7</div>
+          <div class="slide-desc">Monitoreo permanente de cambios regulatorios que afectan tus productos.</div>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <div class="carousel-dot active" onclick="goSlide(0)"></div>
+        <div class="carousel-dot" onclick="goSlide(1)"></div>
+        <div class="carousel-dot" onclick="goSlide(2)"></div>
+        <div class="carousel-dot" onclick="goSlide(3)"></div>
+      </div>
     </div>
   </div>
-  <a href="agente-checklist.html" class="card-btn">Generar mi checklist →</a>
-</div>
-<div class="agent-card">
-  <div class="card-header">
-    <div class="card-icon icon-ingredient">🧪</div>
-    <h3>Consulta de Ingredientes</h3>
+</section>
+
+<!-- ORCHESTRATOR -->
+<section id="orchestrator">
+  <div class="section-header reveal">
+    <div class="section-label">Ecosistema de Agentes</div>
+    <h2>Un Super-Agente orquesta 11 especialistas de IA</h2>
+    <p>Cada agente domina una etapa del registro. Juntos, cubren el ciclo de vida completo de tu producto.</p>
   </div>
-  <div class="card-body">
-    <p>Consulta el estado regulatorio de ingredientes activos por país: registrado, restringido o prohibido. Incluye LMRs, monografías y alternativas.</p>
-    <div class="features">
-      <span class="feature-tag">18+ ingredientes</span>
-      <span class="feature-tag">LMRs</span>
-      <span class="feature-tag">Monografías</span>
-      <span class="feature-tag">Alternativas</span>
+
+  <div class="orch-wrapper">
+    <div class="orch-center" id="orchCenter">
+      <div class="icon">🧠</div>
+      <div class="name">ORCHESTRATOR</div>
+      <div class="sub">Super Agente</div>
+    </div>
+
+    <!-- PRE-REGISTRO -->
+    <div class="phase-group reveal" style="margin-top:40px;">
+      <div class="phase-label pre">⚡ Fase I — Pre-Registro</div>
+      <div class="agents-grid">
+        <div class="agent-card" onclick="showAgent('compass')">
+          <div class="free-tag">Gratis</div>
+          <div class="agent-icon">🧭</div>
+          <div class="agent-name">COMPASS</div>
+          <div class="agent-role">El Navegador</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('predict')">
+          <div class="agent-icon">🔬</div>
+          <div class="agent-name">PREDICT</div>
+          <div class="agent-role">El Laboratorio</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('genesis')">
+          <div class="agent-icon">🧬</div>
+          <div class="agent-name">GENESIS</div>
+          <div class="agent-role">El Arquitecto</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('scout')">
+          <div class="free-tag">Gratis</div>
+          <div class="agent-icon">🕵️</div>
+          <div class="agent-name">SCOUT</div>
+          <div class="agent-role">El Espía</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('source')">
+          <div class="agent-icon">🔍</div>
+          <div class="agent-name">SOURCE</div>
+          <div class="agent-role">El Guardian</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGISTRO -->
+    <div class="phase-group reveal" style="margin-top:32px;">
+      <div class="phase-label reg">📁 Fase II — Registro</div>
+      <div class="agents-grid">
+        <div class="agent-card" onclick="showAgent('binder')">
+          <div class="agent-icon">📂</div>
+          <div class="agent-name">BINDER</div>
+          <div class="agent-role">El Organizador</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('auditor')">
+          <div class="agent-icon">✅</div>
+          <div class="agent-name">AUDITOR</div>
+          <div class="agent-role">El Revisor</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('defender')">
+          <div class="agent-icon">⚖️</div>
+          <div class="agent-name">DEFENDER</div>
+          <div class="agent-role">El Abogado</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('scribe')">
+          <div class="free-tag">Gratis</div>
+          <div class="agent-icon">📝</div>
+          <div class="agent-name">SCRIBE</div>
+          <div class="agent-role">El Editor</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POST-REGISTRO -->
+    <div class="phase-group reveal" style="margin-top:32px;">
+      <div class="phase-label post">🌐 Fase III — Post-Registro</div>
+      <div class="agents-grid">
+        <div class="agent-card" onclick="showAgent('bridge')">
+          <div class="agent-icon">🌍</div>
+          <div class="agent-name">BRIDGE</div>
+          <div class="agent-role">El Globalizador</div>
+        </div>
+        <div class="agent-card" onclick="showAgent('guard')">
+          <div class="agent-icon">🛡️</div>
+          <div class="agent-name">GUARD</div>
+          <div class="agent-role">El Centinela</div>
+        </div>
+      </div>
     </div>
   </div>
-  <a href="agente-ingredientes.html" class="card-btn">Consultar ingrediente →</a>
+</section>
+
+<!-- AGENT DETAIL MODAL -->
+<div class="agent-modal" id="agentModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-phase" id="modalPhase"></div>
+    <div class="modal-icon" id="modalIcon"></div>
+    <div class="modal-title" id="modalTitle"></div>
+    <div class="modal-subtitle" id="modalSubtitle"></div>
+    <div class="modal-problem" id="modalProblem"></div>
+    <div class="modal-solution" id="modalSolution"></div>
+    <div class="modal-tech" id="modalTech"></div>
+  </div>
 </div>
-</div>
-<h2 class="section-title">Las 3 Fases de RegulatorIA</h2>
-<p class="section-sub">11 agentes IA especializados que cubren todo el ciclo de vida del registro de agroquímicos.</p>
-<div class="phases">
-<div class="phase phase-free">
-  <div class="phase-num">1</div>
-  <h4>Pre-Registro <span class="free-badge">GRATIS</span></h4>
-  <p>3 agentes: Clasificación, Checklist, Ingredientes. Evalúa viabilidad antes de invertir.</p>
-</div>
-<div class="phase phase-paid">
-  <div class="phase-num">2</div>
-  <h4>Registro <span class="paid-badge">PRO</span></h4>
-  <p>4 agentes: Preparación de dossier, revisión documental, seguimiento regulatorio, gestión de observaciones.</p>
-</div>
-<div class="phase phase-paid">
-  <div class="phase-num">3</div>
-  <h4>Post-Registro <span class="paid-badge">PRO</span></h4>
-  <p>4 agentes: Monitoreo de cumplimiento, renovaciones, modificaciones, vigilancia regulatoria.</p>
-</div>
-</div>
-<div class="cta-section">
-<h2>¿Listo para registrar tu producto?</h2>
-<p>Pasa de la exploración a la acción. Nuestros 11 agentes IA gestionan todo el proceso en Chile, Colombia, Perú, México, Brasil y Argentina.</p>
-<a href="https://regulatoria.cl" target="_blank" class="cta-btn">Agenda tu consulta en regulatoria.cl</a>
-</div>
-</div>
+
+<!-- HOW IT WORKS -->
+<section id="process">
+  <div class="section-header reveal">
+    <div class="section-label">Cómo Funciona</div>
+    <h2>De la consulta al registro en 4 pasos</h2>
+    <p>Nuestros agentes trabajan 24/7 para que tú te concentres en hacer crecer tu negocio.</p>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-line"></div>
+    <div class="process-step reveal">
+      <div class="step-dot"><span>📞</span></div>
+      <div class="step-content">
+        <h4>1. Consulta Inicial Gratuita</h4>
+        <p>Nos cuentas tu producto y mercados objetivo. COMPASS genera tu mapa de requisitos al instante.</p>
+        <div class="step-time">⚡ 15 minutos</div>
+      </div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-dot"><span>🔬</span></div>
+      <div class="step-content">
+        <h4>2. Análisis IA del Producto</h4>
+        <p>PREDICT evalúa toxicología, SCOUT verifica el panorama regulatorio, SOURCE audita tus proveedores.</p>
+        <div class="step-time">⚡ 24-48 horas (vs. 4-8 semanas tradicional)</div>
+      </div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-dot"><span>📋</span></div>
+      <div class="step-content">
+        <h4>3. Dossier Express</h4>
+        <p>BINDER organiza tu expediente, AUDITOR lo revisa, SCRIBE genera SDS y etiquetas perfectas.</p>
+        <div class="step-time">⚡ 1-2 semanas (vs. 2-4 meses tradicional)</div>
+      </div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-dot"><span>✅</span></div>
+      <div class="step-content">
+        <h4>4. Registro y Vigilancia</h4>
+        <p>DEFENDER maneja objeciones, BRIDGE expande a nuevos países, GUARD vigila tus licencias para siempre.</p>
+        <div class="step-time">🛡️ Monitoreo continuo incluido</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING COMPARISON -->
+<section id="pricing">
+  <div class="section-header reveal">
+    <div class="section-label">Comparación</div>
+    <h2>Consultora Tradicional vs. Consultora IA</h2>
+    <p>Mismos resultados, diferente siglo.</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+    <div class="pricing-card trad">
+      <div class="pricing-badge">Tradicional</div>
+      <h3>Consultora Convencional</h3>
+      <p class="pricing-sub">Equipos humanos, procesos manuales</p>
+      <div class="pricing-row">
+        <span class="metric">Diagnóstico regulatorio</span>
+        <span class="value bad">2-4 semanas</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Predicción toxicológica</span>
+        <span class="value bad">3-6 meses (laboratorio)</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Armado de dossier</span>
+        <span class="value bad">2-4 meses</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Respuesta a objeciones</span>
+        <span class="value bad">3-6 semanas</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Expansión a nuevo país</span>
+        <span class="value bad">6-12 meses</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Costo promedio por registro</span>
+        <span class="value bad">$30K - $80K USD</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Disponibilidad</span>
+        <span class="value bad">Horario oficina</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Escalabilidad</span>
+        <span class="value bad">Limitada (headcount)</span>
+      </div>
+    </div>
+
+    <div class="pricing-card ai">
+      <div class="pricing-badge">Con IA</div>
+      <h3>RegulatorIA</h3>
+      <p class="pricing-sub">11 agentes IA + expertos humanos</p>
+      <div class="pricing-row">
+        <span class="metric">Diagnóstico regulatorio</span>
+        <span class="value great">⚡ Instantáneo</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Predicción toxicológica</span>
+        <span class="value great">⚡ 24-48 horas (10x)</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Armado de dossier</span>
+        <span class="value great">⚡ 1-2 semanas (5x)</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Respuesta a objeciones</span>
+        <span class="value great">⚡ 48 horas (8x)</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Expansión a nuevo país</span>
+        <span class="value great">⚡ 2-4 semanas (10x)</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Costo promedio por registro</span>
+        <span class="value great">50-70% menos</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Disponibilidad</span>
+        <span class="value good">24/7 siempre activo</span>
+      </div>
+      <div class="pricing-row">
+        <span class="metric">Escalabilidad</span>
+        <span class="value good">Ilimitada</span>
+      </div>
+      <div class="pricing-bottom">
+        <a href="#cta" class="btn-primary">Solicitar Cotización →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>¿Listo para registrar tu producto 5x más rápido?</h2>
+  <p>Agenda una consulta gratuita de 15 minutos. COMPASS analizará tus requisitos al instante.</p>
+  <a href="mailto:proyectos@uranoia.cl?subject=Demo%20RegulatorIA" class="btn-white">Agendar Demo Gratuita →</a>
+</section>
+
 <footer>
-<p>© 2026 <a href="https://regulatoria.cl" target="_blank">RegulatorIA</a> — Primera consultoría de registro de agroquímicos con IA en LATAM</p>
-<p style="margin-top:.3rem">Datos regulatorios de referencia. Consultar fuentes oficiales para información vinculante: <a href="https://www.sag.gob.cl" target="_blank">SAG</a> · <a href="https://www.ica.gov.co" target="_blank">ICA</a> · <a href="https://www.gob.pe/senasa" target="_blank">SENASA Perú</a> · <a href="https://www.gob.mx/cofepris" target="_blank">COFEPRIS</a> · <a href="https://www.gov.br/agricultura" target="_blank">MAPA Brasil</a> · <a href="https://www.argentina.gob.ar/senasa" target="_blank">SENASA Argentina</a></p>
+  <p>RegulatorIA by <a href="https://uranoia.cl">Urano IA</a> — La primera consultora de agroquímicos con inteligencia artificial de Latinoamérica.</p>
+  <p style="margin-top:8px;">© 2026 Urano IA. Todos los derechos reservados. | contacto: proyectos@uranoia.cl</p>
 </footer>
+
+<script>
+// MOUSE GLOW FOLLOWER
+const glow = document.getElementById('mouseGlow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+// CAROUSEL
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const dots = document.querySelectorAll('.carousel-dot');
+function goSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.add('active');
+}
+setInterval(() => goSlide((currentSlide + 1) % slides.length), 4000);
+
+// SCROLL REVEAL
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+// PARTICLES
+const pc = document.getElementById('particles');
+for (let i = 0; i < 20; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDelay = Math.random() * 15 + 's';
+  p.style.animationDuration = (10 + Math.random() * 10) + 's';
+  p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+  p.style.background = ['var(--g1)','var(--g2)','var(--g3)','var(--g4)'][Math.floor(Math.random()*4)];
+  pc.appendChild(p);
+}
+
+// AGENT DATA
+const agents = {
+  compass: {
+    phase: 'PRE-REGISTRO', icon: '🧭', name: 'COMPASS', subtitle: 'El Navegador — Motor de Requisitos Dinámicos',
+    problem: '🔴 Un químico quiere registrar un fungicida en Chile y luego en España. No sabe qué estudios específicos pide cada país. Las regulaciones son laberintos de PDFs.',
+    solution: '🟢 Seleccionas Producto + País y COMPASS genera instantáneamente la lista de chequeo oficial con todos los estudios requeridos por ley (OECD 203, 404, Residuos, etc.).',
+    tech: ['Knowledge Graphs', 'RAG', 'Consulta Vectorial', 'Legislación en tiempo real']
+  },
+  predict: {
+    phase: 'PRE-REGISTRO', icon: '🔬', name: 'PREDICT', subtitle: 'El Laboratorio — QSAR Virtual',
+    problem: '🔴 Los ensayos con animales son lentos, éticamente cuestionados y caros. Las herramientas QSAR actuales (OCDE Toolbox) son arcaicas y manuales.',
+    solution: '🟢 Laboratorio virtual de toxicología. Predice propiedades físico-químicas y toxicológicas y genera el informe QMRF aceptado por reguladores (ECHA/EPA).',
+    tech: ['Graph Neural Networks', 'DeepChem', 'Read-Across Automatizado', 'Tanimoto Similarity']
+  },
+  genesis: {
+    phase: 'PRE-REGISTRO', icon: '🧬', name: 'GENESIS', subtitle: 'El Arquitecto — Diseño Generativo Molecular',
+    problem: '🔴 Si PREDICT detecta toxicidad, el químico se queda bloqueado sin alternativas.',
+    solution: '🟢 Propone variantes moleculares que mantienen la función biológica pero eliminan la toxicidad. Safe-by-Design automatizado.',
+    tech: ['Generative Diffusion Models', 'Reinforcement Learning', 'Optimización Molecular']
+  },
+  scout: {
+    phase: 'PRE-REGISTRO', icon: '🕵️', name: 'SCOUT', subtitle: 'El Espía — Inteligencia Regulatoria',
+    problem: '🔴 Lanzar un producto con un ingrediente que está a punto de ser prohibido por una nueva ley.',
+    solution: '🟢 Monitorea bases de datos globales y boletines oficiales para detectar prohibiciones futuras o patentes de competidores.',
+    tech: ['NLP', 'Web Scraping', 'Named Entity Recognition', 'Alertas automáticas']
+  },
+  source: {
+    phase: 'PRE-REGISTRO', icon: '🔍', name: 'SOURCE', subtitle: 'El Guardián — Auditoría de Proveedores',
+    problem: '🔴 Proveedores que envían materias primas con impurezas no declaradas que invalidan el registro.',
+    solution: '🟢 Auditoría automática de Certificados de Análisis (CoA). Compara cada lote contra el estándar registrado.',
+    tech: ['OCR', 'Anomaly Detection', 'Control estadístico']
+  },
+  binder: {
+    phase: 'REGISTRO', icon: '📂', name: 'BINDER', subtitle: 'El Organizador — Gestor Documental IA',
+    problem: '🔴 Cientos de PDFs dispersos. No saber si tienes el dossier al 100% para enviar.',
+    solution: '🟢 Lee archivos, los clasifica automáticamente y los cruza contra la lista de requisitos de COMPASS. Dashboard de progreso en tiempo real.',
+    tech: ['LayoutLM', 'Document Classification', 'Cloud Connectors']
+  },
+  auditor: {
+    phase: 'REGISTRO', icon: '✅', name: 'AUDITOR', subtitle: 'El Revisor — QA Automático',
+    problem: '🔴 Errores humanos en estudios que provocan rechazos de la autoridad regulatoria.',
+    solution: '🟢 Verifica que cada estudio cumpla guías GLP/OECD y sea consistente con el dossier. Maximiza aprobación "First-Pass".',
+    tech: ['Fact-Checking', 'Consistency Check', 'Semantic Search']
+  },
+  defender: {
+    phase: 'REGISTRO', icon: '⚖️', name: 'DEFENDER', subtitle: 'El Abogado — Generador de Defensas',
+    problem: '🔴 La autoridad envía una Carta de Objeción. Responder requiere expertos senior costosos.',
+    solution: '🟢 Analiza el rechazo y redacta una respuesta científica/legal basada en evidencia del dossier y precedentes regulatorios.',
+    tech: ['Fine-Tuned LLMs', 'Litigio Regulatorio', 'Argumentación Científica']
+  },
+  scribe: {
+    phase: 'REGISTRO', icon: '📝', name: 'SCRIBE', subtitle: 'El Editor — Generador SDS/Etiquetas',
+    problem: '🔴 Crear Fichas de Seguridad (SDS) y Etiquetas CLP manualmente es repetitivo y propenso a errores graves.',
+    solution: '🟢 Generación automática de SDS (16 secciones) y etiquetas CLP/GHS multilingües con cálculo de mezclas en tiempo real.',
+    tech: ['Rule-Based Engine', 'CLP Math', 'Template Rendering', 'Multi-idioma']
+  },
+  bridge: {
+    phase: 'POST-REGISTRO', icon: '🌍', name: 'BRIDGE', subtitle: 'El Globalizador — Armonización Internacional',
+    problem: '🔴 Tienes el registro en Chile, quieres vender en Brasil. Hay que rehacer el dossier completo.',
+    solution: '🟢 Toma el dossier aprobado, recicla estudios válidos, identifica gaps y traduce/adapta al formato de cada país.',
+    tech: ['Universal Data Ontology', 'Scientific Translation', 'Multi-country mapping']
+  },
+  guard: {
+    phase: 'POST-REGISTRO', icon: '🛡️', name: 'GUARD', subtitle: 'El Centinela — Vigilancia Perpetua',
+    problem: '🔴 Olvidar renovar un registro que vence. Perder licencias por falta de seguimiento.',
+    solution: '🟢 Lee resoluciones, extrae fechas de caducidad y gestiona renovaciones con alertas escalonadas (Email → SMS → Bloqueo ERP).',
+    tech: ['Extraction Agents', 'Notification System', 'Calendario inteligente']
+  }
+};
+
+// MODAL
+function showAgent(id) {
+  const a = agents[id];
+  document.getElementById('modalPhase').textContent = a.phase;
+  document.getElementById('modalPhase').style.color = a.phase === 'PRE-REGISTRO' ? 'var(--g1)' : a.phase === 'REGISTRO' ? 'var(--g3)' : 'var(--g4)';
+  document.getElementById('modalIcon').textContent = a.icon;
+  document.getElementById('modalTitle').textContent = a.name;
+  document.getElementById('modalSubtitle').textContent = a.subtitle;
+  document.getElementById('modalProblem').textContent = a.problem;
+  document.getElementById('modalSolution').textContent = a.solution;
+  document.getElementById('modalTech').innerHTML = a.tech.map(t => `<span>${t}</span>`).join('');
+  document.getElementById('agentModal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('agentModal').classList.remove('show');
+}
+document.getElementById('agentModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('agentModal')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ORCHESTRATOR PULSE
+const orchCenter = document.getElementById('orchCenter');
+orchCenter.addEventListener('click', () => {
+  orchCenter.style.transform = 'scale(1.15)';
+  setTimeout(() => orchCenter.style.transform = 'scale(1)', 300);
+  // Animate all agent cards
+  document.querySelectorAll('.agent-card').forEach((card, i) => {
+    setTimeout(() => {
+      card.style.transform = 'translateY(-8px)';
+      card.style.borderColor = 'var(--g1)';
+      setTimeout(() => {
+        card.style.transform = '';
+        card.style.borderColor = '';
+      }, 400);
+    }, i * 80);
+  });
+});
+</script>
 </body>
 </html>
