@@ -3,699 +3,959 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegulatorIA — La Primera Consultora de Agroquímicos con IA</title>
+<title>RegulatorIA — Sistema Operativo de IA para Cumplimiento Regulatorio Químico Global</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --g1:#6366f1;--g2:#8b5cf6;--g3:#a855f7;--g4:#ec4899;
-  --text:#1e293b;--muted:#64748b;--light:#f1f5f9;--white:#ffffff;
-  --card:#ffffff;--border:#e2e8f0;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;line-height:1.6}
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* GRADIENT MESH BACKGROUND */
-.mesh-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.07}
-.mesh-bg .blob{position:absolute;border-radius:50%;filter:blur(80px);animation:float 20s ease-in-out infinite}
-.mesh-bg .blob:nth-child(1){width:600px;height:600px;background:var(--g1);top:-10%;left:-5%;animation-delay:0s}
-.mesh-bg .blob:nth-child(2){width:500px;height:500px;background:var(--g3);top:30%;right:-10%;animation-delay:-5s}
-.mesh-bg .blob:nth-child(3){width:400px;height:400px;background:var(--g4);bottom:10%;left:20%;animation-delay:-10s}
-@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-30px) scale(1.05)}66%{transform:translate(-20px,20px) scale(0.95)}}
-
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:1000;backdrop-filter:blur(20px);background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(0,0,0,0.06);transition:all 0.3s}
-nav .nav-inner{max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
-nav .logo{font-weight:800;font-size:1.3em;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-nav .logo span{font-weight:400;opacity:0.7}
-nav .nav-links{display:flex;gap:28px;align-items:center}
-nav .nav-links a{text-decoration:none;color:var(--muted);font-size:0.9em;font-weight:500;transition:color 0.2s}
-nav .nav-links a:hover{color:var(--text)}
-.nav-cta{background:linear-gradient(135deg,var(--g1),var(--g3));color:white!important;-webkit-text-fill-color:white!important;padding:8px 20px;border-radius:8px;font-weight:600;transition:transform 0.2s,box-shadow 0.2s}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(99,102,241,0.4)}
-
-/* HERO */
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:120px 24px 80px}
-.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-text{max-width:560px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.1));border:1px solid rgba(99,102,241,0.2);border-radius:100px;padding:6px 16px;font-size:0.82em;font-weight:600;color:var(--g1);margin-bottom:20px}
-.hero-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--g1);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.5)}}
-.hero h1{font-size:3.2em;font-weight:900;line-height:1.1;margin-bottom:16px;letter-spacing:-0.03em}
-.hero h1 .gradient{background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:shimmer 3s linear infinite}
-@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
-.hero p{font-size:1.15em;color:var(--muted);margin-bottom:28px;line-height:1.7}
-.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{background:linear-gradient(135deg,var(--g1),var(--g3));color:white;border:none;padding:14px 28px;border-radius:12px;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.4)}
-.btn-secondary{background:transparent;color:var(--text);border:1.5px solid var(--border);padding:14px 28px;border-radius:12px;font-size:1em;font-weight:600;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn-secondary:hover{border-color:var(--g1);color:var(--g1)}
-.hero-stats{display:flex;gap:32px;margin-top:36px}
-.hero-stat .num{font-size:1.8em;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-stat .label{font-size:0.82em;color:var(--muted)}
-
-/* CAROUSEL */
-.carousel-container{position:relative;width:100%;max-width:520px;aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.1)}
-.carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity 0.8s ease;display:flex;align-items:center;justify-content:center;padding:40px}
-.carousel-slide.active{opacity:1}
-.carousel-slide:nth-child(1){background:linear-gradient(135deg,#667eea,#764ba2)}
-.carousel-slide:nth-child(2){background:linear-gradient(135deg,#f093fb,#f5576c)}
-.carousel-slide:nth-child(3){background:linear-gradient(135deg,#4facfe,#00f2fe)}
-.carousel-slide:nth-child(4){background:linear-gradient(135deg,#43e97b,#38f9d7)}
-.slide-content{text-align:center;color:white}
-.slide-icon{font-size:3em;margin-bottom:16px}
-.slide-title{font-size:1.4em;font-weight:700;margin-bottom:8px}
-.slide-desc{font-size:0.92em;opacity:0.9;max-width:320px;margin:0 auto}
-.carousel-dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
-.carousel-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);cursor:pointer;transition:all 0.3s}
-.carousel-dot.active{background:white;width:24px;border-radius:4px}
-
-/* SECTION COMMON */
-section{position:relative;z-index:1;padding:100px 24px}
-.section-header{text-align:center;max-width:700px;margin:0 auto 60px}
-.section-label{display:inline-block;font-size:0.82em;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--g1);margin-bottom:12px}
-.section-header h2{font-size:2.4em;font-weight:800;letter-spacing:-0.02em;margin-bottom:14px}
-.section-header p{font-size:1.05em;color:var(--muted);line-height:1.7}
-
-/* ORCHESTRATOR */
-#orchestrator{background:var(--light)}
-.orch-wrapper{max-width:1000px;margin:0 auto;position:relative}
-.orch-center{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;margin:0 auto;position:relative;z-index:2;box-shadow:0 0 0 6px rgba(99,102,241,0.15),0 0 0 12px rgba(99,102,241,0.08),0 20px 60px rgba(99,102,241,0.3);animation:glow 3s ease-in-out infinite;cursor:pointer;transition:transform 0.3s}
-.orch-center:hover{transform:scale(1.05)}
-@keyframes glow{0%,100%{box-shadow:0 0 0 6px rgba(99,102,241,0.15),0 0 0 12px rgba(99,102,241,0.08),0 20px 60px rgba(99,102,241,0.3)}50%{box-shadow:0 0 0 8px rgba(99,102,241,0.25),0 0 0 16px rgba(99,102,241,0.12),0 20px 80px rgba(99,102,241,0.45)}}
-.orch-center .icon{font-size:2.4em;margin-bottom:4px}
-.orch-center .name{font-weight:700;font-size:0.9em}
-.orch-center .sub{font-size:0.7em;opacity:0.8}
-
-.phase-ring{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-top:40px}
-.phase-group{text-align:center}
-.phase-label{font-size:0.75em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;padding:4px 16px;border-radius:100px;display:inline-block}
-.phase-label.pre{background:rgba(99,102,241,0.1);color:var(--g1)}
-.phase-label.reg{background:rgba(168,85,247,0.1);color:var(--g3)}
-.phase-label.post{background:rgba(236,72,153,0.1);color:var(--g4)}
-.agents-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-.agent-card{width:130px;background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px 12px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
-.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g1),var(--g3));transform:scaleX(0);transition:transform 0.3s;transform-origin:left}
-.agent-card:hover{transform:translateY(-4px);border-color:var(--g1);box-shadow:0 8px 24px rgba(99,102,241,0.12)}
-.agent-card:hover::before{transform:scaleX(1)}
-.agent-card .agent-icon{font-size:1.8em;margin-bottom:8px}
-.agent-card .agent-name{font-weight:700;font-size:0.82em;margin-bottom:2px}
-.agent-card .agent-role{font-size:0.7em;color:var(--muted)}
-.agent-card .free-tag{position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#10b981,#34d399);color:white;font-size:0.6em;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase}
-
-/* Connection lines SVG */
-.orch-lines{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
-
-/* AGENT DETAIL MODAL */
-.agent-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px}
-.agent-modal.show{display:flex}
-.modal-content{background:white;border-radius:20px;max-width:520px;width:100%;padding:36px;position:relative;animation:modalIn 0.3s ease}
-@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:var(--light);cursor:pointer;font-size:1.1em;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
-.modal-close:hover{background:var(--border)}
-.modal-phase{font-size:0.75em;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
-.modal-icon{font-size:2.4em;margin-bottom:8px}
-.modal-title{font-size:1.5em;font-weight:800;margin-bottom:4px}
-.modal-subtitle{color:var(--muted);font-size:0.9em;margin-bottom:16px}
-.modal-problem{background:rgba(239,68,68,0.05);border-left:3px solid #ef4444;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:0.9em}
-.modal-solution{background:rgba(34,197,94,0.05);border-left:3px solid #22c55e;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:0.9em}
-.modal-tech{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.modal-tech span{background:linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.08));color:var(--g2);font-size:0.78em;font-weight:600;padding:4px 10px;border-radius:6px}
-
-/* PRICING */
-#pricing{background:var(--white)}
-.pricing-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.pricing-card{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:36px;position:relative;overflow:hidden;transition:all 0.3s}
-.pricing-card.ai{border-color:var(--g1);box-shadow:0 8px 30px rgba(99,102,241,0.1)}
-.pricing-card .pricing-badge{position:absolute;top:20px;right:20px;font-size:0.72em;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;padding:4px 12px;border-radius:6px}
-.pricing-card.trad .pricing-badge{background:#fee2e2;color:#dc2626}
-.pricing-card.ai .pricing-badge{background:linear-gradient(135deg,var(--g1),var(--g3));color:white}
-.pricing-card h3{font-size:1.3em;font-weight:800;margin-bottom:6px;margin-top:12px}
-.pricing-card .pricing-sub{color:var(--muted);font-size:0.88em;margin-bottom:24px}
-.pricing-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--light)}
-.pricing-row:last-child{border-bottom:none}
-.pricing-row .metric{font-size:0.9em;color:var(--muted)}
-.pricing-row .value{font-weight:700;font-size:0.95em}
-.pricing-row .value.bad{color:#dc2626}
-.pricing-row .value.good{color:#059669;background:rgba(5,150,105,0.08);padding:2px 10px;border-radius:6px}
-.pricing-row .value.great{background:linear-gradient(135deg,var(--g1),var(--g3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;font-size:1.05em}
-.pricing-bottom{margin-top:20px;text-align:center}
-.pricing-bottom .btn-primary{width:100%;justify-content:center}
-
-/* PROCESS */
-#process{background:var(--light)}
-.process-steps{max-width:800px;margin:0 auto;position:relative}
-.process-line{position:absolute;left:28px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--g1),var(--g3),var(--g4))}
-.process-step{display:flex;gap:24px;margin-bottom:32px;position:relative}
-.step-dot{width:56px;height:56px;border-radius:50%;background:var(--card);border:2px solid var(--g1);display:flex;align-items:center;justify-content:center;font-size:1.4em;flex-shrink:0;z-index:1;transition:all 0.3s}
-.process-step:hover .step-dot{background:linear-gradient(135deg,var(--g1),var(--g3));border-color:transparent;transform:scale(1.1)}
-.process-step:hover .step-dot span{filter:brightness(10)}
-.step-content{background:var(--card);border-radius:16px;padding:20px 24px;flex:1;border:1px solid var(--border);transition:all 0.3s}
-.process-step:hover .step-content{border-color:var(--g1);box-shadow:0 4px 20px rgba(99,102,241,0.08)}
-.step-content h4{font-weight:700;margin-bottom:4px}
-.step-content p{font-size:0.9em;color:var(--muted)}
-.step-time{display:inline-block;font-size:0.75em;font-weight:700;background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.1));color:var(--g2);padding:3px 10px;border-radius:100px;margin-top:6px}
-
-/* CTA SECTION */
-#cta{background:linear-gradient(135deg,var(--g1),var(--g3),var(--g4));padding:80px 24px;text-align:center;color:white;position:relative;overflow:hidden}
-#cta::before{content:'';position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.08);top:-100px;right:-50px}
-#cta::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.05);bottom:-60px;left:-30px}
-#cta h2{font-size:2.2em;font-weight:800;margin-bottom:12px;position:relative;z-index:1}
-#cta p{opacity:0.9;margin-bottom:28px;font-size:1.05em;position:relative;z-index:1}
-#cta .btn-white{background:white;color:var(--g1);border:none;padding:16px 36px;border-radius:12px;font-size:1.05em;font-weight:700;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:1}
-#cta .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.2)}
-
-/* FOOTER */
-footer{background:var(--text);color:white;padding:40px 24px;text-align:center}
-footer p{opacity:0.6;font-size:0.85em}
-footer a{color:var(--g3);text-decoration:none}
-
-/* MOUSE FOLLOWER */
-.mouse-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,0.08),transparent 70%);pointer-events:none;z-index:0;transform:translate(-50%,-50%);transition:left 0.15s ease,top 0.15s ease}
-
-/* SCROLL ANIMATIONS */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;text-align:center}
-  .hero-text{max-width:100%}
-  .hero-buttons{justify-content:center}
-  .hero-stats{justify-content:center}
-  .carousel-container{max-width:100%;margin:0 auto}
-  .pricing-grid{grid-template-columns:1fr}
-  nav .nav-links{display:none}
-}
-@media(max-width:600px){
-  .hero h1{font-size:2.2em}
-  .agents-grid{gap:8px}
-  .agent-card{width:100px;padding:12px 8px}
+:root {
+  --gradient-start: #667eea;
+  --gradient-end: #764ba2;
+  --bg: #ffffff;
+  --text: #1a1a2e;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --border: #e8e8f0;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 24px rgba(102,126,234,0.08);
+  --card-hover-shadow: 0 12px 40px rgba(102,126,234,0.18);
+  --phase1: #667eea;
+  --phase2: #764ba2;
+  --phase3: #e84393;
+  --free-badge: #00b894;
+  --etapa1: #0984e3;
+  --etapa2: #6c5ce7;
 }
 
-/* PARTICLES */
-.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--g1);opacity:0.3;animation:drift 15s linear infinite}
-@keyframes drift{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:0.3}90%{opacity:0.3}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ─── NAVBAR ─── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: box-shadow 0.3s;
+}
+.navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+.nav-brand { font-weight: 800; font-size: 1.3rem; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); transition: color 0.2s; }
+.nav-links a:hover { color: var(--gradient-start); }
+.nav-cta { padding: 0.5rem 1.2rem; border-radius: 8px; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: #fff !important; -webkit-text-fill-color: #fff !important; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; }
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(102,126,234,0.4); }
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text); margin: 6px 0; transition: 0.3s; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+  background: radial-gradient(ellipse at 20% 50%, rgba(102,126,234,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(118,75,162,0.05) 0%, transparent 60%);
+}
+.hero-content { max-width: 900px; text-align: center; position: relative; z-index: 2; }
+.hero-badge {
+  display: inline-block; padding: 0.4rem 1rem; border-radius: 100px;
+  background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+  color: var(--gradient-start); font-weight: 600; font-size: 0.85rem;
+  margin-bottom: 1.5rem; letter-spacing: 0.02em;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--text) 0%, var(--gradient-start) 50%, var(--gradient-end) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero p { font-size: 1.2rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto 2.5rem; }
+.hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  padding: 0.85rem 2rem; border-radius: 12px;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: #fff; font-weight: 600; font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(102,126,234,0.4); }
+.btn-secondary {
+  padding: 0.85rem 2rem; border-radius: 12px;
+  background: transparent; color: var(--gradient-start);
+  font-weight: 600; font-size: 1rem; border: 2px solid var(--gradient-start);
+  transition: all 0.2s; cursor: pointer;
+}
+.btn-secondary:hover { background: rgba(102,126,234,0.06); }
+.hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 3.5rem; }
+.hero-stat { text-align: center; }
+.hero-stat .num { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-stat .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+/* ─── SECTIONS ─── */
+section { padding: 5rem 2rem; }
+.section-header { text-align: center; max-width: 700px; margin: 0 auto 3.5rem; }
+.section-header h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; }
+.section-header p { color: var(--text-secondary); font-size: 1.05rem; }
+
+/* ─── ORCHESTRATOR VISUALIZATION ─── */
+#orchestrator { background: linear-gradient(180deg, #f8f9ff 0%, #fff 100%); }
+.orchestrator-visual {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr; align-items: start; gap: 0;
+}
+.phase-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.phase-header {
+  padding: 1rem 1.5rem; border-radius: 16px; text-align: center; width: 100%;
+  color: #fff; font-weight: 700; font-size: 0.95rem; position: relative;
+}
+.phase-header.p1 { background: linear-gradient(135deg, #667eea, #5a6fd6); }
+.phase-header.p2 { background: linear-gradient(135deg, #764ba2, #6a3d96); }
+.phase-header.p3 { background: linear-gradient(135deg, #e84393, #d63384); }
+.phase-header small { display: block; font-weight: 400; font-size: 0.75rem; opacity: 0.85; margin-top: 0.25rem; }
+.phase-agents { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
+.mini-agent {
+  padding: 0.6rem 0.9rem; border-radius: 10px; background: #fff;
+  border: 1px solid var(--border); font-size: 0.8rem; font-weight: 600;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: all 0.2s; cursor: pointer;
+}
+.mini-agent:hover { border-color: var(--gradient-start); box-shadow: 0 2px 12px rgba(102,126,234,0.12); }
+.mini-agent .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.mini-agent .free-tag { margin-left: auto; font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(0,184,148,0.12); color: var(--free-badge); font-weight: 700; }
+.arrow-col { display: flex; align-items: center; justify-content: center; padding-top: 3rem; }
+.arrow-col svg { width: 40px; height: 40px; color: var(--text-muted); }
+
+/* ─── AGENT CARDS ─── */
+.phase-section { padding: 4rem 2rem; }
+.phase-title-bar {
+  display: flex; align-items: center; gap: 1rem; max-width: 1200px; margin: 0 auto 2.5rem;
+  padding-bottom: 1rem; border-bottom: 2px solid var(--border);
+}
+.phase-number {
+  width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;
+}
+.phase-title-bar h3 { font-size: 1.5rem; font-weight: 800; }
+.phase-title-bar .phase-sub { font-size: 0.95rem; color: var(--text-secondary); }
+
+.agents-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+}
+.agent-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.8rem; position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;
+}
+.agent-card:hover { transform: translateY(-4px); box-shadow: var(--card-hover-shadow); }
+.agent-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.agent-card.phase-1::before { background: linear-gradient(90deg, var(--phase1), #5a6fd6); }
+.agent-card.phase-2::before { background: linear-gradient(90deg, var(--phase2), #8e5ec2); }
+.agent-card.phase-3::before { background: linear-gradient(90deg, var(--phase3), #fd79a8); }
+
+.card-top { display: flex; align-items: start; justify-content: space-between; margin-bottom: 1rem; }
+.card-top-left { display: flex; flex-direction: column; gap: 0.4rem; }
+.agent-name { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.02em; }
+.agent-subtitle { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; font-style: italic; }
+.card-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.badge {
+  font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.badge-etapa1 { background: rgba(9,132,227,0.1); color: var(--etapa1); }
+.badge-etapa2 { background: rgba(108,92,231,0.1); color: var(--etapa2); }
+.badge-free { background: rgba(0,184,148,0.12); color: var(--free-badge); }
+
+.card-mission { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 1.2rem; line-height: 1.55; }
+.card-tech { margin-bottom: 1.2rem; }
+.card-tech-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tech-tag {
+  font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 6px;
+  background: #f0f0f8; color: var(--text-secondary); font-weight: 500;
+}
+.card-metric {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; border-radius: 10px;
+  background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+  margin-bottom: 1rem;
+}
+.metric-icon { font-size: 1.2rem; }
+.metric-text { font-size: 0.85rem; font-weight: 600; color: var(--gradient-start); }
+.card-actions { display: flex; gap: 0.5rem; }
+.btn-free {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1.2rem; border-radius: 10px;
+  background: linear-gradient(135deg, var(--free-badge), #00a884);
+  color: #fff; font-weight: 600; font-size: 0.85rem;
+  transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer;
+}
+.btn-free:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,184,148,0.35); }
+.btn-detail {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1.2rem; border-radius: 10px;
+  background: rgba(102,126,234,0.08); color: var(--gradient-start);
+  font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-detail:hover { background: rgba(102,126,234,0.15); }
+
+/* ─── PRICING ─── */
+#pricing { background: linear-gradient(180deg, #fff 0%, #f8f9ff 100%); }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+.pricing-card {
+  background: #fff; border: 2px solid var(--border); border-radius: 20px;
+  padding: 2.5rem; text-align: center; position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.pricing-card:hover { transform: translateY(-4px); box-shadow: var(--card-hover-shadow); }
+.pricing-card.featured { border-color: var(--gradient-start); }
+.pricing-card.featured::before {
+  content: 'MÁS POPULAR'; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  padding: 0.3rem 1rem; border-radius: 100px; font-size: 0.7rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: #fff;
+  letter-spacing: 0.04em;
+}
+.pricing-name { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
+.pricing-price { font-size: 2.8rem; font-weight: 900; margin-bottom: 0.25rem; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.pricing-period { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.pricing-features { list-style: none; text-align: left; margin-bottom: 2rem; }
+.pricing-features li { padding: 0.5rem 0; font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: start; gap: 0.6rem; }
+.pricing-features li::before { content: '✓'; color: var(--free-badge); font-weight: 700; flex-shrink: 0; }
+.pricing-cta { width: 100%; padding: 0.85rem; border-radius: 12px; font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: all 0.2s; }
+.pricing-cta.primary { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: #fff; }
+.pricing-cta.primary:hover { box-shadow: 0 6px 24px rgba(102,126,234,0.35); transform: translateY(-1px); }
+.pricing-cta.secondary { background: transparent; color: var(--gradient-start); border: 2px solid var(--gradient-start); }
+.pricing-cta.secondary:hover { background: rgba(102,126,234,0.06); }
+
+.addons-section { max-width: 800px; margin: 3rem auto 0; }
+.addons-section h3 { font-size: 1.3rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem; }
+.addons-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.addon-card {
+  padding: 1.2rem; border-radius: 12px; border: 1px solid var(--border); text-align: center;
+  background: #fff; transition: box-shadow 0.2s;
+}
+.addon-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.addon-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.3rem; }
+.addon-price { font-weight: 800; color: var(--gradient-start); font-size: 1.1rem; }
+.addon-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+/* ─── CTA SECTION ─── */
+.cta-section {
+  padding: 5rem 2rem; text-align: center;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: #fff; position: relative; overflow: hidden;
+}
+.cta-section h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; }
+.cta-section p { font-size: 1.1rem; opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; }
+.cta-email {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 1rem 2rem; border-radius: 14px; background: #fff;
+  color: var(--gradient-start); font-weight: 700; font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-email:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 2rem; text-align: center; font-size: 0.85rem;
+  color: var(--text-muted); border-top: 1px solid var(--border);
+}
+
+/* ─── MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  z-index: 2000; display: none; align-items: center; justify-content: center;
+  padding: 1rem; opacity: 0; transition: opacity 0.3s;
+}
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal {
+  background: #fff; border-radius: 20px; max-width: 600px; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 2.5rem; position: relative;
+  transform: translateY(20px); transition: transform 0.3s;
+}
+.modal-overlay.active .modal { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px;
+  border-radius: 50%; border: none; background: #f0f0f8; cursor: pointer;
+  font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: #e0e0ee; }
+.modal h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+.modal .modal-subtitle { font-size: 0.9rem; color: var(--text-muted); font-style: italic; margin-bottom: 1.5rem; }
+.modal .modal-phase { font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
+.modal .modal-body { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+.modal .modal-body h4 { font-weight: 700; color: var(--text); margin: 1rem 0 0.5rem; font-size: 0.95rem; }
+.modal .modal-body ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+.modal .modal-body li { margin-bottom: 0.3rem; }
+
+/* ─── SCROLL ANIMATIONS ─── */
+.fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up-delay-1 { transition-delay: 0.1s; }
+.fade-up-delay-2 { transition-delay: 0.2s; }
+.fade-up-delay-3 { transition-delay: 0.3s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .orchestrator-visual { grid-template-columns: 1fr; gap: 1.5rem; }
+  .arrow-col { transform: rotate(90deg); padding: 0; }
+  .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 1.5rem; gap: 1rem; border-bottom: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .nav-links.open { display: flex; }
+  .hamburger { display: block; }
+  .hero-stats { gap: 1.5rem; }
+  .agents-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2rem; }
+  section { padding: 3rem 1rem; }
+  .agent-card { padding: 1.4rem; }
+}
 </style>
 </head>
 <body>
 
-<div class="mesh-bg">
-  <div class="blob"></div><div class="blob"></div><div class="blob"></div>
-</div>
-<div class="mouse-glow" id="mouseGlow"></div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <div class="logo">Regulator<span>.IA</span></div>
-    <div class="nav-links">
-      <a href="#orchestrator">Agentes IA</a>
-      <a href="#process">Cómo Funciona</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#cta" class="nav-cta">Agendar Demo</a>
-    </div>
+<!-- ─── NAVBAR ─── -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand">RegulatorIA</a>
+  <div class="nav-links" id="navLinks">
+    <a href="#orchestrator">Arquitectura</a>
+    <a href="#phase1">Agentes</a>
+    <a href="#pricing">Precios</a>
+    <a href="compass.html">COMPASS Demo</a>
+    <a href="mailto:proyectos@uranoia.cl" class="nav-cta">Contactar</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="particles" id="particles"></div>
-  <div class="hero-inner">
-    <div class="hero-text">
-      <div class="hero-badge"><span class="pulse"></span> Primera en Latinoamérica</div>
-      <h1>La primera consultora de registro de agroquímicos <span class="gradient">impulsada por IA</span></h1>
-      <p>11 agentes de inteligencia artificial especializados que transforman meses de trámites regulatorios en días. De la molécula al mercado, sin fricciones.</p>
-      <div class="hero-buttons">
-        <a href="#cta" class="btn-primary">Agendar Reunión →</a>
-        <a href="#orchestrator" class="btn-secondary">Ver Agentes IA</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="num">3-5x</div>
-          <div class="label">Más rápido</div>
-        </div>
-        <div class="hero-stat">
-          <div class="num">50%</div>
-          <div class="label">Menos costo</div>
-        </div>
-        <div class="hero-stat">
-          <div class="num">11</div>
-          <div class="label">Agentes IA</div>
-        </div>
-      </div>
+<!-- ─── HERO ─── -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Plan Maestro v3.0 — 11 Agentes de IA Especializados</div>
+    <h1>Sistema Operativo de IA para Cumplimiento Regulatorio Químico Global</h1>
+    <p>De la molécula al mercado global. 11 agentes de IA orquestados cubren pre-registro, registro y post-registro — reduciendo tiempos de aprobación de meses a días.</p>
+    <div class="hero-buttons">
+      <a href="compass.html" class="btn-primary">Probar COMPASS Gratis</a>
+      <a href="#orchestrator" class="btn-secondary">Ver Arquitectura</a>
     </div>
-    <div class="carousel-container">
-      <div class="carousel-slide active">
-        <div class="slide-content">
-          <div class="slide-icon">🧪</div>
-          <div class="slide-title">Predicción Toxicológica</div>
-          <div class="slide-desc">QSAR con redes neuronales. Resultados en segundos, no en meses de laboratorio.</div>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <div class="slide-content">
-          <div class="slide-icon">📋</div>
-          <div class="slide-title">Dossier Inteligente</div>
-          <div class="slide-desc">Armamos tu expediente regulatorio con IA que clasifica, audita y optimiza.</div>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <div class="slide-content">
-          <div class="slide-icon">🌎</div>
-          <div class="slide-title">Expansión Global</div>
-          <div class="slide-desc">Registro en Chile, Brasil, Argentina, UE... Un solo dossier, múltiples mercados.</div>
-        </div>
-      </div>
-      <div class="carousel-slide">
-        <div class="slide-content">
-          <div class="slide-icon">🛡️</div>
-          <div class="slide-title">Vigilancia 24/7</div>
-          <div class="slide-desc">Monitoreo permanente de cambios regulatorios que afectan tus productos.</div>
-        </div>
-      </div>
-      <div class="carousel-dots">
-        <div class="carousel-dot active" onclick="goSlide(0)"></div>
-        <div class="carousel-dot" onclick="goSlide(1)"></div>
-        <div class="carousel-dot" onclick="goSlide(2)"></div>
-        <div class="carousel-dot" onclick="goSlide(3)"></div>
-      </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">11</div><div class="label">Agentes IA</div></div>
+      <div class="hero-stat"><div class="num">3</div><div class="label">Fases del Ciclo</div></div>
+      <div class="hero-stat"><div class="num">>90%</div><div class="label">Tasa Aprobación</div></div>
+      <div class="hero-stat"><div class="num">30+</div><div class="label">Idiomas SDS</div></div>
     </div>
   </div>
 </section>
 
-<!-- ORCHESTRATOR -->
+<!-- ─── ORCHESTRATOR ─── -->
 <section id="orchestrator">
-  <div class="section-header reveal">
-    <div class="section-label">Ecosistema de Agentes</div>
-    <h2>Un Super-Agente orquesta 11 especialistas de IA</h2>
-    <p>Cada agente domina una etapa del registro. Juntos, cubren el ciclo de vida completo de tu producto.</p>
+  <div class="section-header fade-up">
+    <h2>Orquestación de 3 Fases</h2>
+    <p>Cada agente se especializa en una tarea crítica del ciclo regulatorio. Juntos forman un sistema operativo completo.</p>
   </div>
-
-  <div class="orch-wrapper">
-    <div class="orch-center" id="orchCenter">
-      <div class="icon">🧠</div>
-      <div class="name">ORCHESTRATOR</div>
-      <div class="sub">Super Agente</div>
-    </div>
-
-    <!-- PRE-REGISTRO -->
-    <div class="phase-group reveal" style="margin-top:40px;">
-      <div class="phase-label pre">⚡ Fase I — Pre-Registro</div>
-      <div class="agents-grid">
-        <div class="agent-card" onclick="showAgent('compass')">
-          <div class="free-tag">Gratis</div>
-          <div class="agent-icon">🧭</div>
-          <div class="agent-name">COMPASS</div>
-          <div class="agent-role">El Navegador</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('predict')">
-          <div class="agent-icon">🔬</div>
-          <div class="agent-name">PREDICT</div>
-          <div class="agent-role">El Laboratorio</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('genesis')">
-          <div class="agent-icon">🧬</div>
-          <div class="agent-name">GENESIS</div>
-          <div class="agent-role">El Arquitecto</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('scout')">
-          <div class="free-tag">Gratis</div>
-          <div class="agent-icon">🕵️</div>
-          <div class="agent-name">SCOUT</div>
-          <div class="agent-role">El Espía</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('source')">
-          <div class="agent-icon">🔍</div>
-          <div class="agent-name">SOURCE</div>
-          <div class="agent-role">El Guardian</div>
-        </div>
+  <div class="orchestrator-visual fade-up">
+    <!-- Phase I -->
+    <div class="phase-col">
+      <div class="phase-header p1">FASE I<small>Pre-Registro — Discovery &amp; Feasibility</small></div>
+      <div class="phase-agents">
+        <div class="mini-agent"><span class="dot" style="background:var(--phase1)"></span>COMPASS<span class="free-tag">FREE</span></div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase1)"></span>PREDICT</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase1)"></span>GENESIS</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase1)"></span>SCOUT<span class="free-tag">FREE</span></div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase1)"></span>SOURCE</div>
       </div>
     </div>
-
-    <!-- REGISTRO -->
-    <div class="phase-group reveal" style="margin-top:32px;">
-      <div class="phase-label reg">📁 Fase II — Registro</div>
-      <div class="agents-grid">
-        <div class="agent-card" onclick="showAgent('binder')">
-          <div class="agent-icon">📂</div>
-          <div class="agent-name">BINDER</div>
-          <div class="agent-role">El Organizador</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('auditor')">
-          <div class="agent-icon">✅</div>
-          <div class="agent-name">AUDITOR</div>
-          <div class="agent-role">El Revisor</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('defender')">
-          <div class="agent-icon">⚖️</div>
-          <div class="agent-name">DEFENDER</div>
-          <div class="agent-role">El Abogado</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('scribe')">
-          <div class="free-tag">Gratis</div>
-          <div class="agent-icon">📝</div>
-          <div class="agent-name">SCRIBE</div>
-          <div class="agent-role">El Editor</div>
-        </div>
+    <!-- Arrow -->
+    <div class="arrow-col">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M8 20h20M22 14l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <!-- Phase II -->
+    <div class="phase-col">
+      <div class="phase-header p2">FASE II<small>Registro — The Submission Factory</small></div>
+      <div class="phase-agents">
+        <div class="mini-agent"><span class="dot" style="background:var(--phase2)"></span>BINDER</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase2)"></span>AUDITOR</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase2)"></span>DEFENDER</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase2)"></span>SCRIBE<span class="free-tag">FREE</span></div>
       </div>
     </div>
-
-    <!-- POST-REGISTRO -->
-    <div class="phase-group reveal" style="margin-top:32px;">
-      <div class="phase-label post">🌐 Fase III — Post-Registro</div>
-      <div class="agents-grid">
-        <div class="agent-card" onclick="showAgent('bridge')">
-          <div class="agent-icon">🌍</div>
-          <div class="agent-name">BRIDGE</div>
-          <div class="agent-role">El Globalizador</div>
-        </div>
-        <div class="agent-card" onclick="showAgent('guard')">
-          <div class="agent-icon">🛡️</div>
-          <div class="agent-name">GUARD</div>
-          <div class="agent-role">El Centinela</div>
-        </div>
+    <!-- Arrow -->
+    <div class="arrow-col">
+      <svg viewBox="0 0 40 40" fill="none"><path d="M8 20h20M22 14l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <!-- Phase III -->
+    <div class="phase-col">
+      <div class="phase-header p3">FASE III<small>Post-Registro &amp; Expansión — Lifecycle</small></div>
+      <div class="phase-agents">
+        <div class="mini-agent"><span class="dot" style="background:var(--phase3)"></span>BRIDGE</div>
+        <div class="mini-agent"><span class="dot" style="background:var(--phase3)"></span>GUARD</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AGENT DETAIL MODAL -->
-<div class="agent-modal" id="agentModal">
-  <div class="modal-content">
+<!-- ═══════════ FASE I ═══════════ -->
+<section class="phase-section" id="phase1" style="background:#fafbff">
+  <div class="phase-title-bar fade-up">
+    <div class="phase-number" style="background:var(--phase1)">I</div>
+    <div>
+      <h3>Pre-Registro — Discovery & Feasibility</h3>
+      <div class="phase-sub">Investigación, viabilidad molecular y vigilancia regulatoria</div>
+    </div>
+  </div>
+  <div class="agents-grid">
+
+    <!-- COMPASS -->
+    <div class="agent-card phase-1 fade-up" onclick="openModal('compass')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">COMPASS</div>
+          <div class="agent-subtitle">The Navigator</div>
+        </div>
+        <div class="card-badges">
+          <span class="badge badge-etapa1">Etapa 1 MVP</span>
+          <span class="badge badge-free">Gratuito</span>
+        </div>
+      </div>
+      <div class="card-mission">Motor de requisitos regulatorios dinámicos. GPS del cumplimiento global. Selecciona Tipo de Producto + País y genera tu Lista de Chequeo Oficial con todos los estudios exigidos.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Knowledge Graphs</span>
+          <span class="tech-tag">RAG</span>
+          <span class="tech-tag">NLP Regulatorio</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🧭</span><span class="metric-text">Checklist regulatorio en minutos, no semanas</span></div>
+      <div class="card-actions">
+        <a href="compass.html" class="btn-free" onclick="event.stopPropagation()">Probar Gratis →</a>
+        <button class="btn-detail">Más Info</button>
+      </div>
+    </div>
+
+    <!-- PREDICT -->
+    <div class="agent-card phase-1 fade-up fade-up-delay-1" onclick="openModal('predict')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">PREDICT</div>
+          <div class="agent-subtitle">The Lab (QSAR)</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa1">Etapa 1 MVP</span></div>
+      </div>
+      <div class="card-mission">Laboratorio virtual de toxicología in silico. Predicciones QSAR: logP, pKa, mutagenicidad Ames, carcinogenicidad, sensitización dérmica, ecotoxicidad LC50. Genera QMRF automático.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Graph Neural Networks</span>
+          <span class="tech-tag">Automated Read-Across</span>
+          <span class="tech-tag">QSAR Ensemble Models</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🔬</span><span class="metric-text">Toxicología predictiva sin ensayos animales</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- GENESIS -->
+    <div class="agent-card phase-1 fade-up fade-up-delay-2" onclick="openModal('genesis')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">GENESIS</div>
+          <div class="agent-subtitle">The Architect</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa2">Etapa 2</span></div>
+      </div>
+      <div class="card-mission">Diseño generativo de moléculas Safe-by-Design. Cuando PREDICT detecta toxicidad, GENESIS propone variantes moleculares seguras automáticamente.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Generative Diffusion Models</span>
+          <span class="tech-tag">Reinforcement Learning</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🧬</span><span class="metric-text">Moléculas optimizadas para seguridad y eficacia</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- SCOUT -->
+    <div class="agent-card phase-1 fade-up" onclick="openModal('scout')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">SCOUT</div>
+          <div class="agent-subtitle">The Spy</div>
+        </div>
+        <div class="card-badges">
+          <span class="badge badge-etapa2">Etapa 2</span>
+          <span class="badge badge-free">Gratuito</span>
+        </div>
+      </div>
+      <div class="card-mission">Inteligencia regulatoria de mercado. Monitorea bases de datos globales y boletines oficiales: prohibiciones futuras, nuevos requisitos, patentes de competidores.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">NLP</span>
+          <span class="tech-tag">Web Scraping</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🕵️</span><span class="metric-text">Alertas proactivas antes del cambio regulatorio</span></div>
+      <div class="card-actions">
+        <a href="scout.html" class="btn-free" onclick="event.stopPropagation()">Probar Gratis →</a>
+        <button class="btn-detail">Más Info</button>
+      </div>
+    </div>
+
+    <!-- SOURCE -->
+    <div class="agent-card phase-1 fade-up fade-up-delay-1" onclick="openModal('source')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">SOURCE</div>
+          <div class="agent-subtitle">The Gatekeeper</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa2">Etapa 2</span></div>
+      </div>
+      <div class="card-mission">Auditoría automática de Certificados de Análisis (CoA). Detecta impurezas no declaradas y anomalías en documentación de proveedores.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">OCR</span>
+          <span class="tech-tag">Anomaly Detection</span>
+          <span class="tech-tag">Estadístico</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🔍</span><span class="metric-text">Zero impurezas ocultas en tu cadena de suministro</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ FASE II ═══════════ -->
+<section class="phase-section" id="phase2">
+  <div class="phase-title-bar fade-up">
+    <div class="phase-number" style="background:var(--phase2)">II</div>
+    <div>
+      <h3>Registro — The Submission Factory</h3>
+      <div class="phase-sub">Gestión documental, revisión, defensa regulatoria y publicación</div>
+    </div>
+  </div>
+  <div class="agents-grid">
+
+    <!-- BINDER -->
+    <div class="agent-card phase-2 fade-up" onclick="openModal('binder')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">BINDER</div>
+          <div class="agent-subtitle">The Organizer</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa1">Etapa 1 MVP</span></div>
+      </div>
+      <div class="card-mission">Gestor documental inteligente. Conecta SharePoint/Drive/OneDrive, clasifica archivos con Document AI (LayoutLM v3), cruza contra requisitos de COMPASS. Dashboard de completitud en tiempo real.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Document AI</span>
+          <span class="tech-tag">LayoutLM v3</span>
+          <span class="tech-tag">SharePoint API</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">📁</span><span class="metric-text">Dossier completo verificado automáticamente</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- AUDITOR -->
+    <div class="agent-card phase-2 fade-up fade-up-delay-1" onclick="openModal('auditor')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">AUDITOR</div>
+          <div class="agent-subtitle">The Reviewer</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa1">Etapa 1 MVP</span></div>
+      </div>
+      <div class="card-mission">Revisor automático GLP/OECD con 3 niveles: consistencia numérica/química, cumplimiento metodológico OECD, y completitud cruzada vs COMPASS.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">GLP Validation</span>
+          <span class="tech-tag">OECD Rules Engine</span>
+          <span class="tech-tag">Cross-Check AI</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">✅</span><span class="metric-text">Tasa de aprobación: de 55-60% a >90%</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- DEFENDER -->
+    <div class="agent-card phase-2 fade-up fade-up-delay-2" onclick="openModal('defender')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">DEFENDER</div>
+          <div class="agent-subtitle">The Lawyer</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa2">Etapa 2</span></div>
+      </div>
+      <div class="card-mission">Generador de defensas técnicas ante cartas de objeción regulatoria. LLMs Fine-Tuned en litigio regulatorio para respuestas precisas y fundamentadas.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Fine-Tuned LLMs</span>
+          <span class="tech-tag">Litigio Regulatorio</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">⚖️</span><span class="metric-text">Respuestas a objeciones en horas, no semanas</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- SCRIBE -->
+    <div class="agent-card phase-2 fade-up" onclick="openModal('scribe')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">SCRIBE</div>
+          <div class="agent-subtitle">The Publisher</div>
+        </div>
+        <div class="card-badges">
+          <span class="badge badge-etapa1">Etapa 1 MVP</span>
+          <span class="badge badge-free">Gratuito</span>
+        </div>
+      </div>
+      <div class="card-mission">SDS 16 secciones + etiquetas CLP/GHS automáticas. Motor determinista CLP (CE 1272/2008), GHS Rev.9. Soporte para 30+ idiomas con renderizado PDF profesional.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Rule-Based Engine</span>
+          <span class="tech-tag">Fine-Tuned LLM</span>
+          <span class="tech-tag">PDF Rendering</span>
+          <span class="tech-tag">CLP/GHS Rev.9</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">📄</span><span class="metric-text">SDS + etiquetas en 30+ idiomas instantáneamente</span></div>
+      <div class="card-actions">
+        <a href="scribe.html" class="btn-free" onclick="event.stopPropagation()">Probar Gratis →</a>
+        <button class="btn-detail">Más Info</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ FASE III ═══════════ -->
+<section class="phase-section" id="phase3" style="background:#fafbff">
+  <div class="phase-title-bar fade-up">
+    <div class="phase-number" style="background:var(--phase3)">III</div>
+    <div>
+      <h3>Post-Registro & Expansión — Lifecycle</h3>
+      <div class="phase-sub">Globalización de dossiers y vigilancia perpetua de licencias</div>
+    </div>
+  </div>
+  <div class="agents-grid">
+
+    <!-- BRIDGE -->
+    <div class="agent-card phase-3 fade-up" onclick="openModal('bridge')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">BRIDGE</div>
+          <div class="agent-subtitle">The Globalizer</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa2">Etapa 2</span></div>
+      </div>
+      <div class="card-mission">Armonización global de dossiers. Recicla estudios válidos entre jurisdicciones y adapta formato para ANVISA/IBAMA, EPA, ECHA y más.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Cross-jurisdiction AI</span>
+          <span class="tech-tag">Format Adaptation</span>
+          <span class="tech-tag">Study Recycling</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🌍</span><span class="metric-text">€5,000/país — reutiliza hasta 80% de estudios</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+    <!-- GUARD -->
+    <div class="agent-card phase-3 fade-up fade-up-delay-1" onclick="openModal('guard')">
+      <div class="card-top">
+        <div class="card-top-left">
+          <div class="agent-name">GUARD</div>
+          <div class="agent-subtitle">The Sentinel</div>
+        </div>
+        <div class="card-badges"><span class="badge badge-etapa2">Etapa 2</span></div>
+      </div>
+      <div class="card-mission">Vigilancia perpetua de licencias. Monitorea fechas de caducidad, gestiona renovaciones automáticas y activa alertas escalonadas: Email → SMS → Bloqueo ERP.</div>
+      <div class="card-tech">
+        <div class="card-tech-label">Tech Stack</div>
+        <div class="tech-tags">
+          <span class="tech-tag">License Tracking</span>
+          <span class="tech-tag">ERP Integration</span>
+          <span class="tech-tag">Escalation Engine</span>
+        </div>
+      </div>
+      <div class="card-metric"><span class="metric-icon">🛡️</span><span class="metric-text">Cero licencias vencidas — renovación proactiva</span></div>
+      <div class="card-actions"><button class="btn-detail">Más Info</button></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing">
+  <div class="section-header fade-up">
+    <h2>Planes y Precios</h2>
+    <p>Desde el checklist regulatorio básico hasta la plataforma completa de innovación molecular.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <!-- Essential -->
+    <div class="pricing-card fade-up">
+      <div class="pricing-name">Essential</div>
+      <div class="pricing-price">€25,000</div>
+      <div class="pricing-period">por año</div>
+      <ul class="pricing-features">
+        <li>COMPASS — Navigator regulatorio</li>
+        <li>BINDER — Gestor documental inteligente</li>
+        <li>SCRIBE — SDS + etiquetas CLP/GHS</li>
+        <li>GUARD — Vigilancia de licencias</li>
+        <li>Soporte por email prioritario</li>
+        <li>Dashboard de completitud</li>
+      </ul>
+      <a href="mailto:proyectos@uranoia.cl?subject=Plan Essential RegulatorIA" class="pricing-cta secondary">Solicitar Demo</a>
+    </div>
+
+    <!-- Innovator -->
+    <div class="pricing-card featured fade-up fade-up-delay-1">
+      <div class="pricing-name">Innovator</div>
+      <div class="pricing-price">€60,000</div>
+      <div class="pricing-period">por año</div>
+      <ul class="pricing-features">
+        <li>Todo en Essential incluido</li>
+        <li>PREDICT — Lab QSAR in silico</li>
+        <li>GENESIS — Diseño molecular Safe-by-Design</li>
+        <li>SCOUT — Inteligencia regulatoria</li>
+        <li>SOURCE — Auditoría de CoA</li>
+        <li>AUDITOR — Revisor GLP/OECD</li>
+        <li>Soporte dedicado + onboarding</li>
+        <li>API access completo</li>
+      </ul>
+      <a href="mailto:proyectos@uranoia.cl?subject=Plan Innovator RegulatorIA" class="pricing-cta primary">Solicitar Demo</a>
+    </div>
+
+  </div>
+
+  <!-- Add-ons -->
+  <div class="addons-section fade-up">
+    <h3>Add-ons</h3>
+    <div class="addons-grid">
+      <div class="addon-card">
+        <div class="addon-name">BRIDGE</div>
+        <div class="addon-price">€5,000 / país</div>
+        <div class="addon-desc">Armonización global de dossiers</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">DEFENDER</div>
+        <div class="addon-price">€1,500 / respuesta</div>
+        <div class="addon-desc">Defensa ante objeciones regulatorias</div>
+      </div>
+      <div class="addon-card">
+        <div class="addon-name">PREDICT Premium</div>
+        <div class="addon-price">€500 / QMRF</div>
+        <div class="addon-desc">Informe QMRF completo y validado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section">
+  <h2>¿Listo para transformar tu cumplimiento regulatorio?</h2>
+  <p>Agenda una demostración personalizada con nuestro equipo. Descubre cómo los 11 agentes de RegulatorIA pueden acelerar tu time-to-market.</p>
+  <a href="mailto:proyectos@uranoia.cl?subject=Demo RegulatorIA" class="cta-email">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    proyectos@uranoia.cl
+  </a>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>© 2026 RegulatorIA by URANoIA — Sistema Operativo de IA para Cumplimiento Regulatorio Químico Global</p>
+</footer>
+
+<!-- ─── MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-phase" id="modalPhase"></div>
-    <div class="modal-icon" id="modalIcon"></div>
-    <div class="modal-title" id="modalTitle"></div>
+    <h2 id="modalTitle"></h2>
     <div class="modal-subtitle" id="modalSubtitle"></div>
-    <div class="modal-problem" id="modalProblem"></div>
-    <div class="modal-solution" id="modalSolution"></div>
-    <div class="modal-tech" id="modalTech"></div>
+    <div class="modal-phase" id="modalPhase"></div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<section id="process">
-  <div class="section-header reveal">
-    <div class="section-label">Cómo Funciona</div>
-    <h2>De la consulta al registro en 4 pasos</h2>
-    <p>Nuestros agentes trabajan 24/7 para que tú te concentres en hacer crecer tu negocio.</p>
-  </div>
-
-  <div class="process-steps">
-    <div class="process-line"></div>
-    <div class="process-step reveal">
-      <div class="step-dot"><span>📞</span></div>
-      <div class="step-content">
-        <h4>1. Consulta Inicial Gratuita</h4>
-        <p>Nos cuentas tu producto y mercados objetivo. COMPASS genera tu mapa de requisitos al instante.</p>
-        <div class="step-time">⚡ 15 minutos</div>
-      </div>
-    </div>
-    <div class="process-step reveal">
-      <div class="step-dot"><span>🔬</span></div>
-      <div class="step-content">
-        <h4>2. Análisis IA del Producto</h4>
-        <p>PREDICT evalúa toxicología, SCOUT verifica el panorama regulatorio, SOURCE audita tus proveedores.</p>
-        <div class="step-time">⚡ 24-48 horas (vs. 4-8 semanas tradicional)</div>
-      </div>
-    </div>
-    <div class="process-step reveal">
-      <div class="step-dot"><span>📋</span></div>
-      <div class="step-content">
-        <h4>3. Dossier Express</h4>
-        <p>BINDER organiza tu expediente, AUDITOR lo revisa, SCRIBE genera SDS y etiquetas perfectas.</p>
-        <div class="step-time">⚡ 1-2 semanas (vs. 2-4 meses tradicional)</div>
-      </div>
-    </div>
-    <div class="process-step reveal">
-      <div class="step-dot"><span>✅</span></div>
-      <div class="step-content">
-        <h4>4. Registro y Vigilancia</h4>
-        <p>DEFENDER maneja objeciones, BRIDGE expande a nuevos países, GUARD vigila tus licencias para siempre.</p>
-        <div class="step-time">🛡️ Monitoreo continuo incluido</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING COMPARISON -->
-<section id="pricing">
-  <div class="section-header reveal">
-    <div class="section-label">Comparación</div>
-    <h2>Consultora Tradicional vs. Consultora IA</h2>
-    <p>Mismos resultados, diferente siglo.</p>
-  </div>
-
-  <div class="pricing-grid reveal">
-    <div class="pricing-card trad">
-      <div class="pricing-badge">Tradicional</div>
-      <h3>Consultora Convencional</h3>
-      <p class="pricing-sub">Equipos humanos, procesos manuales</p>
-      <div class="pricing-row">
-        <span class="metric">Diagnóstico regulatorio</span>
-        <span class="value bad">2-4 semanas</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Predicción toxicológica</span>
-        <span class="value bad">3-6 meses (laboratorio)</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Armado de dossier</span>
-        <span class="value bad">2-4 meses</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Respuesta a objeciones</span>
-        <span class="value bad">3-6 semanas</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Expansión a nuevo país</span>
-        <span class="value bad">6-12 meses</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Costo promedio por registro</span>
-        <span class="value bad">$30K - $80K USD</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Disponibilidad</span>
-        <span class="value bad">Horario oficina</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Escalabilidad</span>
-        <span class="value bad">Limitada (headcount)</span>
-      </div>
-    </div>
-
-    <div class="pricing-card ai">
-      <div class="pricing-badge">Con IA</div>
-      <h3>RegulatorIA</h3>
-      <p class="pricing-sub">11 agentes IA + expertos humanos</p>
-      <div class="pricing-row">
-        <span class="metric">Diagnóstico regulatorio</span>
-        <span class="value great">⚡ Instantáneo</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Predicción toxicológica</span>
-        <span class="value great">⚡ 24-48 horas (10x)</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Armado de dossier</span>
-        <span class="value great">⚡ 1-2 semanas (5x)</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Respuesta a objeciones</span>
-        <span class="value great">⚡ 48 horas (8x)</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Expansión a nuevo país</span>
-        <span class="value great">⚡ 2-4 semanas (10x)</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Costo promedio por registro</span>
-        <span class="value great">50-70% menos</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Disponibilidad</span>
-        <span class="value good">24/7 siempre activo</span>
-      </div>
-      <div class="pricing-row">
-        <span class="metric">Escalabilidad</span>
-        <span class="value good">Ilimitada</span>
-      </div>
-      <div class="pricing-bottom">
-        <a href="#cta" class="btn-primary">Solicitar Cotización →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <h2>¿Listo para registrar tu producto 5x más rápido?</h2>
-  <p>Agenda una consulta gratuita de 15 minutos. COMPASS analizará tus requisitos al instante.</p>
-  <a href="mailto:proyectos@uranoia.cl?subject=Demo%20RegulatorIA" class="btn-white">Agendar Demo Gratuita →</a>
-</section>
-
-<footer>
-  <p>RegulatorIA by <a href="https://uranoia.cl">Urano IA</a> — La primera consultora de agroquímicos con inteligencia artificial de Latinoamérica.</p>
-  <p style="margin-top:8px;">© 2026 Urano IA. Todos los derechos reservados. | contacto: proyectos@uranoia.cl</p>
-</footer>
-
 <script>
-// MOUSE GLOW FOLLOWER
-const glow = document.getElementById('mouseGlow');
-document.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top = e.clientY + 'px';
+// ─── AGENTS DATA ───
+const agents = {
+  compass: {
+    title: 'COMPASS', subtitle: 'The Navigator',
+    phase: 'FASE I · Pre-Registro · Etapa 1 MVP · GRATUITO',
+    body: `<p>Motor de requisitos regulatorios dinámicos — el GPS del cumplimiento global.</p>
+    <h4>Funcionalidad</h4>
+    <p>El usuario selecciona Tipo de Producto + País destino y COMPASS genera automáticamente la Lista de Chequeo Oficial completa con todos los estudios exigidos por la autoridad regulatoria correspondiente.</p>
+    <h4>Tech Stack</h4>
+    <ul><li>Knowledge Graphs para mapeo regulatorio multi-jurisdicción</li><li>RAG (Retrieval-Augmented Generation) sobre corpus regulatorio actualizado</li><li>NLP Regulatorio especializado en normativa química</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Checklist regulatorio completo en minutos — elimina semanas de investigación manual y riesgo de omisiones.</p>`
+  },
+  predict: {
+    title: 'PREDICT', subtitle: 'The Lab (QSAR)',
+    phase: 'FASE I · Pre-Registro · Etapa 1 MVP',
+    body: `<p>Laboratorio virtual de toxicología in silico.</p>
+    <h4>Predicciones QSAR</h4>
+    <ul><li>logP (lipofilicidad)</li><li>pKa (acidez/basicidad)</li><li>Mutagenicidad Ames</li><li>Carcinogenicidad</li><li>Sensitización dérmica</li><li>Ecotoxicidad LC50</li></ul>
+    <h4>Output Principal</h4>
+    <p>Genera QMRF (QSAR Model Reporting Format) automático, listo para submission regulatoria.</p>
+    <h4>Tech Stack</h4>
+    <ul><li>Graph Neural Networks para representación molecular</li><li>Automated Read-Across para inferencia por analogía</li><li>QSAR Ensemble Models para predicciones robustas</li></ul>`
+  },
+  genesis: {
+    title: 'GENESIS', subtitle: 'The Architect',
+    phase: 'FASE I · Pre-Registro · Etapa 2',
+    body: `<p>Diseño generativo de moléculas Safe-by-Design.</p>
+    <h4>Funcionalidad</h4>
+    <p>Cuando PREDICT detecta toxicidad en un compuesto, GENESIS entra en acción proponiendo variantes moleculares que mantienen la funcionalidad deseada pero eliminan o reducen los riesgos toxicológicos identificados.</p>
+    <h4>Tech Stack</h4>
+    <ul><li>Generative Diffusion Models para exploración del espacio químico</li><li>Reinforcement Learning para optimización multi-objetivo (eficacia + seguridad)</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Moléculas optimizadas para seguridad y eficacia desde la fase de diseño — reduciendo iteraciones costosas en laboratorio.</p>`
+  },
+  scout: {
+    title: 'SCOUT', subtitle: 'The Spy',
+    phase: 'FASE I · Pre-Registro · Etapa 2 · GRATUITO',
+    body: `<p>Inteligencia regulatoria de mercado en tiempo real.</p>
+    <h4>Monitoreo Continuo</h4>
+    <ul><li>Bases de datos regulatorias globales</li><li>Boletines oficiales de autoridades</li><li>Prohibiciones futuras y restricciones emergentes</li><li>Nuevos requisitos regulatorios</li><li>Patentes de competidores</li></ul>
+    <h4>Tech Stack</h4>
+    <ul><li>NLP avanzado para procesamiento de documentos regulatorios</li><li>Web Scraping inteligente de fuentes oficiales</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Alertas proactivas antes de que un cambio regulatorio impacte tu negocio.</p>`
+  },
+  source: {
+    title: 'SOURCE', subtitle: 'The Gatekeeper',
+    phase: 'FASE I · Pre-Registro · Etapa 2',
+    body: `<p>Auditoría automática de Certificados de Análisis (CoA).</p>
+    <h4>Funcionalidad</h4>
+    <p>Analiza automáticamente los CoA de proveedores para detectar impurezas no declaradas, inconsistencias en datos analíticos y anomalías estadísticas que podrían indicar problemas de calidad.</p>
+    <h4>Tech Stack</h4>
+    <ul><li>OCR avanzado para extracción de datos de certificados</li><li>Anomaly Detection estadístico para identificar valores atípicos</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Zero impurezas ocultas en tu cadena de suministro — protección proactiva de calidad.</p>`
+  },
+  binder: {
+    title: 'BINDER', subtitle: 'The Organizer',
+    phase: 'FASE II · Registro · Etapa 1 MVP',
+    body: `<p>Gestor documental inteligente para dossiers regulatorios.</p>
+    <h4>Funcionalidad</h4>
+    <ul><li>Conecta con SharePoint, Google Drive y OneDrive</li><li>Clasifica archivos automáticamente con Document AI (LayoutLM v3)</li><li>Cruza documentos contra requisitos generados por COMPASS</li><li>Dashboard de completitud en tiempo real</li></ul>
+    <h4>Tech Stack</h4>
+    <ul><li>Document AI con LayoutLM v3 para clasificación inteligente</li><li>APIs de integración con plataformas documentales</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Dossier completo y verificado automáticamente — nunca más enviar submissions incompletas.</p>`
+  },
+  auditor: {
+    title: 'AUDITOR', subtitle: 'The Reviewer',
+    phase: 'FASE II · Registro · Etapa 1 MVP',
+    body: `<p>Revisor automático GLP/OECD con 3 niveles de validación.</p>
+    <h4>Niveles de Revisión</h4>
+    <ul><li><strong>Nivel 1:</strong> Consistencia numérica y química — verificación de datos</li><li><strong>Nivel 2:</strong> Cumplimiento metodológico OECD — adherencia a guías</li><li><strong>Nivel 3:</strong> Completitud cruzada vs COMPASS — cobertura total de requisitos</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Incrementa la tasa de aprobación regulatoria de 55-60% a >90% — reduce re-submisiones y tiempos de espera.</p>`
+  },
+  defender: {
+    title: 'DEFENDER', subtitle: 'The Lawyer',
+    phase: 'FASE II · Registro · Etapa 2',
+    body: `<p>Generador de defensas técnicas ante cartas de objeción regulatoria.</p>
+    <h4>Funcionalidad</h4>
+    <p>Analiza cartas de objeción de autoridades regulatorias y genera respuestas técnicamente fundamentadas, con argumentos científicos y precedentes regulatorios.</p>
+    <h4>Tech Stack</h4>
+    <ul><li>Fine-Tuned LLMs especializados en litigio regulatorio</li><li>Base de conocimiento de precedentes y resoluciones</li></ul>
+    <h4>Precio Add-on</h4>
+    <p>€1,500 por respuesta generada.</p>`
+  },
+  scribe: {
+    title: 'SCRIBE', subtitle: 'The Publisher',
+    phase: 'FASE II · Registro · Etapa 1 MVP · GRATUITO',
+    body: `<p>Generador automático de SDS (16 secciones) + etiquetas CLP/GHS.</p>
+    <h4>Funcionalidad</h4>
+    <ul><li>Safety Data Sheets completas (16 secciones estándar)</li><li>Etiquetas CLP conforme a CE 1272/2008</li><li>Cumplimiento GHS Rev.9</li><li>Soporte para 30+ idiomas</li><li>Renderizado PDF profesional</li></ul>
+    <h4>Tech Stack</h4>
+    <ul><li>Rule-Based Engine determinista para clasificación CLP</li><li>Fine-Tuned LLM para generación de texto regulatorio</li><li>Motor PDF Rendering profesional</li></ul>`
+  },
+  bridge: {
+    title: 'BRIDGE', subtitle: 'The Globalizer',
+    phase: 'FASE III · Post-Registro · Etapa 2',
+    body: `<p>Armonización global de dossiers para expansión internacional.</p>
+    <h4>Funcionalidad</h4>
+    <ul><li>Recicla estudios válidos entre jurisdicciones</li><li>Adapta formato para autoridades específicas: ANVISA/IBAMA (Brasil), EPA (USA), ECHA (Europa)</li><li>Análisis de gap regulatorio entre países</li></ul>
+    <h4>Precio Add-on</h4>
+    <p>€5,000 por país — reutiliza hasta 80% de los estudios existentes.</p>
+    <h4>Beneficio Clave</h4>
+    <p>Expansión global acelerada sin duplicar inversión en estudios.</p>`
+  },
+  guard: {
+    title: 'GUARD', subtitle: 'The Sentinel',
+    phase: 'FASE III · Post-Registro · Etapa 2',
+    body: `<p>Vigilancia perpetua de licencias y registros.</p>
+    <h4>Sistema de Alertas Escalonadas</h4>
+    <ul><li><strong>Nivel 1:</strong> Email — notificación anticipada de vencimientos</li><li><strong>Nivel 2:</strong> SMS — alerta urgente de renovación pendiente</li><li><strong>Nivel 3:</strong> Bloqueo ERP — prevención de operaciones con licencias vencidas</li></ul>
+    <h4>Funcionalidad</h4>
+    <ul><li>Monitoreo continuo de fechas de caducidad</li><li>Gestión proactiva de renovaciones</li><li>Integración con sistemas ERP empresariales</li></ul>
+    <h4>Beneficio Clave</h4>
+    <p>Cero licencias vencidas — renovación proactiva que protege la continuidad operativa.</p>`
+  }
+};
+
+// ─── MODAL ───
+function openModal(key) {
+  const a = agents[key];
+  if (!a) return;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalSubtitle').textContent = a.subtitle;
+  document.getElementById('modalPhase').textContent = a.phase;
+  document.getElementById('modalBody').innerHTML = a.body;
+  const overlay = document.getElementById('modalOverlay');
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => overlay.classList.add('active'));
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) return;
+  const overlay = document.getElementById('modalOverlay');
+  overlay.classList.remove('active');
+  setTimeout(() => { overlay.style.display = 'none'; }, 300);
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── NAVBAR SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 });
 
-// CAROUSEL
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const dots = document.querySelectorAll('.carousel-dot');
-function goSlide(n) {
-  slides[currentSlide].classList.remove('active');
-  dots[currentSlide].classList.remove('active');
-  currentSlide = n;
-  slides[currentSlide].classList.add('active');
-  dots[currentSlide].classList.add('active');
-}
-setInterval(() => goSlide((currentSlide + 1) % slides.length), 4000);
+// ─── HAMBURGER ───
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
 
-// SCROLL REVEAL
-const reveals = document.querySelectorAll('.reveal');
+// ─── SCROLL ANIMATIONS ───
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
     }
   });
-}, { threshold: 0.15 });
-reveals.forEach(el => observer.observe(el));
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-// PARTICLES
-const pc = document.getElementById('particles');
-for (let i = 0; i < 20; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.style.left = Math.random() * 100 + '%';
-  p.style.animationDelay = Math.random() * 15 + 's';
-  p.style.animationDuration = (10 + Math.random() * 10) + 's';
-  p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-  p.style.background = ['var(--g1)','var(--g2)','var(--g3)','var(--g4)'][Math.floor(Math.random()*4)];
-  pc.appendChild(p);
-}
-
-// AGENT DATA
-const agents = {
-  compass: {
-    phase: 'PRE-REGISTRO', icon: '🧭', name: 'COMPASS', subtitle: 'El Navegador — Motor de Requisitos Dinámicos',
-    problem: '🔴 Un químico quiere registrar un fungicida en Chile y luego en España. No sabe qué estudios específicos pide cada país. Las regulaciones son laberintos de PDFs.',
-    solution: '🟢 Seleccionas Producto + País y COMPASS genera instantáneamente la lista de chequeo oficial con todos los estudios requeridos por ley (OECD 203, 404, Residuos, etc.).',
-    tech: ['Knowledge Graphs', 'RAG', 'Consulta Vectorial', 'Legislación en tiempo real']
-  },
-  predict: {
-    phase: 'PRE-REGISTRO', icon: '🔬', name: 'PREDICT', subtitle: 'El Laboratorio — QSAR Virtual',
-    problem: '🔴 Los ensayos con animales son lentos, éticamente cuestionados y caros. Las herramientas QSAR actuales (OCDE Toolbox) son arcaicas y manuales.',
-    solution: '🟢 Laboratorio virtual de toxicología. Predice propiedades físico-químicas y toxicológicas y genera el informe QMRF aceptado por reguladores (ECHA/EPA).',
-    tech: ['Graph Neural Networks', 'DeepChem', 'Read-Across Automatizado', 'Tanimoto Similarity']
-  },
-  genesis: {
-    phase: 'PRE-REGISTRO', icon: '🧬', name: 'GENESIS', subtitle: 'El Arquitecto — Diseño Generativo Molecular',
-    problem: '🔴 Si PREDICT detecta toxicidad, el químico se queda bloqueado sin alternativas.',
-    solution: '🟢 Propone variantes moleculares que mantienen la función biológica pero eliminan la toxicidad. Safe-by-Design automatizado.',
-    tech: ['Generative Diffusion Models', 'Reinforcement Learning', 'Optimización Molecular']
-  },
-  scout: {
-    phase: 'PRE-REGISTRO', icon: '🕵️', name: 'SCOUT', subtitle: 'El Espía — Inteligencia Regulatoria',
-    problem: '🔴 Lanzar un producto con un ingrediente que está a punto de ser prohibido por una nueva ley.',
-    solution: '🟢 Monitorea bases de datos globales y boletines oficiales para detectar prohibiciones futuras o patentes de competidores.',
-    tech: ['NLP', 'Web Scraping', 'Named Entity Recognition', 'Alertas automáticas']
-  },
-  source: {
-    phase: 'PRE-REGISTRO', icon: '🔍', name: 'SOURCE', subtitle: 'El Guardián — Auditoría de Proveedores',
-    problem: '🔴 Proveedores que envían materias primas con impurezas no declaradas que invalidan el registro.',
-    solution: '🟢 Auditoría automática de Certificados de Análisis (CoA). Compara cada lote contra el estándar registrado.',
-    tech: ['OCR', 'Anomaly Detection', 'Control estadístico']
-  },
-  binder: {
-    phase: 'REGISTRO', icon: '📂', name: 'BINDER', subtitle: 'El Organizador — Gestor Documental IA',
-    problem: '🔴 Cientos de PDFs dispersos. No saber si tienes el dossier al 100% para enviar.',
-    solution: '🟢 Lee archivos, los clasifica automáticamente y los cruza contra la lista de requisitos de COMPASS. Dashboard de progreso en tiempo real.',
-    tech: ['LayoutLM', 'Document Classification', 'Cloud Connectors']
-  },
-  auditor: {
-    phase: 'REGISTRO', icon: '✅', name: 'AUDITOR', subtitle: 'El Revisor — QA Automático',
-    problem: '🔴 Errores humanos en estudios que provocan rechazos de la autoridad regulatoria.',
-    solution: '🟢 Verifica que cada estudio cumpla guías GLP/OECD y sea consistente con el dossier. Maximiza aprobación "First-Pass".',
-    tech: ['Fact-Checking', 'Consistency Check', 'Semantic Search']
-  },
-  defender: {
-    phase: 'REGISTRO', icon: '⚖️', name: 'DEFENDER', subtitle: 'El Abogado — Generador de Defensas',
-    problem: '🔴 La autoridad envía una Carta de Objeción. Responder requiere expertos senior costosos.',
-    solution: '🟢 Analiza el rechazo y redacta una respuesta científica/legal basada en evidencia del dossier y precedentes regulatorios.',
-    tech: ['Fine-Tuned LLMs', 'Litigio Regulatorio', 'Argumentación Científica']
-  },
-  scribe: {
-    phase: 'REGISTRO', icon: '📝', name: 'SCRIBE', subtitle: 'El Editor — Generador SDS/Etiquetas',
-    problem: '🔴 Crear Fichas de Seguridad (SDS) y Etiquetas CLP manualmente es repetitivo y propenso a errores graves.',
-    solution: '🟢 Generación automática de SDS (16 secciones) y etiquetas CLP/GHS multilingües con cálculo de mezclas en tiempo real.',
-    tech: ['Rule-Based Engine', 'CLP Math', 'Template Rendering', 'Multi-idioma']
-  },
-  bridge: {
-    phase: 'POST-REGISTRO', icon: '🌍', name: 'BRIDGE', subtitle: 'El Globalizador — Armonización Internacional',
-    problem: '🔴 Tienes el registro en Chile, quieres vender en Brasil. Hay que rehacer el dossier completo.',
-    solution: '🟢 Toma el dossier aprobado, recicla estudios válidos, identifica gaps y traduce/adapta al formato de cada país.',
-    tech: ['Universal Data Ontology', 'Scientific Translation', 'Multi-country mapping']
-  },
-  guard: {
-    phase: 'POST-REGISTRO', icon: '🛡️', name: 'GUARD', subtitle: 'El Centinela — Vigilancia Perpetua',
-    problem: '🔴 Olvidar renovar un registro que vence. Perder licencias por falta de seguimiento.',
-    solution: '🟢 Lee resoluciones, extrae fechas de caducidad y gestiona renovaciones con alertas escalonadas (Email → SMS → Bloqueo ERP).',
-    tech: ['Extraction Agents', 'Notification System', 'Calendario inteligente']
-  }
-};
-
-// MODAL
-function showAgent(id) {
-  const a = agents[id];
-  document.getElementById('modalPhase').textContent = a.phase;
-  document.getElementById('modalPhase').style.color = a.phase === 'PRE-REGISTRO' ? 'var(--g1)' : a.phase === 'REGISTRO' ? 'var(--g3)' : 'var(--g4)';
-  document.getElementById('modalIcon').textContent = a.icon;
-  document.getElementById('modalTitle').textContent = a.name;
-  document.getElementById('modalSubtitle').textContent = a.subtitle;
-  document.getElementById('modalProblem').textContent = a.problem;
-  document.getElementById('modalSolution').textContent = a.solution;
-  document.getElementById('modalTech').innerHTML = a.tech.map(t => `<span>${t}</span>`).join('');
-  document.getElementById('agentModal').classList.add('show');
-}
-function closeModal() {
-  document.getElementById('agentModal').classList.remove('show');
-}
-document.getElementById('agentModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('agentModal')) closeModal();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ORCHESTRATOR PULSE
-const orchCenter = document.getElementById('orchCenter');
-orchCenter.addEventListener('click', () => {
-  orchCenter.style.transform = 'scale(1.15)';
-  setTimeout(() => orchCenter.style.transform = 'scale(1)', 300);
-  // Animate all agent cards
-  document.querySelectorAll('.agent-card').forEach((card, i) => {
-    setTimeout(() => {
-      card.style.transform = 'translateY(-8px)';
-      card.style.borderColor = 'var(--g1)';
-      setTimeout(() => {
-        card.style.transform = '';
-        card.style.borderColor = '';
-      }, 400);
-    }, i * 80);
-  });
-});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
