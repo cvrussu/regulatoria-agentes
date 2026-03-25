@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCRIBE — Generador de HDS y Etiquetas | RegulatorIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a2e;line-height:1.6}
+.gradient-bar{height:4px;background:linear-gradient(90deg,#667eea,#764ba2)}
+.header{padding:2rem 2rem 1.5rem;border-bottom:1px solid #e8e8f0}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.logo{display:flex;align-items:center;gap:.75rem}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.1rem}
+.logo-text h1{font-size:1.4rem;font-weight:700;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text span{font-size:.75rem;color:#888;font-weight:500;letter-spacing:.5px}
+.badge{padding:.35rem .85rem;border-radius:20px;font-size:.7rem;font-weight:600;background:linear-gradient(135deg,#667eea20,#764ba220);color:#667eea;border:1px solid #667eea30}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:2rem}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.panel{background:#fafaff;border:1px solid #e8e8f0;border-radius:14px;padding:1.8rem}
+.panel h2{font-size:1rem;font-weight:700;margin-bottom:1.2rem;color:#1a1a2e;display:flex;align-items:center;gap:.5rem}
+.panel h2 .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.75rem;font-weight:600;color:#667eea;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem}
+.form-group input,.form-group select{width:100%;padding:.6rem .9rem;border:1.5px solid #e0e0ee;border-radius:8px;font-family:'Inter',sans-serif;font-size:.88rem;color:#1a1a2e;background:#fff;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:#667eea;box-shadow:0 0 0 3px #667eea15}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.autocomplete-wrapper{position:relative}
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #667eea;border-top:none;border-radius:0 0 8px 8px;max-height:200px;overflow-y:auto;z-index:10;display:none}
+.autocomplete-list div{padding:.5rem .9rem;font-size:.85rem;cursor:pointer;transition:background .15s}
+.autocomplete-list div:hover{background:#667eea10}
+.btn-generate{width:100%;padding:.75rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:.5rem}
+.btn-generate:hover{transform:translateY(-1px);box-shadow:0 4px 15px #667eea40}
+.output{display:none}
+.output.visible{display:block}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;border-bottom:2px solid #e8e8f0;padding-bottom:0}
+.tab{padding:.6rem 1.2rem;font-size:.82rem;font-weight:600;cursor:pointer;color:#888;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s}
+.tab.active{color:#667eea;border-bottom-color:#667eea}
+.tab:hover{color:#667eea}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.sds-section{margin-bottom:1.2rem;border:1px solid #e8e8f0;border-radius:10px;overflow:hidden}
+.sds-header{background:#f5f5ff;padding:.7rem 1rem;font-size:.82rem;font-weight:700;color:#1a1a2e;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.sds-header:hover{background:#eeeeff}
+.sds-header .arrow{transition:transform .3s;color:#667eea}
+.sds-header.open .arrow{transform:rotate(180deg)}
+.sds-body{padding:1rem;font-size:.82rem;color:#555;line-height:1.7;display:none;background:#fff}
+.sds-body.open{display:block}
+.pictogram-row{display:flex;gap:.75rem;flex-wrap:wrap;margin:1rem 0}
+.pictogram{width:64px;height:64px;position:relative;display:flex;align-items:center;justify-content:center}
+.pictogram svg{width:64px;height:64px}
+.pictogram-label{font-size:.6rem;text-align:center;color:#666;margin-top:.2rem;font-weight:500}
+.signal-word{display:inline-block;padding:.4rem 1rem;border-radius:6px;font-size:.85rem;font-weight:700;margin:.5rem 0}
+.signal-danger{background:#fee2e2;color:#dc2626;border:2px solid #dc2626}
+.signal-warning{background:#fef3c7;color:#d97706;border:2px solid #d97706}
+.phrase-list{list-style:none;padding:0}
+.phrase-list li{padding:.3rem 0;font-size:.82rem;color:#555;border-bottom:1px solid #f0f0f5}
+.phrase-list li strong{color:#1a1a2e}
+.label-preview{border:2px solid #1a1a2e;border-radius:10px;padding:1.5rem;background:#fff}
+.label-header{text-align:center;border-bottom:2px solid #1a1a2e;padding-bottom:1rem;margin-bottom:1rem}
+.label-product-name{font-size:1.3rem;font-weight:800;text-transform:uppercase}
+.label-ingredient{font-size:.85rem;color:#555;margin-top:.3rem}
+.label-section{margin-bottom:1rem}
+.label-section-title{font-size:.7rem;font-weight:700;text-transform:uppercase;color:#667eea;letter-spacing:.5px;margin-bottom:.3rem}
+.label-pictograms{display:flex;gap:.5rem;justify-content:center;margin:1rem 0}
+.label-pictograms .pictogram{width:48px;height:48px}
+.label-pictograms .pictogram svg{width:48px;height:48px}
+.label-footer{text-align:center;font-size:.7rem;color:#888;border-top:1px solid #e0e0ee;padding-top:.8rem;margin-top:1rem}
+.cta-banner{margin-top:2.5rem;background:linear-gradient(135deg,#667eea,#764ba2);border-radius:14px;padding:2rem 2.5rem;color:#fff;text-align:center}
+.cta-banner h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.cta-banner p{font-size:.9rem;opacity:.9;margin-bottom:1rem}
+.cta-banner a{color:#fff;font-weight:700;text-decoration:underline;font-size:1rem}
+</style>
+</head>
+<body>
+<div class="gradient-bar"></div>
+<div class="header">
+<div class="header-inner">
+<div class="logo">
+<div class="logo-icon">S</div>
+<div class="logo-text">
+<h1>SCRIBE</h1>
+<span>GENERADOR DE HDS Y ETIQUETAS GHS</span>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:1rem">
+<span class="badge">SGA / GHS</span>
+<span class="badge">RegulatorIA</span>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="grid">
+<div class="panel">
+<h2><span class="dot"></span> Datos del Producto</h2>
+<div class="form-group">
+<label>Nombre Comercial</label>
+<input type="text" id="productName" placeholder="Ej: AgroMax Pro 480 SL">
+</div>
+<div class="form-group">
+<label>Ingrediente Activo</label>
+<div class="autocomplete-wrapper">
+<input type="text" id="activeIngredient" placeholder="Escriba para buscar..." autocomplete="off">
+<div class="autocomplete-list" id="acList"></div>
+</div>
+</div>
+<div class="form-group">
+<label>Concentración (g/L o %)</label>
+<input type="text" id="concentration" placeholder="Ej: 480 g/L">
+</div>
+<div class="form-group">
+<label>Tipo de Formulación</label>
+<select id="formulationType">
+<option value="">Seleccione...</option>
+<option value="EC">EC — Concentrado Emulsionable</option>
+<option value="WP">WP — Polvo Mojable</option>
+<option value="SC">SC — Suspensión Concentrada</option>
+<option value="SL">SL — Concentrado Soluble</option>
+<option value="WG">WG — Gránulo Dispersable</option>
+<option value="GR">GR — Granulado</option>
+<option value="CS">CS — Suspensión de Cápsulas</option>
+<option value="EW">EW — Emulsión Aceite en Agua</option>
+</select>
+</div>
+<div class="form-group">
+<label>País de Destino</label>
+<select id="targetCountry">
+<option value="CL">Chile</option>
+<option value="AR">Argentina</option>
+<option value="BR">Brasil</option>
+<option value="CO">Colombia</option>
+<option value="PE">Perú</option>
+<option value="MX">México</option>
+<option value="UY">Uruguay</option>
+<option value="PY">Paraguay</option>
+<option value="EU">Unión Europea</option>
+<option value="US">Estados Unidos</option>
+</select>
+</div>
+<button class="btn-generate" onclick="generateSDS()">Generar HDS y Etiqueta</button>
+</div>
+
+<div>
+<div class="output" id="outputPanel">
+<div class="tabs">
+<div class="tab active" onclick="switchTab(this,'sds')">Hoja de Datos de Seguridad</div>
+<div class="tab" onclick="switchTab(this,'ghs')">Clasificación GHS</div>
+<div class="tab" onclick="switchTab(this,'label')">Vista Previa Etiqueta</div>
+</div>
+
+<div class="tab-content active" id="tab-sds"></div>
+<div class="tab-content" id="tab-ghs"></div>
+<div class="tab-content" id="tab-label"></div>
+</div>
+
+<div id="emptyState" style="text-align:center;padding:4rem 2rem;color:#bbb">
+<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#d0d0e0" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+<p style="margin-top:1rem;font-size:.95rem">Complete los datos del producto y presione <strong>Generar</strong></p>
+</div>
+</div>
+</div>
+
+<div class="cta-banner">
+<h3>¿Necesita documentación regulatoria completa?</h3>
+<p>SCRIBE Pro genera HDS completas en múltiples idiomas, etiquetas país-específicas y dossiers de registro con validación automática.</p>
+<a href="mailto:proyectos@uranoia.cl">proyectos@uranoia.cl</a>
+</div>
+</div>
+
+<script>
+const ingredients={
+"Glifosato":{cas:"1071-83-6",signal:"warning",cat:"Tox. Aguda 4 (oral); Irritación ocular grave 1; Tox. acuática aguda 1; Tox. acuática crónica 2",pictos:["exclamation","environment","corrosion"],hPhrases:["H302 — Nocivo en caso de ingestión","H318 — Provoca lesiones oculares graves","H400 — Muy tóxico para los organismos acuáticos","H411 — Tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P264 — Lavarse las manos cuidadosamente tras la manipulación","P270 — No comer, beber ni fumar durante su utilización","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P301+P312 — EN CASO DE INGESTIÓN: Llamar a un CENTRO DE TOXICOLOGÍA","P305+P351+P338 — EN CASO DE CONTACTO CON LOS OJOS: Aclarar con agua. Quitar lentes de contacto"]},
+"Atrazina":{cas:"1912-24-9",signal:"danger",cat:"Carc. 2; Tox. Aguda 4 (oral); Sensibilización cutánea 1; Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["health","exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H317 — Puede provocar una reacción alérgica en la piel","H351 — Se sospecha que provoca cáncer","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P201 — Solicitar instrucciones especiales antes del uso","P261 — Evitar respirar el polvo","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas de protección","P308+P313 — EN CASO DE exposición: Consultar a un médico"]},
+"Clorpirifos":{cas:"2921-88-2",signal:"danger",cat:"Tox. Aguda 3 (oral); Tox. Aguda 3 (dérmica); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["skull","environment"],hPhrases:["H301 — Tóxico en caso de ingestión","H311 — Tóxico en contacto con la piel","H330 — Mortal en caso de inhalación","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P260 — No respirar el polvo/humo/gas/niebla/vapores","P264 — Lavarse cuidadosamente tras la manipulación","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P284 — Llevar equipo de protección respiratoria","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]},
+"Imidacloprid":{cas:"138261-41-3",signal:"warning",cat:"Tox. Aguda 4 (oral); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P264 — Lavarse las manos cuidadosamente tras la manipulación","P270 — No comer, beber ni fumar durante su utilización","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes de protección","P301+P312 — EN CASO DE INGESTIÓN: Llamar a un CENTRO DE TOXICOLOGÍA"]},
+"Mancozeb":{cas:"8018-01-7",signal:"warning",cat:"Sensibilización cutánea 1; Repr. 2; Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["health","exclamation","environment"],hPhrases:["H317 — Puede provocar una reacción alérgica en la piel","H361d — Se sospecha que daña al feto","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P201 — Solicitar instrucciones especiales antes del uso","P261 — Evitar respirar el polvo","P272 — Las prendas de trabajo contaminadas no podrán sacarse del lugar de trabajo","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas de protección","P308+P313 — EN CASO DE exposición: Consultar a un médico"]},
+"Paraquat":{cas:"4685-14-7",signal:"danger",cat:"Tox. Aguda 2 (oral); Tox. Aguda 3 (dérmica); STOT RE 1; Irritación ocular 2; Tox. acuática aguda 1",pictos:["skull","health","environment"],hPhrases:["H300 — Mortal en caso de ingestión","H311 — Tóxico en contacto con la piel","H318 — Provoca lesiones oculares graves","H372 — Provoca daños en los órganos (pulmones) tras exposiciones prolongadas","H400 — Muy tóxico para los organismos acuáticos"],pPhrases:["P260 — No respirar la niebla/vapores/aerosol","P264 — Lavarse cuidadosamente tras la manipulación","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P284 — Llevar equipo de protección respiratoria","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]},
+"2,4-D":{cas:"94-75-7",signal:"danger",cat:"Tox. Aguda 3 (oral); Irritación ocular grave 1; STOT RE 2; Tox. acuática crónica 2",pictos:["skull","corrosion","health"],hPhrases:["H301 — Tóxico en caso de ingestión","H318 — Provoca lesiones oculares graves","H373 — Puede provocar daños en los órganos tras exposiciones prolongadas","H411 — Tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P260 — No respirar el polvo/niebla","P264 — Lavarse cuidadosamente tras la manipulación","P270 — No comer, beber ni fumar durante su utilización","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas de protección","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]},
+"Cipermetrina":{cas:"52315-07-8",signal:"danger",cat:"Tox. Aguda 3 (inhalación); Tox. Aguda 4 (oral); Irritación cutánea 2; Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["skull","exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H315 — Provoca irritación cutánea","H331 — Tóxico en caso de inhalación","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P261 — Evitar respirar la niebla/vapores","P271 — Utilizar únicamente en exteriores o en un lugar bien ventilado","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas de protección","P304+P340 — EN CASO DE INHALACIÓN: Transportar a la persona al aire libre","P312 — Llamar a un CENTRO DE TOXICOLOGÍA si la persona se encuentra mal"]},
+"Azoxistrobina":{cas:"131860-33-8",signal:"warning",cat:"Tox. Aguda 4 (oral); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P264 — Lavarse las manos cuidadosamente tras la manipulación","P270 — No comer, beber ni fumar durante su utilización","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes de protección","P301+P312 — EN CASO DE INGESTIÓN: Llamar a un CENTRO DE TOXICOLOGÍA"]},
+"Metalaxil":{cas:"57837-19-1",signal:"warning",cat:"Tox. Aguda 4 (oral); Tox. acuática crónica 3",pictos:["exclamation"],hPhrases:["H302 — Nocivo en caso de ingestión","H412 — Nocivo para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P264 — Lavarse las manos cuidadosamente tras la manipulación","P270 — No comer, beber ni fumar durante su utilización","P273 — Evitar su liberación al medio ambiente","P301+P312 — EN CASO DE INGESTIÓN: Llamar a un CENTRO DE TOXICOLOGÍA"]},
+"Carbendazim":{cas:"10605-21-7",signal:"danger",cat:"Muta. 1B; Repr. 1B; Tox. Aguda 4 (inhalación); Sensibilización cutánea 1; Tox. acuática aguda 1",pictos:["health","exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H317 — Puede provocar una reacción alérgica en la piel","H340 — Puede provocar defectos genéticos","H360FD — Puede perjudicar la fertilidad. Puede dañar al feto","H400 — Muy tóxico para los organismos acuáticos"],pPhrases:["P201 — Solicitar instrucciones especiales antes del uso","P261 — Evitar respirar el polvo","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas de protección","P308+P313 — EN CASO DE exposición: Consultar a un médico"]},
+"Abamectina":{cas:"71751-41-2",signal:"danger",cat:"Tox. Aguda 1 (oral); Tox. Aguda 1 (dérmica); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["skull","environment"],hPhrases:["H300 — Mortal en caso de ingestión","H310 — Mortal en contacto con la piel","H330 — Mortal en caso de inhalación","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P260 — No respirar el polvo/humo/gas/niebla","P262 — Evitar el contacto con los ojos, la piel o la ropa","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P284 — Llevar equipo de protección respiratoria","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]},
+"Lambda-cihalotrina":{cas:"91465-08-6",signal:"danger",cat:"Tox. Aguda 3 (oral); Tox. Aguda 3 (dérmica); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["skull","environment"],hPhrases:["H301 — Tóxico en caso de ingestión","H311 — Tóxico en contacto con la piel","H331 — Tóxico en caso de inhalación","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P260 — No respirar la niebla/vapores","P264 — Lavarse cuidadosamente tras la manipulación","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]},
+"Spinosad":{cas:"168316-95-8",signal:"warning",cat:"Tox. Aguda 4 (oral); Irritación ocular 2; Sensibilización cutánea 1; Tox. acuática aguda 1",pictos:["exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H317 — Puede provocar una reacción alérgica en la piel","H319 — Provoca irritación ocular grave","H400 — Muy tóxico para los organismos acuáticos"],pPhrases:["P261 — Evitar respirar el polvo","P264 — Lavarse cuidadosamente tras la manipulación","P272 — Las prendas contaminadas no podrán sacarse del lugar de trabajo","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/gafas de protección"]},
+"Tebuconazol":{cas:"107534-96-3",signal:"danger",cat:"Repr. 2; Tox. Aguda 4 (oral); Tox. acuática aguda 1; Tox. acuática crónica 1",pictos:["health","exclamation","environment"],hPhrases:["H302 — Nocivo en caso de ingestión","H361d — Se sospecha que daña al feto","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P201 — Solicitar instrucciones especiales antes del uso","P261 — Evitar respirar el polvo/niebla","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas de protección","P308+P313 — EN CASO DE exposición: Consultar a un médico"]},
+"Clorotalonil":{cas:"1897-45-6",signal:"danger",cat:"Carc. 2; Tox. Aguda 4 (inhalación); Sensibilización cutánea 1; Irritación ocular grave 1; Tox. acuática aguda 1",pictos:["health","corrosion","exclamation","environment"],hPhrases:["H317 — Puede provocar una reacción alérgica en la piel","H318 — Provoca lesiones oculares graves","H332 — Nocivo en caso de inhalación","H351 — Se sospecha que provoca cáncer","H400 — Muy tóxico para los organismos acuáticos","H410 — Muy tóxico para los organismos acuáticos, con efectos nocivos duraderos"],pPhrases:["P201 — Solicitar instrucciones especiales antes del uso","P261 — Evitar respirar el polvo/niebla","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P305+P351+P338 — EN CASO DE CONTACTO CON LOS OJOS: Aclarar con agua","P308+P313 — EN CASO DE exposición: Consultar a un médico"]},
+"Metomilo":{cas:"16752-77-5",signal:"danger",cat:"Tox. Aguda 1 (oral); Tox. Aguda 2 (dérmica); Tox. acuática aguda 1",pictos:["skull","environment"],hPhrases:["H300 — Mortal en caso de ingestión","H310 — Mortal en contacto con la piel","H400 — Muy tóxico para los organismos acuáticos"],pPhrases:["P260 — No respirar el polvo/humo","P262 — Evitar el contacto con los ojos, la piel o la ropa","P273 — Evitar su liberación al medio ambiente","P280 — Llevar guantes/prendas/gafas/máscara de protección","P284 — Llevar equipo de protección respiratoria","P310 — Llamar inmediatamente a un CENTRO DE TOXICOLOGÍA"]}
+};
+
+const ingredientNames=Object.keys(ingredients);
+
+const acInput=document.getElementById("activeIngredient");
+const acList=document.getElementById("acList");
+acInput.addEventListener("input",function(){
+const v=this.value.toLowerCase();
+if(v.length<1){acList.style.display="none";return;}
+const matches=ingredientNames.filter(n=>n.toLowerCase().includes(v));
+if(!matches.length){acList.style.display="none";return;}
+acList.innerHTML=matches.map(m=>`<div onclick="selectIngredient('${m}')">${m}</div>`).join("");
+acList.style.display="block";
+});
+document.addEventListener("click",e=>{if(!e.target.closest(".autocomplete-wrapper"))acList.style.display="none";});
+
+function selectIngredient(name){acInput.value=name;acList.style.display="none";}
+
+function pictoSVG(type,size){
+const s=size||64;const h=s/2;
+const diamond=`<polygon points="${h},2 ${s-2},${h} ${h},${s-2} 2,${h}" fill="white" stroke="#dc2626" stroke-width="2"/>`;
+const icons={
+skull:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.3}" fill="#dc2626">☠</text></svg>`,
+exclamation:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.35}" font-weight="900" fill="#dc2626">!</text></svg>`,
+environment:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.22}" fill="#dc2626">🌳</text></svg>`,
+health:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.22}" fill="#dc2626">⚕</text></svg>`,
+corrosion:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.22}" fill="#dc2626">🧪</text></svg>`,
+flame:`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${diamond}<text x="${h}" y="${h+2}" text-anchor="middle" dominant-baseline="middle" font-size="${s*.22}" fill="#dc2626">🔥</text></svg>`
+};
+return icons[type]||"";
+}
+
+const pictoNames={skull:"Toxicidad aguda",exclamation:"Atención",environment:"Peligro medio ambiente",health:"Peligro para la salud",corrosion:"Corrosión",flame:"Inflamable"};
+
+const sdsSections=[
+{n:1,t:"Identificación del producto y de la empresa",gen:d=>`<strong>Nombre comercial:</strong> ${d.name}<br><strong>Ingrediente activo:</strong> ${d.ai} (CAS ${d.cas})<br><strong>Concentración:</strong> ${d.conc}<br><strong>Formulación:</strong> ${d.form}<br><strong>Uso:</strong> Producto fitosanitario de uso agrícola<br><strong>Empresa:</strong> [Nombre del registrante]<br><strong>Teléfono de emergencia:</strong> [Centro de Toxicología local]`},
+{n:2,t:"Identificación de los peligros",gen:d=>`<strong>Clasificación GHS:</strong> ${d.cat}<br><strong>Palabra de advertencia:</strong> ${d.signal==="danger"?"PELIGRO":"ATENCIÓN"}<br><strong>Indicaciones de peligro:</strong><br>${d.hPhrases.map(h=>"• "+h).join("<br>")}`},
+{n:3,t:"Composición / información sobre los componentes",gen:d=>`<strong>Ingrediente activo:</strong> ${d.ai}<br><strong>No. CAS:</strong> ${d.cas}<br><strong>Concentración:</strong> ${d.conc}<br><strong>Co-formulantes:</strong> Información propietaria. Contiene solventes y tensioactivos.`},
+{n:4,t:"Primeros auxilios",gen:d=>`<strong>Inhalación:</strong> Trasladar al aire libre. Si presenta dificultad para respirar, buscar atención médica.<br><strong>Contacto con la piel:</strong> Quitar ropa contaminada. Lavar con abundante agua y jabón durante 15 min.<br><strong>Contacto con los ojos:</strong> Enjuagar con agua durante 15 minutos. Consultar a un oftalmólogo.<br><strong>Ingestión:</strong> NO provocar el vómito. Acudir inmediatamente a un centro médico con la etiqueta del producto.`},
+{n:5,t:"Medidas de lucha contra incendios",gen:d=>`<strong>Medios de extinción:</strong> Espuma, CO₂, polvo químico seco. NO usar agua a chorro directo.<br><strong>Peligros específicos:</strong> Puede emitir gases tóxicos (${d.form==="EC"?"incluidos vapores de solvente orgánico":"incluidos óxidos de nitrógeno y fósforo"}) durante la combustión.<br><strong>Equipo de protección:</strong> Usar aparato de respiración autónomo y traje de protección completa.`},
+{n:6,t:"Medidas en caso de vertido accidental",gen:()=>`<strong>Precauciones personales:</strong> Usar EPP completo. Evitar contacto con piel y ojos. Asegurar ventilación adecuada.<br><strong>Precauciones ambientales:</strong> Evitar que el producto llegue a cursos de agua, alcantarillas o suelo.<br><strong>Métodos de limpieza:</strong> Absorber con material inerte (arena, tierra de diatomeas). Recoger en contenedores etiquetados para disposición.`},
+{n:7,t:"Manipulación y almacenamiento",gen:d=>`<strong>Manipulación:</strong> Usar EPP. Evitar formación de aerosoles. No comer, beber ni fumar durante la manipulación.<br><strong>Almacenamiento:</strong> Conservar en envase original cerrado, en lugar fresco, seco y ventilado. Temperatura: 5–35°C. Mantener alejado de alimentos y piensos.<br><strong>Materiales incompatibles:</strong> Agentes oxidantes fuertes, ácidos y bases concentrados.`},
+{n:8,t:"Controles de exposición / protección individual",gen:()=>`<strong>Protección respiratoria:</strong> Máscara con filtro para vapores orgánicos y partículas (tipo A2P3).<br><strong>Protección de manos:</strong> Guantes de nitrilo (espesor ≥0.4 mm, tiempo de permeación >480 min).<br><strong>Protección ocular:</strong> Gafas de seguridad con protección lateral o pantalla facial.<br><strong>Protección corporal:</strong> Traje de protección impermeable (tipo 4 mínimo para aplicación).`},
+{n:9,t:"Propiedades físicas y químicas",gen:d=>`<strong>Estado físico:</strong> ${d.form==="WP"||d.form==="WG"?"Sólido (polvo/gránulo)":"Líquido"}<br><strong>Color:</strong> Variable según formulación<br><strong>Olor:</strong> Característico<br><strong>pH:</strong> ${d.form==="SL"?"4.5–7.0":"5.0–8.0"} (dilución al 1%)<br><strong>Punto de inflamación:</strong> ${d.form==="EC"?">60°C":"No aplicable"}<br><strong>Densidad:</strong> Según especificación de producto`},
+{n:10,t:"Estabilidad y reactividad",gen:()=>`<strong>Estabilidad:</strong> Estable bajo condiciones normales de almacenamiento.<br><strong>Condiciones a evitar:</strong> Temperaturas extremas, luz solar directa, humedad excesiva.<br><strong>Materiales incompatibles:</strong> Agentes oxidantes fuertes, ácidos y bases fuertes.<br><strong>Productos de descomposición:</strong> Óxidos de carbono, nitrógeno y fósforo según composición.`},
+{n:11,t:"Información toxicológica",gen:d=>`<strong>Toxicidad aguda oral (i.a.):</strong> Ver clasificación GHS en Sección 2.<br><strong>Irritación cutánea:</strong> Según clasificación del ingrediente activo.<br><strong>Sensibilización:</strong> Consultar datos del ingrediente activo ${d.ai}.<br><strong>Nota:</strong> Los datos completos de toxicología se encuentran en el dossier regulatorio del producto.`},
+{n:12,t:"Información ecológica",gen:d=>`<strong>Toxicidad acuática:</strong> ${d.pictos.includes("environment")?"Muy tóxico para organismos acuáticos":"Datos disponibles en dossier"}.<br><strong>Persistencia/degradabilidad:</strong> Consultar evaluación de destino ambiental.<br><strong>Potencial de bioacumulación:</strong> Según datos del ingrediente activo.<br><strong>Movilidad en suelo:</strong> Consultar estudios de adsorción/desorción del dossier.`},
+{n:13,t:"Consideraciones relativas a la eliminación",gen:()=>`<strong>Producto:</strong> No verter en desagües. Eliminar conforme a la normativa local vigente.<br><strong>Envases:</strong> Realizar triple lavado. Envases no retornables deben inutilizarse y entregarse a sistema de recolección (ej: Campo Limpio, CampoLimpio, INPEV según país).<br><strong>Caldo sobrante:</strong> Aplicar en cultivo autorizado o disponer según normativa local.`},
+{n:14,t:"Información relativa al transporte",gen:()=>`<strong>ONU:</strong> Según clasificación específica del producto formulado.<br><strong>Clase de peligro:</strong> Consultar ficha de transporte específica.<br><strong>Grupo de embalaje:</strong> Según producto formulado.<br><strong>Precauciones:</strong> Transportar en vehículo exclusivo o separado de alimentos. Mantener documentación de transporte visible.`},
+{n:15,t:"Información reglamentaria",gen:d=>{const regs={CL:"Registro SAG según DS 5/2010 del Ministerio de Agricultura",AR:"Registro SENASA según Decreto 3489/58 y Resolución SENASA",BR:"Registro MAPA/ANVISA/IBAMA según Lei 7.802/89 y Decreto 4.074/02",CO:"Registro ICA según Resolución ICA y Decisión Andina 436",PE:"Registro SENASA según D.S. 001-2015-MINAGRI",MX:"Registro COFEPRIS según LGSP y NOM-232-SSA1",UY:"Registro MGAP/DGSA según Decreto 149/977",PY:"Registro SENAVE según Ley 123/91",EU:"Aprobación según Reglamento (CE) No 1107/2009",US:"Registro EPA según FIFRA"};return`<strong>Regulación aplicable (${d.country}):</strong> ${regs[d.country]||"Consultar regulación local"}<br><strong>Clasificación toxicológica:</strong> Según autoridad competente del país de registro.<br><strong>Franja de color:</strong> Según categoría toxicológica asignada.`;}},
+{n:16,t:"Otra información",gen:()=>`<strong>Fecha de elaboración:</strong> ${new Date().toLocaleDateString("es-CL")}<br><strong>Versión:</strong> 1.0 (Borrador generado por SCRIBE)<br><strong>Descargo:</strong> Esta HDS fue generada como esqueleto referencial. Debe ser completada y validada por un profesional calificado antes de su uso regulatorio.<br><strong>Contacto técnico:</strong> proyectos@uranoia.cl`}
+];
+
+function generateSDS(){
+const name=document.getElementById("productName").value.trim();
+const ai=document.getElementById("activeIngredient").value.trim();
+const conc=document.getElementById("concentration").value.trim();
+const form=document.getElementById("formulationType").value;
+const country=document.getElementById("targetCountry").value;
+
+if(!name||!ai||!conc||!form){alert("Por favor complete todos los campos obligatorios.");return;}
+
+const data=ingredients[ai];
+if(!data){alert("Ingrediente activo no encontrado en la base de datos. Seleccione uno de la lista de autocompletado.");return;}
+
+const d={name,ai,cas:data.cas,conc,form,country,signal:data.signal,cat:data.cat,pictos:data.pictos,hPhrases:data.hPhrases,pPhrases:data.pPhrases};
+
+let sdsHTML=sdsSections.map(s=>`
+<div class="sds-section">
+<div class="sds-header" onclick="toggleSection(this)">
+<span>Sección ${s.n}: ${s.t}</span>
+<span class="arrow">▼</span>
+</div>
+<div class="sds-body">${s.gen(d)}</div>
+</div>`).join("");
+document.getElementById("tab-sds").innerHTML=sdsHTML;
+
+let ghsHTML=`<h3 style="font-size:1rem;margin-bottom:1rem;color:#1a1a2e">Clasificación GHS — ${d.ai}</h3>`;
+ghsHTML+=`<p style="font-size:.85rem;color:#555;margin-bottom:.5rem"><strong>CAS:</strong> ${d.cas}</p>`;
+ghsHTML+=`<p style="font-size:.85rem;color:#555;margin-bottom:1rem"><strong>Clasificación:</strong> ${d.cat}</p>`;
+ghsHTML+=`<h4 style="font-size:.85rem;font-weight:700;margin-bottom:.5rem;color:#667eea">Pictogramas SGA</h4>`;
+ghsHTML+=`<div class="pictogram-row">${d.pictos.map(p=>`<div><div class="pictogram">${pictoSVG(p,64)}</div><div class="pictogram-label">${pictoNames[p]}</div></div>`).join("")}</div>`;
+ghsHTML+=`<h4 style="font-size:.85rem;font-weight:700;margin:.8rem 0 .3rem;color:#667eea">Palabra de Advertencia</h4>`;
+ghsHTML+=`<span class="signal-word ${d.signal==="danger"?"signal-danger":"signal-warning"}">${d.signal==="danger"?"PELIGRO":"ATENCIÓN"}</span>`;
+ghsHTML+=`<h4 style="font-size:.85rem;font-weight:700;margin:1.2rem 0 .5rem;color:#667eea">Indicaciones de Peligro (H)</h4>`;
+ghsHTML+=`<ul class="phrase-list">${d.hPhrases.map(h=>`<li>${h}</li>`).join("")}</ul>`;
+ghsHTML+=`<h4 style="font-size:.85rem;font-weight:700;margin:1.2rem 0 .5rem;color:#667eea">Consejos de Prudencia (P)</h4>`;
+ghsHTML+=`<ul class="phrase-list">${d.pPhrases.map(p=>`<li>${p}</li>`).join("")}</ul>`;
+document.getElementById("tab-ghs").innerHTML=ghsHTML;
+
+const formNames={EC:"Concentrado Emulsionable",WP:"Polvo Mojable",SC:"Suspensión Concentrada",SL:"Concentrado Soluble",WG:"Gránulo Dispersable",GR:"Granulado",CS:"Suspensión de Cápsulas",EW:"Emulsión Aceite en Agua"};
+let labelHTML=`<div class="label-preview">`;
+labelHTML+=`<div class="label-header">`;
+labelHTML+=`<div class="label-product-name">${d.name}</div>`;
+labelHTML+=`<div class="label-ingredient">${d.ai} ${d.conc} — ${formNames[d.form]||d.form}</div>`;
+labelHTML+=`</div>`;
+labelHTML+=`<div class="label-pictograms">${d.pictos.map(p=>`<div class="pictogram">${pictoSVG(p,48)}</div>`).join("")}</div>`;
+labelHTML+=`<div style="text-align:center;margin-bottom:1rem"><span class="signal-word ${d.signal==="danger"?"signal-danger":"signal-warning"}">${d.signal==="danger"?"PELIGRO":"ATENCIÓN"}</span></div>`;
+labelHTML+=`<div class="label-section"><div class="label-section-title">Indicaciones de Peligro</div>${d.hPhrases.map(h=>`<div style="font-size:.78rem;color:#555;padding:.15rem 0">${h}</div>`).join("")}</div>`;
+labelHTML+=`<div class="label-section"><div class="label-section-title">Consejos de Prudencia</div>${d.pPhrases.slice(0,4).map(p=>`<div style="font-size:.78rem;color:#555;padding:.15rem 0">${p}</div>`).join("")}</div>`;
+labelHTML+=`<div class="label-section"><div class="label-section-title">Primeros Auxilios</div><div style="font-size:.78rem;color:#555">En caso de intoxicación, acudir inmediatamente al centro de salud más cercano con la etiqueta del producto. No provocar el vómito.</div></div>`;
+labelHTML+=`<div class="label-section"><div class="label-section-title">Almacenamiento</div><div style="font-size:.78rem;color:#555">Mantener en envase original, cerrado, en lugar fresco y ventilado. Fuera del alcance de niños y animales domésticos.</div></div>`;
+labelHTML+=`<div class="label-footer">Documento generado por SCRIBE (RegulatorIA) — Borrador referencial<br>Para documentación regulatoria completa: <strong>proyectos@uranoia.cl</strong></div>`;
+labelHTML+=`</div>`;
+document.getElementById("tab-label").innerHTML=labelHTML;
+
+document.getElementById("outputPanel").classList.add("visible");
+document.getElementById("emptyState").style.display="none";
+}
+
+function switchTab(el,tab){
+document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
+el.classList.add("active");
+document.getElementById("tab-"+tab).classList.add("active");
+}
+
+function toggleSection(el){
+el.classList.toggle("open");
+el.nextElementSibling.classList.toggle("open");
+}
+</script>
+</body>
+</html>
