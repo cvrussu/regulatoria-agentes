@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan de Ejecución Marketing — UraNoIA 2026</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #232733;
+    --border: #2d3140;
+    --text: #e4e6ed;
+    --muted: #8b8fa3;
+    --accent: #6c5ce7;
+    --accent2: #00cec9;
+    --green: #00b894;
+    --orange: #fdcb6e;
+    --red: #e17055;
+    --blue: #74b9ff;
+    --pink: #fd79a8;
+    --regulatoria: #e17055;
+    --tunorma: #00cec9;
+    --scien: #6c5ce7;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .header { background: linear-gradient(135deg, #1a1d27 0%, #2d1f4e 50%, #1a2d3d 100%); padding: 2rem; border-bottom: 1px solid var(--border); }
+  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: .25rem; }
+  .header .sub { color: var(--muted); font-size: .95rem; }
+  .header .stats-row { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .stat-card { background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: 10px; padding: .75rem 1.25rem; min-width: 140px; }
+  .stat-card .num { font-size: 1.5rem; font-weight: 700; }
+  .stat-card .label { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .stat-card.green .num { color: var(--green); }
+  .stat-card.blue .num { color: var(--blue); }
+  .stat-card.orange .num { color: var(--orange); }
+  .stat-card.pink .num { color: var(--pink); }
+  .nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); overflow-x: auto; }
+  .nav button { background: none; border: none; color: var(--muted); padding: .85rem 1.5rem; font-size: .9rem; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .2s; }
+  .nav button:hover { color: var(--text); background: rgba(255,255,255,.03); }
+  .nav button.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .section { display: none; padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+  .section.active { display: block; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; transition: border-color .2s; }
+  .card:hover { border-color: var(--accent); }
+  .card h3 { font-size: 1.05rem; margin-bottom: .5rem; display: flex; align-items: center; gap: .5rem; }
+  .card p { color: var(--muted); font-size: .88rem; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
+  .badge.auto { background: rgba(0,206,201,.15); color: var(--accent2); }
+  .badge.semi { background: rgba(253,203,110,.15); color: var(--orange); }
+  .badge.manual { background: rgba(225,112,85,.15); color: var(--red); }
+  .badge.high { background: rgba(0,184,148,.15); color: var(--green); }
+  .badge.med { background: rgba(116,185,255,.15); color: var(--blue); }
+  .proj-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: .7rem; font-weight: 600; }
+  .proj-tag.reg { background: rgba(225,112,85,.15); color: var(--regulatoria); }
+  .proj-tag.tun { background: rgba(0,206,201,.15); color: var(--tunorma); }
+  .proj-tag.sci { background: rgba(108,92,231,.15); color: var(--scien); }
+  .action { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: .75rem; }
+  .action .top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .5rem; }
+  .action .title { font-weight: 600; font-size: .95rem; }
+  .action .meta { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+  .action .details { margin-top: .75rem; font-size: .85rem; color: var(--muted); }
+  .action .details strong { color: var(--text); }
+  .action .cmd { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: .5rem .75rem; margin-top: .5rem; font-family: 'Fira Code', 'Consolas', monospace; font-size: .78rem; color: var(--accent2); overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+  .action .time-est { color: var(--orange); font-size: .8rem; font-weight: 600; }
+  .launch-card { background: linear-gradient(135deg, rgba(108,92,231,.1), rgba(0,206,201,.1)); border: 1px solid var(--accent); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+  .launch-card h3 { color: var(--accent2); margin-bottom: .75rem; font-size: 1.1rem; }
+  .launch-card .step { display: flex; gap: .75rem; margin-bottom: .75rem; align-items: flex-start; }
+  .launch-card .step-num { background: var(--accent); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .launch-card .step-text { font-size: .88rem; }
+  .launch-card .step-text strong { color: var(--accent2); }
+  .tbl { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: .75rem; }
+  .tbl th { text-align: left; padding: .5rem .75rem; border-bottom: 1px solid var(--border); color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; }
+  .tbl td { padding: .5rem .75rem; border-bottom: 1px solid rgba(45,49,64,.5); }
+  .tbl tr:hover td { background: rgba(255,255,255,.02); }
+  .filters { display: flex; gap: .5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .filters button { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); padding: .4rem 1rem; font-size: .8rem; cursor: pointer; transition: all .2s; }
+  .filters button:hover, .filters button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .checklist { list-style: none; }
+  .checklist li { padding: .35rem 0; font-size: .85rem; display: flex; align-items: flex-start; gap: .5rem; }
+  .checklist li::before { content: '○'; color: var(--muted); flex-shrink: 0; }
+  .cost-table td:last-child { text-align: right; font-weight: 600; }
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.3rem; }
+    .header .stats-row { gap: .75rem; }
+    .stat-card { min-width: 110px; padding: .5rem .75rem; }
+    .nav button { padding: .7rem 1rem; font-size: .8rem; }
+    .section { padding: 1rem; }
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  .cmd { cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>⚡ Plan de Ejecución Marketing — Automatizado</h1>
+  <div class="sub">UraNoIA · RegulatorIA · TuNorma · ScienSolutions — Marzo 2026</div>
+  <div class="stats-row">
+    <div class="stat-card green"><div class="num">47</div><div class="label">Acciones Totales</div></div>
+    <div class="stat-card blue"><div class="num">28</div><div class="label">Automatizables</div></div>
+    <div class="stat-card orange"><div class="num">10</div><div class="label">Herramientas</div></div>
+    <div class="stat-card pink"><div class="num">$10K</div><div class="label">Meta Ingresos</div></div>
+  </div>
+</div>
+<div class="nav" id="nav">
+  <button class="active" onclick="showSection('launch')">🚀 Lanzar Ahora</button>
+  <button onclick="showSection('week1')">Semana 1</button>
+  <button onclick="showSection('week24')">Semana 2-4</button>
+  <button onclick="showSection('month23')">Mes 2-3</button>
+  <button onclick="showSection('seo')">📝 SEO Blog</button>
+  <button onclick="showSection('social')">📱 Social</button>
+  <button onclick="showSection('email')">📧 Email</button>
+  <button onclick="showSection('leads')">🎯 Leads</button>
+  <button onclick="showSection('ads')">💰 Ads</button>
+  <button onclick="showSection('budget')">💵 Presupuesto</button>
+  <button onclick="showSection('kpis')">📊 KPIs</button>
+</div>
+<div class="section active" id="launch">
+  <h2 style="margin-bottom:.5rem; color:var(--accent2);">🚀 Lanzar Ahora — Acciones Inmediatas</h2>
+  <p style="color:var(--muted); margin-bottom:1.25rem;">Estas acciones se ejecutan con un solo comando o tarea programada. Cero intervención manual.</p>
+  <div class="launch-card">
+    <h3>1. Publicar 9 Blog Posts SEO → GitHub Pages</h3>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:1rem;">Herramienta: <strong style="color:var(--accent2)">GitHub MCP (push_files)</strong> · Tiempo: ~30 min · Impacto: ALTO</p>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Pedirle a Claude: <strong>"Crea 9 blog posts SEO en HTML para mis 3 proyectos y publícalos en GitHub Pages"</strong></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Claude usa <strong>mcp__github__push_files</strong> para subir los 9 archivos HTML al repo</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">GitHub Pages los publica automáticamente. Indexación orgánica en 2-4 semanas.</div></div>
+    <div class="details" style="margin-top:.75rem;">
+      <strong>Keywords por proyecto:</strong>
+      <table class="tbl" style="margin-top:.5rem;">
+        <tr><th>Proyecto</th><th>Blog 1</th><th>Blog 2</th><th>Blog 3</th></tr>
+        <tr><td><span class="proj-tag reg">RegulatorIA</span></td><td>registro fitosanitario chile requisitos</td><td>regulación agroquímicos latam IA</td><td>dossier técnico plaguicidas SAG</td></tr>
+        <tr><td><span class="proj-tag tun">TuNorma</span></td><td>cumplimiento DS 594 chile software</td><td>monitoreo ambiental laboral obligatorio</td><td>fiscalización SEREMI salud empresas</td></tr>
+        <tr><td><span class="proj-tag sci">ScienSolutions</span></td><td>exámenes clínicos domicilio Chile</td><td>panel viral respiratorio PCR rápido</td><td>análisis microbioma intestinal Chile</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="launch-card">
+    <h3>2. Crear 15 Posts LinkedIn + 15 Instagram → Canva MCP</h3>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:1rem;">Herramienta: <strong style="color:var(--accent2)">Canva MCP (generate-design)</strong> · Tiempo: ~45 min · Impacto: ALTO</p>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Pedirle a Claude: <strong>"Crea 5 posts de LinkedIn para RegulatorIA en Canva con diseño profesional"</strong></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Claude usa <strong>generate-design-structured</strong> con prompts específicos por proyecto</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Exportar cada diseño con <strong>export-design</strong> formato PNG</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Publicar en LinkedIn vía <strong>Chrome MCP</strong> (semi-auto: Claude navega y publica)</div></div>
+  </div>
+  <div class="launch-card">
+    <h3>3. Programar Email Follow-up #2 → Scheduled Tasks + SMTP</h3>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:1rem;">Herramienta: <strong style="color:var(--accent2)">Scheduled Tasks + SMTP Ferozo</strong> · Tiempo: ~20 min · Impacto: ALTO</p>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Pedirle a Claude: <strong>"Programa follow-up emails para las 3 campañas usando scheduled tasks"</strong></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Claude crea 3 tareas programadas, una por proyecto, con templates HTML personalizados</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Cada tarea se ejecuta en horario óptimo: <strong>Martes/Jueves 9:00 AM Chile</strong></div></div>
+  </div>
+  <div class="launch-card">
+    <h3>4. Enriquecer Top 50 Prospectos → Apollo/Vibe Prospecting</h3>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:1rem;">Herramienta: <strong style="color:var(--accent2)">Vibe Prospecting (enrich-prospects)</strong> · Créditos: ~50 de 343 · Impacto: MEDIO-ALTO</p>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Pedirle a Claude: <strong>"Enriquece los mejores 50 leads de mis campañas con Apollo"</strong></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Claude usa <strong>match-prospects</strong> + <strong>enrich-prospects</strong> para obtener emails, cargos, LinkedIn</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Exportar a CSV con <strong>export-to-csv</strong> para importar a HubSpot</div></div>
+  </div>
+  <div class="launch-card">
+    <h3>5. Generar Audio Explicativo → ElevenLabs TTS</h3>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:1rem;">Herramienta: <strong style="color:var(--accent2)">ElevenLabs (generate_tts)</strong> · Tiempo: ~15 min · Impacto: MEDIO</p>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Pedirle a Claude: <strong>"Genera 3 audios de 60 segundos explicando cada servicio"</strong></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Claude genera scripts y usa <strong>generate_tts</strong> con voz profesional en español</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Embeber audios en landing pages o usar en videos cortos</div></div>
+  </div>
+</div>
+<div class="section" id="week1">
+  <h2 style="margin-bottom:1.25rem;">📅 Semana 1 — Ejecución Inmediata</h2>
+  <div class="filters">
+    <button class="active" onclick="filterActions(this, 'all')">Todas</button>
+    <button onclick="filterActions(this, 'auto')">🤖 Automatizable</button>
+    <button onclick="filterActions(this, 'semi')">⚡ Semi-Auto</button>
+  </div>
+  <h3 style="color:var(--green); margin-bottom:.75rem;">Día 1 — Content Foundation</h3>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">1.1 Crear y publicar 9 blog posts SEO</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> GitHub MCP → push_files<br><strong>Tiempo:</strong> 30 min</div>
+  </div>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">1.2 Generar 15 diseños LinkedIn en Canva</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Canva MCP → generate-design-structured<br><strong>Tiempo:</strong> 45 min</div>
+  </div>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">1.3 Enriquecer 50 leads con Apollo</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Vibe Prospecting<br><strong>Créditos:</strong> ~50 de 343<br><strong>Tiempo:</strong> 20 min</div>
+  </div>
+  <h3 style="color:var(--green); margin-bottom:.75rem; margin-top:1.5rem;">Día 2 — Email Campaigns</h3>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">2.1 Programar Follow-up #2</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Scheduled Tasks + SMTP Ferozo<br><strong>Tiempo:</strong> 20 min/campaña</div>
+  </div>
+  <div class="action" data-type="semi">
+    <div class="top"><div class="title">2.2 Importar leads a HubSpot</div><div class="meta"><span class="badge semi">SEMI</span><span class="badge med">MEDIO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> HubSpot CSV import<br><strong>Tiempo:</strong> 15 min</div>
+  </div>
+  <h3 style="color:var(--green); margin-bottom:.75rem; margin-top:1.5rem;">Día 3 — Social Publish + Audio</h3>
+  <div class="action" data-type="semi">
+    <div class="top"><div class="title">3.1 Publicar posts en LinkedIn via Chrome MCP</div><div class="meta"><span class="badge semi">SEMI</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Chrome MCP<br><strong>Tiempo:</strong> 5 min/post</div>
+  </div>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">3.2 Generar audios TTS con ElevenLabs</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge med">MEDIO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> ElevenLabs MCP<br><strong>Tiempo:</strong> 15 min</div>
+  </div>
+  <h3 style="color:var(--green); margin-bottom:.75rem; margin-top:1.5rem;">Día 4-5 — Pitch Decks + Automation</h3>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">4.1 Crear pitch decks con Gamma</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge med">MEDIO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Gamma MCP<br><strong>Tiempo:</strong> 15 min/deck</div>
+  </div>
+  <div class="action" data-type="auto">
+    <div class="top"><div class="title">4.2 Programar tareas recurrentes semanales</div><div class="meta"><span class="badge auto">AUTO</span><span class="badge high">ALTO</span></div></div>
+    <div class="details"><strong>Herramienta:</strong> Scheduled Tasks<br><strong>Tiempo:</strong> 10 min setup</div>
+  </div>
+</div>
+<div class="section" id="week24">
+  <h2 style="margin-bottom:1.25rem;">📅 Semanas 2-4 — Scaling Semi-Automatizado</h2>
+  <div class="card">
+    <h3>💰 Google Ads Setup (via Chrome MCP)</h3>
+    <div class="details">
+      <strong>Automatización:</strong> <span class="badge semi">SEMI-AUTO</span> — Claude navega y llena formularios, tú apruebas pagos<br><br>
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>Budget/día</th><th>Keywords</th></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>$15</td><td>registro fitosanitario, consultoría regulatoria</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>$15</td><td>cumplimiento DS 594, software seguridad laboral</td></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>$20</td><td>examen sangre domicilio, PCR rápido Santiago</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📘 Meta Ads Setup (via Chrome MCP)</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>Objetivo</th><th>Audiencia</th><th>Budget/día</th></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>Lead Gen</td><td>25-55, Santiago, salud</td><td>$15</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>Traffic</td><td>Profesionales HSEC</td><td>$10</td></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>Lead Gen</td><td>Agroindustria LATAM</td><td>$10</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📅 LinkedIn Content Calendar — 4 Semanas</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Semana</th><th>Lun</th><th>Mié</th><th>Vie</th></tr>
+        <tr><td>Sem 2</td><td>Estadística</td><td>Caso éxito</td><td>Tip / How-to</td></tr>
+        <tr><td>Sem 3</td><td>Problema → Solución</td><td>Behind scenes</td><td>CTA directo</td></tr>
+        <tr><td>Sem 4</td><td>Tendencia</td><td>Testimonial</td><td>Oferta</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="month23">
+  <h2 style="margin-bottom:1.25rem;">📅 Mes 2-3 — Escalamiento</h2>
+  <div class="card">
+    <h3>📧 Email Nurture Sequences — 5 emails por proyecto</h3>
+    <div class="details">
+      <strong>RegulatorIA:</strong>
+      <table class="tbl">
+        <tr><th>#</th><th>Día</th><th>Asunto</th></tr>
+        <tr><td>1</td><td>0</td><td>Bienvenido a RegulatorIA</td></tr>
+        <tr><td>2</td><td>3</td><td>3 Errores que Retrasan tu Registro</td></tr>
+        <tr><td>3</td><td>7</td><td>Caso de Éxito: Registro en 6 Meses</td></tr>
+        <tr><td>4</td><td>12</td><td>Checklist Registro Fitosanitario 2026</td></tr>
+        <tr><td>5</td><td>18</td><td>Demo Exclusiva — Acelera tu Registro</td></tr>
+      </table>
+      <br><strong>TuNorma:</strong>
+      <table class="tbl">
+        <tr><th>#</th><th>Día</th><th>Asunto</th></tr>
+        <tr><td>1</td><td>0</td><td>TuNorma — DS 594 Sin Complicaciones</td></tr>
+        <tr><td>2</td><td>3</td><td>5 Multas Más Comunes DS 594</td></tr>
+        <tr><td>3</td><td>7</td><td>Monitoreo en Tiempo Real</td></tr>
+        <tr><td>4</td><td>12</td><td>Caso: Empresa Evitó $50M en Multas</td></tr>
+        <tr><td>5</td><td>18</td><td>Prueba TuNorma Gratis 14 Días</td></tr>
+      </table>
+      <br><strong>ScienSolutions:</strong>
+      <table class="tbl">
+        <tr><th>#</th><th>Día</th><th>Asunto</th></tr>
+        <tr><td>1</td><td>0</td><td>Exámenes Clínicos en Tu Hogar</td></tr>
+        <tr><td>2</td><td>3</td><td>Panel Viral: 15 Patógenos en 24hrs</td></tr>
+        <tr><td>3</td><td>7</td><td>DeepSkin: IA para Tu Piel</td></tr>
+        <tr><td>4</td><td>12</td><td>GutCode: Tu Microbioma Decodificado</td></tr>
+        <tr><td>5</td><td>18</td><td>Pack Completo — 20% Descuento</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🔄 Content Repurposing Pipeline</h3>
+    <div class="details">
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin:.75rem 0; align-items:center;">
+        <span style="background:var(--accent);padding:6px 12px;border-radius:6px;font-size:.8rem;">Blog Post</span>
+        <span style="color:var(--muted);">→</span>
+        <span style="background:rgba(0,206,201,.2);padding:6px 12px;border-radius:6px;font-size:.8rem;">LinkedIn</span>
+        <span style="color:var(--muted);">→</span>
+        <span style="background:rgba(253,203,110,.2);padding:6px 12px;border-radius:6px;font-size:.8rem;">Instagram</span>
+        <span style="color:var(--muted);">→</span>
+        <span style="background:rgba(253,121,168,.2);padding:6px 12px;border-radius:6px;font-size:.8rem;">TikTok</span>
+        <span style="color:var(--muted);">→</span>
+        <span style="background:rgba(116,185,255,.2);padding:6px 12px;border-radius:6px;font-size:.8rem;">Email</span>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🎯 Apollo Prospecting — Rondas Mensuales</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Mes</th><th>Créditos</th><th>Leads esperados</th></tr>
+        <tr><td>Mes 2 - Ronda 1-3</td><td>150</td><td>120-150</td></tr>
+        <tr><td>Mes 3 - Ronda 4</td><td>100</td><td>80-100</td></tr>
+        <tr><td>Reserva</td><td>43</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="seo">
+  <h2 style="margin-bottom:1.25rem;">📝 SEO Blog — Plan Detallado</h2>
+  <div class="card">
+    <h3><span class="proj-tag reg">RegulatorIA</span> — 3 Blog Posts</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Título SEO</th><th>Keyword</th><th>Vol. est.</th></tr>
+        <tr><td>Requisitos Registro Fitosanitario Chile 2026</td><td>registro fitosanitario chile</td><td>320/mes</td></tr>
+        <tr><td>IA Transformando Regulación Agroquímicos LATAM</td><td>regulación agroquímicos IA</td><td>110/mes</td></tr>
+        <tr><td>Guía Dossier Técnico Plaguicidas SAG</td><td>dossier técnico plaguicidas SAG</td><td>90/mes</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="proj-tag tun">TuNorma</span> — 3 Blog Posts</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Título SEO</th><th>Keyword</th><th>Vol. est.</th></tr>
+        <tr><td>Cumplimiento DS 594 Chile: Guía Completa</td><td>cumplimiento DS 594 chile</td><td>480/mes</td></tr>
+        <tr><td>Monitoreo Ambiental Laboral Obligaciones</td><td>monitoreo ambiental laboral</td><td>210/mes</td></tr>
+        <tr><td>Fiscalización SEREMI: Cómo Prepararse</td><td>fiscalización SEREMI salud</td><td>170/mes</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="proj-tag sci">ScienSolutions</span> — 3 Blog Posts</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Título SEO</th><th>Keyword</th><th>Vol. est.</th></tr>
+        <tr><td>Exámenes Clínicos a Domicilio Chile 2026</td><td>exámenes clínicos domicilio Chile</td><td>590/mes</td></tr>
+        <tr><td>Panel Viral Respiratorio: Qué Es y Cuándo Hacerte uno</td><td>panel viral respiratorio PCR</td><td>1,200/mes</td></tr>
+        <tr><td>Análisis Microbioma Intestinal Chile</td><td>análisis microbioma intestinal</td><td>720/mes</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="social">
+  <h2 style="margin-bottom:1.25rem;">📱 Social Media — Contenido</h2>
+  <div class="card">
+    <h3><span class="proj-tag reg">RegulatorIA</span> — 5 Posts LinkedIn</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>#</th><th>Copy</th><th>CTA</th></tr>
+        <tr><td>1</td><td>40% de registros se rechazan por errores evitables</td><td>Link a blog</td></tr>
+        <tr><td>2</td><td>De 18 a 6 meses con IA</td><td>Demo gratuita</td></tr>
+        <tr><td>3</td><td>5 cambios regulatorios 2026</td><td>Descarga guía</td></tr>
+        <tr><td>4</td><td>Caso real: -45% costos regulatorios</td><td>Ver caso</td></tr>
+        <tr><td>5</td><td>RegulatorIA: IA + experiencia regulatoria</td><td>Agendar demo</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="proj-tag tun">TuNorma</span> — 5 Posts LinkedIn</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>#</th><th>Copy</th><th>CTA</th></tr>
+        <tr><td>1</td><td>Multas DS 594 superan $50M CLP</td><td>Evaluación gratis</td></tr>
+        <tr><td>2</td><td>Checklist: 10 puntos SEREMI</td><td>Descarga</td></tr>
+        <tr><td>3</td><td>Monitoreo ambiental en tiempo real</td><td>Demo gratis</td></tr>
+        <tr><td>4</td><td>Empresa minera evitó clausura</td><td>Ver caso</td></tr>
+        <tr><td>5</td><td>Trial gratis 14 días</td><td>Trial link</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="proj-tag sci">ScienSolutions</span> — 5 Posts</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>#</th><th>Copy</th><th>CTA</th></tr>
+        <tr><td>1</td><td>Exámenes en tu casa, resultados 24hrs</td><td>Agendar visita</td></tr>
+        <tr><td>2</td><td>Panel Viral: 15 patógenos, 1 muestra</td><td>Más info</td></tr>
+        <tr><td>3</td><td>DeepSkin: IA dermatológica</td><td>Probar</td></tr>
+        <tr><td>4</td><td>GutCode: microbioma decodificado</td><td>Descubrir</td></tr>
+        <tr><td>5</td><td>Pack Completo 20% off</td><td>Comprar</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="email">
+  <h2 style="margin-bottom:1.25rem;">📧 Email Marketing</h2>
+  <div class="card">
+    <h3>Configuración SMTP</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Cuenta</th><th>Proyecto</th><th>Límite</th></tr>
+        <tr><td>proyectos@uranoia.cl</td><td><span class="proj-tag reg">REG</span></td><td>100/hr</td></tr>
+        <tr><td>info@gruporegulatorio.cl</td><td><span class="proj-tag tun">TUN</span></td><td>100/hr</td></tr>
+        <tr><td>contacto@sciensolutions.com</td><td><span class="proj-tag sci">SCI</span></td><td>100/hr</td></tr>
+      </table>
+      <br><strong>Capacidad:</strong> 400 emails/hr, ~2,400/día. Recomendado: 50-80/campaña/día.
+    </div>
+  </div>
+</div>
+<div class="section" id="leads">
+  <h2 style="margin-bottom:1.25rem;">🎯 Lead Generation</h2>
+  <div class="card">
+    <h3>Créditos Apollo: 343 disponibles</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>ICP</th><th>Geografía</th><th>Créditos</th></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>Regulatory Affairs Manager</td><td>Chile, Argentina, Colombia, México</td><td>~120</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>Jefe HSEC, Prevencionista</td><td>Chile</td><td>~110</td></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>Director Médico, Clínica</td><td>Chile (Santiago)</td><td>~113</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="ads">
+  <h2 style="margin-bottom:1.25rem;">💰 Paid Ads</h2>
+  <div class="card">
+    <h3>Google Ads — $50/día total</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>Budget/día</th><th>CPC est.</th><th>Clicks/mes</th></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>$15</td><td>$1.50</td><td>300</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>$15</td><td>$1.20</td><td>375</td></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>$20</td><td>$0.80</td><td>750</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Meta Ads — $35/día total</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>Objetivo</th><th>Budget/día</th></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>Lead Gen</td><td>$15</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>Traffic</td><td>$10</td></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>Lead Gen</td><td>$10</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="budget">
+  <h2 style="margin-bottom:1.25rem;">💵 Presupuesto</h2>
+  <div class="card">
+    <h3>Costos Mensuales</h3>
+    <div class="details">
+      <table class="tbl cost-table">
+        <tr><th>Concepto</th><th>Costo/mes</th></tr>
+        <tr><td>Google Ads ($50/día)</td><td>$1,500</td></tr>
+        <tr><td>Meta Ads ($35/día)</td><td>$1,050</td></tr>
+        <tr><td>GitHub Pages / SMTP / Apollo / Canva</td><td>$0*</td></tr>
+        <tr style="font-weight:700; color:#00cec9;"><td>TOTAL</td><td>~$2,550/mes</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Proyección Revenue → $10K</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Proyecto</th><th>Deal Size</th><th>Deals/mes</th><th>Revenue</th></tr>
+        <tr><td><span class="proj-tag reg">REG</span></td><td>$3K-8K</td><td>1-2</td><td>$3K-8K</td></tr>
+        <tr><td><span class="proj-tag tun">TUN</span></td><td>$500-2K/mes</td><td>3-5</td><td>$1.5K-5K</td></tr>
+        <tr><td><span class="proj-tag sci">SCI</span></td><td>$50-200/exam</td><td>20-50</td><td>$1K-5K</td></tr>
+        <tr style="font-weight:700; color:#00b894;"><td>TOTAL</td><td></td><td></td><td>$5.5K-18K</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="section" id="kpis">
+  <h2 style="margin-bottom:1.25rem;">📊 KPIs</h2>
+  <div class="card">
+    <h3>Métricas Clave</h3>
+    <div class="details">
+      <table class="tbl">
+        <tr><th>Métrica</th><th>Sem 1</th><th>Mes 1</th><th>Mes 3</th></tr>
+        <tr><td>Blog posts</td><td>9</td><td>15</td><td>36</td></tr>
+        <tr><td>Tráfico orgánico</td><td>50</td><td>500</td><td>3,000</td></tr>
+        <tr><td>Posts social</td><td>15</td><td>36</td><td>108</td></tr>
+        <tr><td>Emails enviados</td><td>150</td><td>500</td><td>2,000</td></tr>
+        <tr><td>Leads generados</td><td>50</td><td>100</td><td>300</td></tr>
+        <tr><td>Meetings</td><td>2</td><td>8</td><td>20</td></tr>
+        <tr><td>Revenue</td><td>$0</td><td>$3K</td><td>$10K+</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+function filterActions(btn, type) {
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.action').forEach(a => {
+    if (type === 'all') { a.style.display = ''; return; }
+    a.style.display = a.dataset.type === type ? '' : 'none';
+  });
+}
+document.querySelectorAll('.cmd').forEach(cmd => {
+  cmd.title = 'Click para copiar';
+  cmd.addEventListener('click', () => {
+    const textarea = document.createElement('textarea');
+    textarea.value = cmd.textContent;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(textarea);
+    const orig = cmd.style.borderColor;
+    cmd.style.borderColor = '#00b894';
+    setTimeout(() => { cmd.style.borderColor = orig; }, 1000);
+  });
+});
+</script>
+</body>
+</html>
