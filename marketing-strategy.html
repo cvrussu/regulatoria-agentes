@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estrategia de Marketing LATAM — Urano IA</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#1a1a2e;--secondary:#16213e;--accent:#0f3460;--highlight:#e94560;--gold:#f5a623;--green:#27ae60;--blue:#2980b9;--purple:#8e44ad;--bg:#f0f2f5;--card:#fff;--text:#2c3e50;--muted:#7f8c8d;--border:#e0e0e0;--reg-color:#0f3460;--tun-color:#27ae60;--sci-color:#8e44ad;--shadow:0 4px 24px rgba(0,0,0,.08)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.header{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;padding:40px 0;text-align:center}
+.header h1{font-size:2.4em;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.header p{font-size:1.15em;opacity:.85;max-width:700px;margin:0 auto}
+.header .meta{margin-top:16px;font-size:.9em;opacity:.6}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+.project-tabs{display:flex;justify-content:center;gap:12px;margin:32px 0 0;flex-wrap:wrap}
+.project-tab{padding:14px 32px;border-radius:12px 12px 0 0;cursor:pointer;font-weight:700;font-size:1em;transition:all .3s;border:2px solid transparent;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7)}
+.project-tab:hover{background:rgba(255,255,255,.25);color:#fff}
+.project-tab.active{background:#fff;color:var(--text);border-bottom-color:#fff}
+.project-tab[data-project="regulatoria"]{border-top:3px solid var(--reg-color)}
+.project-tab[data-project="tunorma"]{border-top:3px solid var(--tun-color)}
+.project-tab[data-project="scien"]{border-top:3px solid var(--sci-color)}
+.project-tab.active[data-project="regulatoria"]{color:var(--reg-color)}
+.project-tab.active[data-project="tunorma"]{color:var(--tun-color)}
+.project-tab.active[data-project="scien"]{color:var(--sci-color)}
+.section-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:24px 0 20px;padding:8px;background:#fff;border-radius:12px;box-shadow:var(--shadow)}
+.section-tab{padding:10px 18px;border-radius:8px;cursor:pointer;font-size:.85em;font-weight:600;transition:all .2s;background:transparent;color:var(--muted);border:none}
+.section-tab:hover{background:var(--bg);color:var(--text)}
+.section-tab.active{background:var(--primary);color:#fff}
+.project-content{display:none}
+.project-content.active{display:block}
+.section-content{display:none}
+.section-content.active{display:block}
+.card{background:var(--card);border-radius:16px;padding:32px;margin-bottom:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.card h2{font-size:1.6em;margin-bottom:8px;color:var(--primary)}
+.card h3{font-size:1.2em;margin:24px 0 12px;color:var(--accent);border-bottom:2px solid var(--bg);padding-bottom:8px}
+.card h4{font-size:1em;margin:16px 0 8px;color:var(--text);font-weight:700}
+.badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.75em;font-weight:700;margin:2px}
+.badge-reg{background:#e8f0fe;color:var(--reg-color)}
+.badge-tun{background:#e8f8f0;color:var(--tun-color)}
+.badge-sci{background:#f3e8f9;color:var(--sci-color)}
+.badge-high{background:#ffeaea;color:#c0392b}
+.badge-med{background:#fff5e0;color:#e67e22}
+.badge-low{background:#e8f8f0;color:#27ae60}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9em}
+th{background:var(--primary);color:#fff;padding:12px 16px;text-align:left;font-weight:600;white-space:nowrap}
+td{padding:10px 16px;border-bottom:1px solid var(--border)}
+tr:hover td{background:#f8f9fa}
+tr:nth-child(even) td{background:#fafbfc}
+.kw-table th{font-size:.8em;text-transform:uppercase;letter-spacing:.5px}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:16px 0}
+.metric-card{background:linear-gradient(135deg,#f8f9fa,#fff);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.metric-card .number{font-size:2em;font-weight:800;color:var(--primary)}
+.metric-card .label{font-size:.85em;color:var(--muted);margin-top:4px}
+.ad-copy{background:#f8f9fa;border-left:4px solid var(--accent);padding:16px 20px;margin:12px 0;border-radius:0 8px 8px 0;font-size:.95em}
+.ad-copy .headline{font-weight:700;color:var(--primary);font-size:1.1em}
+.ad-copy .desc{color:var(--text);margin-top:4px}
+.ad-copy .url{color:var(--green);font-size:.85em;margin-top:4px}
+.timeline{position:relative;padding-left:40px;margin:20px 0}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--accent),var(--highlight))}
+.timeline-item{position:relative;margin-bottom:28px;padding:16px 20px;background:#f8f9fa;border-radius:12px;border:1px solid var(--border)}
+.timeline-item::before{content:'';position:absolute;left:-33px;top:20px;width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 2px var(--accent)}
+.timeline-item .week{font-weight:800;color:var(--accent);font-size:.9em;text-transform:uppercase}
+.timeline-item .tasks{margin-top:8px;font-size:.9em}
+.budget-bar{height:32px;border-radius:8px;overflow:hidden;display:flex;margin:8px 0}
+.budget-bar div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.75em;font-weight:700;min-width:40px}
+.funnel{display:grid;gap:12px;margin:16px 0}
+.funnel-stage{padding:16px 20px;border-radius:12px;color:#fff}
+.funnel-tofu{background:linear-gradient(135deg,#3498db,#2980b9)}
+.funnel-mofu{background:linear-gradient(135deg,#f39c12,#e67e22)}
+.funnel-bofu{background:linear-gradient(135deg,#27ae60,#2ecc71)}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:8px 0 8px 28px;position:relative;border-bottom:1px solid #f0f0f0}
+.checklist li::before{content:'\2713';position:absolute;left:0;color:var(--green);font-weight:700;font-size:1.1em}
+.tag{display:inline-block;padding:3px 10px;background:#e8f0fe;color:var(--accent);border-radius:6px;font-size:.8em;margin:2px;font-weight:600}
+.progress-bar{height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;margin:8px 0}
+.progress-bar .fill{height:100%;border-radius:4px;transition:width .5s}
+.collapsible{cursor:pointer;padding:16px;background:#f8f9fa;border:1px solid var(--border);border-radius:8px;margin:8px 0;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.collapsible:hover{background:#f0f2f5}
+.collapsible::after{content:'\25B8';transition:transform .3s;font-size:1.2em}
+.collapsible.open::after{transform:rotate(90deg)}
+.collapsible-content{display:none;padding:16px;background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px}
+.collapsible-content.open{display:block}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}.project-tab{padding:10px 16px;font-size:.85em}.card{padding:20px}}
+.highlight-box{background:linear-gradient(135deg,#667eea20,#764ba220);border:1px solid #667eea40;border-radius:12px;padding:20px;margin:16px 0}
+.revenue-target{text-align:center;padding:40px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border-radius:16px;margin:24px 0}
+.revenue-target .amount{font-size:3em;font-weight:900}
+.revenue-target .subtitle{opacity:.8;margin-top:8px}
+.emoji{font-size:1.2em;margin-right:4px}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:.85em;border-top:1px solid var(--border);margin-top:40px;background:#fff}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="container">
+<h1>Estrategia de Marketing Digital LATAM</h1>
+<p>Plan integral para posicionar a Urano IA como l\u00edder en IA aplicada en Latinoam\u00e9rica</p>
+<div class="project-tabs">
+<div class="project-tab active" data-project="regulatoria" onclick="switchProject('regulatoria')">RegulatorIA</div>
+<div class="project-tab" data-project="tunorma" onclick="switchProject('tunorma')">TuNorma</div>
+<div class="project-tab" data-project="scien" onclick="switchProject('scien')">ScienSolutions</div>
+</div>
+<div class="meta">Preparado: Marzo 2026 · Meta de ingresos: $10,000 USD/mes · Horizonte: 90 d\u00edas</div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== REGULATORIA ==================== -->
+<div class="project-content active" id="project-regulatoria">
+<div class="section-tabs">
+<div class="section-tab active" onclick="switchSection('regulatoria','seo')">SEO</div>
+<div class="section-tab" onclick="switchSection('regulatoria','google')">Google Ads</div>
+<div class="section-tab" onclick="switchSection('regulatoria','meta')">Meta Ads</div>
+<div class="section-tab" onclick="switchSection('regulatoria','tiktok')">TikTok</div>
+<div class="section-tab" onclick="switchSection('regulatoria','linkedin')">LinkedIn</div>
+<div class="section-tab" onclick="switchSection('regulatoria','content')">Content</div>
+<div class="section-tab" onclick="switchSection('regulatoria','budget')">Presupuesto</div>
+<div class="section-tab" onclick="switchSection('regulatoria','kpis')">KPIs</div>
+<div class="section-tab" onclick="switchSection('regulatoria','timeline')">90 D\u00edas</div>
+</div>
+
+<!-- SEO -->
+<div class="section-content active" id="regulatoria-seo">
+<div class="card">
+<h2>Estrategia SEO — RegulatorIA</h2>
+<p>Posicionamiento org\u00e1nico para captar empresas agroqu\u00edmicas buscando soluciones regulatorias con IA en LATAM.</p>
+
+<h3>Palabras Clave Objetivo (30+)</h3>
+<table class="kw-table">
+<tr><th>#</th><th>Keyword</th><th>Vol. Mensual Est.</th><th>Dificultad</th><th>Intent</th></tr>
+<tr><td>1</td><td>registro de agroqu\u00edmicos</td><td>1,200</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>2</td><td>consultor\u00eda regulatoria agroqu\u00edmicos</td><td>480</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>3</td><td>registro fitosanitario chile</td><td>390</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>4</td><td>regulaci\u00f3n de plaguicidas latinoam\u00e9rica</td><td>320</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>5</td><td>inteligencia artificial agroqu\u00edmicos</td><td>260</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>6</td><td>SAG registro productos</td><td>720</td><td><span class="badge badge-med">Media</span></td><td>Navegacional</td></tr>
+<tr><td>7</td><td>dossier regulatorio agroqu\u00edmicos</td><td>210</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>8</td><td>normativa de plaguicidas</td><td>590</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>9</td><td>toxicolog\u00eda agroqu\u00edmicos</td><td>440</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>10</td><td>registro SENASA productos fitosanitarios</td><td>350</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>11</td><td>equivalencia t\u00e9cnica agroqu\u00edmicos</td><td>180</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>12</td><td>regulaci\u00f3n plaguicidas colombia</td><td>290</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>13</td><td>etiquetado de agroqu\u00edmicos</td><td>310</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>14</td><td>COFEPRIS registro plaguicidas</td><td>520</td><td><span class="badge badge-med">Media</span></td><td>Navegacional</td></tr>
+<tr><td>15</td><td>consultor\u00eda SAG chile</td><td>170</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>16</td><td>hoja de seguridad agroqu\u00edmicos</td><td>680</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>17</td><td>registro de fertilizantes</td><td>410</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>18</td><td>clasificaci\u00f3n toxicol\u00f3gica plaguicidas</td><td>350</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>19</td><td>software regulatorio agr\u00edcola</td><td>90</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>20</td><td>automatizar registro agroqu\u00edmicos</td><td>70</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>21</td><td>requisitos registro plaguicidas m\u00e9xico</td><td>280</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>22</td><td>buenas pr\u00e1cticas agr\u00edcolas regulaci\u00f3n</td><td>240</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>23</td><td>l\u00edmite m\u00e1ximo de residuos LMR</td><td>530</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>24</td><td>agente IA regulatorio</td><td>40</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>25</td><td>registro productos fitosanitarios per\u00fa</td><td>220</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>26</td><td>ANVISA registro agroqu\u00edmicos brasil</td><td>380</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>27</td><td>legislaci\u00f3n agroqu\u00edmica argentina</td><td>190</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>28</td><td>IA para cumplimiento regulatorio</td><td>110</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>29</td><td>auditor\u00eda regulatoria agroqu\u00edmicos</td><td>150</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>30</td><td>certificaci\u00f3n org\u00e1nica requisitos</td><td>620</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>31</td><td>ficha t\u00e9cnica plaguicidas</td><td>450</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>32</td><td>regulaci\u00f3n biotecnolog\u00eda agr\u00edcola latam</td><td>130</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+</table>
+
+<h3>Checklist On-Page SEO</h3>
+<ul class="checklist">
+<li>Title tags optimizados: "Consultor\u00eda Regulatoria con IA para Agroqu\u00edmicos | RegulatorIA"</li>
+<li>Meta descriptions con CTA en cada p\u00e1gina (m\u00e1x 155 caracteres)</li>
+<li>URLs limpias: /registro-agroquimicos-chile, /consultoria-regulatoria-latam</li>
+<li>H1 \u00fanico por p\u00e1gina con keyword principal, H2-H3 con variaciones</li>
+<li>Schema markup: Organization, Service, FAQPage, BreadcrumbList</li>
+<li>Im\u00e1genes optimizadas con alt text descriptivo en espa\u00f1ol</li>
+<li>Enlazado interno entre art\u00edculos de blog y p\u00e1ginas de servicio</li>
+<li>Core Web Vitals: LCP &lt; 2.5s, FID &lt; 100ms, CLS &lt; 0.1</li>
+<li>Sitemap XML actualizado y enviado a Google Search Console</li>
+<li>Hreflang tags para segmentar Chile, M\u00e9xico, Colombia, Per\u00fa, Argentina</li>
+</ul>
+
+<h3>Calendario de Blog (Mensual)</h3>
+<table>
+<tr><th>Semana</th><th>Art\u00edculo</th><th>Keyword Target</th><th>Palabras</th></tr>
+<tr><td>Sem 1</td><td>"Gu\u00eda completa para registrar agroqu\u00edmicos en Chile 2026"</td><td>registro agroqu\u00edmicos chile</td><td>2,500</td></tr>
+<tr><td>Sem 2</td><td>"C\u00f3mo la IA est\u00e1 transformando la consultor\u00eda regulatoria"</td><td>IA consultor\u00eda regulatoria</td><td>1,800</td></tr>
+<tr><td>Sem 3</td><td>"Requisitos de COFEPRIS para plaguicidas: paso a paso"</td><td>COFEPRIS registro plaguicidas</td><td>2,200</td></tr>
+<tr><td>Sem 4</td><td>"LMR en agroqu\u00edmicos: lo que toda empresa debe saber"</td><td>l\u00edmite m\u00e1ximo residuos</td><td>1,500</td></tr>
+</table>
+
+<h3>SEO T\u00e9cnico</h3>
+<ul class="checklist">
+<li>Migrar a HTTPS si no est\u00e1 implementado</li>
+<li>Implementar lazy loading para im\u00e1genes</li>
+<li>Minificar CSS/JS y habilitar compresi\u00f3n Gzip/Brotli</li>
+<li>Crear p\u00e1gina 404 personalizada con links \u00fatiles</li>
+<li>Configurar redirects 301 para URLs antiguas</li>
+<li>Implementar AMP para art\u00edculos de blog (opcional)</li>
+<li>Auditor\u00eda mensual con Screaming Frog o Ahrefs</li>
+</ul>
+</div>
+</div>
+
+<!-- Google Ads -->
+<div class="section-content" id="regulatoria-google">
+<div class="card">
+<h2>Google Ads — RegulatorIA</h2>
+<p>Presupuesto recomendado: <strong>$400-600 USD/mes</strong> · Enfoque: Search + Display remarketing</p>
+
+<h3>Estructura de Campa\u00f1as</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Tipo</th><th>Presupuesto Diario</th><th>Objetivo</th></tr>
+<tr><td>REG - Search Consultor\u00eda</td><td>Search</td><td>$8-10</td><td>Leads cualificados</td></tr>
+<tr><td>REG - Search Registro</td><td>Search</td><td>$5-7</td><td>Leads informativos</td></tr>
+<tr><td>REG - Display Remarketing</td><td>Display</td><td>$3-4</td><td>Reconversi\u00f3n</td></tr>
+<tr><td>REG - Brand</td><td>Search</td><td>$1-2</td><td>Protecci\u00f3n de marca</td></tr>
+</table>
+
+<h3>Grupos de Anuncios y Keywords</h3>
+<table class="kw-table">
+<tr><th>Ad Group</th><th>Keywords</th><th>CPC Est.</th><th>Match Type</th></tr>
+<tr><td>Consultor\u00eda Regulatoria</td><td>consultor\u00eda regulatoria agroqu\u00edmicos, asesor\u00eda regulatoria fitosanitarios, consultor registro plaguicidas</td><td>$1.20-2.50</td><td>Phrase + Exact</td></tr>
+<tr><td>Registro Agroqu\u00edmicos</td><td>registro de agroqu\u00edmicos, registrar plaguicidas, registro fitosanitario</td><td>$0.80-1.80</td><td>Phrase + Exact</td></tr>
+<tr><td>IA Regulatoria</td><td>inteligencia artificial regulatoria, agente IA agroqu\u00edmicos, automatizar regulaci\u00f3n</td><td>$0.60-1.20</td><td>Broad Modified</td></tr>
+<tr><td>Pa\u00eds Espec\u00edfico</td><td>registro SAG chile, COFEPRIS plaguicidas, SENASA fitosanitarios</td><td>$0.50-1.50</td><td>Exact</td></tr>
+</table>
+
+<h3>Ejemplos de Anuncios en Espa\u00f1ol</h3>
+<div class="ad-copy">
+<div class="headline">Consultor\u00eda Regulatoria con IA | 11 Agentes Especializados</div>
+<div class="desc">Acelera el registro de tus agroqu\u00edmicos en LATAM. Nuestros agentes de IA analizan dossiers, normativas y requisitos en minutos. Cotizaci\u00f3n gratuita.</div>
+<div class="url">regulatoria.uranoia.cl/consultoria</div>
+</div>
+<div class="ad-copy">
+<div class="headline">Registra Agroqu\u00edmicos 10x M\u00e1s R\u00e1pido | RegulatorIA</div>
+<div class="desc">Deja que la IA revise tu dossier regulatorio. Cumplimiento con SAG, COFEPRIS, SENASA y m\u00e1s. +500 regulaciones analizadas. Solicita demo.</div>
+<div class="url">regulatoria.uranoia.cl/demo</div>
+</div>
+<div class="ad-copy">
+<div class="headline">\u00bfRegistrando Plaguicidas en Chile? | Expertos + IA</div>
+<div class="desc">Combinamos experiencia regulatoria con 11 agentes de IA para agilizar tu registro fitosanitario. Resultados en semanas, no meses.</div>
+<div class="url">regulatoria.uranoia.cl/chile</div>
+</div>
+
+<h3>Extensiones de Anuncio</h3>
+<ul class="checklist">
+<li>Sitelinks: "Ver Demo", "Nuestros 11 Agentes IA", "Casos de \u00c9xito", "Cotizar Ahora"</li>
+<li>Callouts: "Cobertura LATAM", "11 Agentes de IA", "+500 Regulaciones", "Resultados R\u00e1pidos"</li>
+<li>Snippet estructurado — Servicios: Registro, Dossier, Toxicolog\u00eda, Etiquetado, LMR</li>
+<li>Extensi\u00f3n de llamada: proyectos@uranoia.cl</li>
+</ul>
+
+<h3>Keywords Negativas</h3>
+<p><span class="tag">gratis</span> <span class="tag">empleo</span> <span class="tag">trabajo</span> <span class="tag">curso</span> <span class="tag">universidad</span> <span class="tag">tesis</span> <span class="tag">pdf</span> <span class="tag">descargar</span> <span class="tag">que es</span> <span class="tag">definici\u00f3n</span></p>
+</div>
+</div>
+
+<!-- Meta Ads -->
+<div class="section-content" id="regulatoria-meta">
+<div class="card">
+<h2>Meta Ads (Facebook + Instagram) — RegulatorIA</h2>
+
+<h3>Estructura Full-Funnel</h3>
+<div class="funnel">
+<div class="funnel-stage funnel-tofu">
+<h4 style="color:#fff;margin:0">TOFU — Awareness (40% del presupuesto)</h4>
+<p style="margin-top:8px"><strong>Objetivo:</strong> Alcance + Video Views</p>
+<p><strong>Audiencia:</strong> Ingenieros agr\u00f3nomos, directores de empresas agroqu\u00edmicas, reguladores · 25-55 a\u00f1os · Chile, M\u00e9xico, Colombia, Per\u00fa, Argentina, Brasil</p>
+<p><strong>Creativo:</strong> Video corto (30s) mostrando c\u00f3mo los 11 agentes IA analizan un dossier en tiempo real. Formato Reels/Stories.</p>
+<p><strong>Copy:</strong> "\u00bfCu\u00e1ntas horas gastas revisando dossiers regulatorios? Nuestros agentes de IA lo hacen en minutos. Descubre RegulatorIA."</p>
+</div>
+<div class="funnel-stage funnel-mofu">
+<h4 style="color:#fff;margin:0">MOFU — Consideraci\u00f3n (35% del presupuesto)</h4>
+<p style="margin-top:8px"><strong>Objetivo:</strong> Tr\u00e1fico + Engagement</p>
+<p><strong>Audiencia:</strong> Retargeting de video viewers (50%+) + Lookalike 1-3% de visitantes web</p>
+<p><strong>Creativo:</strong> Carrusel con cada agente IA y su funci\u00f3n. Caso de estudio en formato infograf\u00eda.</p>
+<p><strong>Copy:</strong> "De dossiers regulatorios a aprobaci\u00f3n: c\u00f3mo una empresa agroqu\u00edmica en Chile redujo su tiempo de registro un 70% con RegulatorIA."</p>
+</div>
+<div class="funnel-stage funnel-bofu">
+<h4 style="color:#fff;margin:0">BOFU — Conversi\u00f3n (25% del presupuesto)</h4>
+<p style="margin-top:8px"><strong>Objetivo:</strong> Leads / Conversiones</p>
+<p><strong>Audiencia:</strong> Retargeting visitantes web (\u00faltimos 30 d\u00edas) + Engagement con ads MOFU</p>
+<p><strong>Creativo:</strong> Formulario Lead Ad con oferta: "Auditor\u00eda regulatoria gratuita con IA para tu portafolio"</p>
+<p><strong>Copy:</strong> "Agenda tu auditor\u00eda regulatoria con IA — sin costo, sin compromiso. Descubre qu\u00e9 tan preparado est\u00e1 tu dossier. Cupos limitados este mes."</p>
+</div>
+</div>
+
+<h3>Segmentaci\u00f3n Detallada</h3>
+<table>
+<tr><th>Par\u00e1metro</th><th>Configuraci\u00f3n</th></tr>
+<tr><td>Intereses</td><td>Agrochemicals, Crop protection, Pesticides, Agricultural science, Regulatory affairs</td></tr>
+<tr><td>T\u00edtulos laborales</td><td>Regulatory Affairs, Director T\u00e9cnico, Gerente de Registro, Ing. Agr\u00f3nomo</td></tr>
+<tr><td>Industrias</td><td>Agricultura, Agroqu\u00edmicos, Biotecnolog\u00eda, Fertilizantes</td></tr>
+<tr><td>Comportamiento</td><td>Administradores de p\u00e1ginas de negocio, Tomadores de decisiones</td></tr>
+<tr><td>Exclusiones</td><td>Estudiantes, menores de 24, personas en empleo agr\u00edcola operativo</td></tr>
+</table>
+</div>
+</div>
+
+<!-- TikTok -->
+<div class="section-content" id="regulatoria-tiktok">
+<div class="card">
+<h2>TikTok Ads — RegulatorIA</h2>
+<p>Enfoque: Educaci\u00f3n + credibilidad t\u00e9cnica para audiencia joven-profesional en agro.</p>
+
+<h3>Estrategia de Contenido Org\u00e1nico</h3>
+<table>
+<tr><th>Formato</th><th>Concepto</th><th>Frecuencia</th></tr>
+<tr><td>Explainer (60s)</td><td>"\u00bfSab\u00edas que registrar un plaguicida toma 2 a\u00f1os? Con IA lo hacemos en semanas"</td><td>2x/semana</td></tr>
+<tr><td>Behind the scenes</td><td>Mostrando los dashboards de los 11 agentes IA trabajando</td><td>1x/semana</td></tr>
+<tr><td>Datos curiosos</td><td>"3 datos que no sab\u00edas sobre la regulaci\u00f3n de agroqu\u00edmicos en tu pa\u00eds"</td><td>2x/semana</td></tr>
+<tr><td>Duet/Stitch</td><td>Reacci\u00f3n a noticias de regulaci\u00f3n agr\u00edcola en LATAM</td><td>1x/semana</td></tr>
+<tr><td>Tutorial r\u00e1pido</td><td>"As\u00ed funciona nuestro agente de toxicolog\u00eda en 30 segundos"</td><td>1x/semana</td></tr>
+</table>
+
+<h3>Hashtags Estrat\u00e9gicos</h3>
+<p>
+<span class="tag">#Agroqu\u00edmicos</span> <span class="tag">#RegulatorIA</span> <span class="tag">#IAenAgricultura</span>
+<span class="tag">#PlaguicidasLATAM</span> <span class="tag">#AgrotechLatam</span> <span class="tag">#InnovacionAgricola</span>
+<span class="tag">#RegistroFitosanitario</span> <span class="tag">#TechAgro</span> <span class="tag">#InteligenciaArtificial</span>
+<span class="tag">#UranIA</span> <span class="tag">#FuturoDelAgro</span> <span class="tag">#AgroLatam</span>
+</p>
+
+<h3>TikTok Ads (Paid)</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Formato</th><th>Objetivo</th><th>Presupuesto</th></tr>
+<tr><td>Brand Awareness</td><td>In-Feed Video (15-30s)</td><td>Video Views</td><td>$100-150/mes</td></tr>
+<tr><td>Lead Gen</td><td>Spark Ads (boost org\u00e1nico)</td><td>Tr\u00e1fico web</td><td>$50-100/mes</td></tr>
+</table>
+
+<h3>Targeting LATAM</h3>
+<p><strong>Pa\u00edses:</strong> Chile, M\u00e9xico, Colombia, Per\u00fa, Argentina, Brasil · <strong>Edad:</strong> 25-45 · <strong>Intereses:</strong> Agricultura, tecnolog\u00eda, ciencia, negocios · <strong>Idioma:</strong> Espa\u00f1ol</p>
+</div>
+</div>
+
+<!-- LinkedIn -->
+<div class="section-content" id="regulatoria-linkedin">
+<div class="card">
+<h2>LinkedIn — RegulatorIA</h2>
+<p>Canal principal B2B para decision-makers en empresas agroqu\u00edmicas.</p>
+
+<h3>Estrategia Org\u00e1nica</h3>
+<table>
+<tr><th>Tipo</th><th>Contenido</th><th>Frecuencia</th></tr>
+<tr><td>Thought Leadership</td><td>Posts del CEO/CTO sobre tendencias regulatorias IA + agro</td><td>3x/semana</td></tr>
+<tr><td>Casos de estudio</td><td>Resultados de clientes (anonimizados si necesario)</td><td>1x/semana</td></tr>
+<tr><td>Carrusel educativo</td><td>"5 errores comunes al registrar agroqu\u00edmicos en LATAM"</td><td>1x/semana</td></tr>
+<tr><td>Encuestas</td><td>"\u00bfCu\u00e1nto demora tu proceso de registro regulatorio?"</td><td>2x/mes</td></tr>
+<tr><td>Art\u00edculos largos</td><td>Deep-dives sobre regulaci\u00f3n por pa\u00eds</td><td>2x/mes</td></tr>
+</table>
+
+<h3>LinkedIn Ads (Paid)</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Formato</th><th>Targeting</th><th>Presupuesto</th></tr>
+<tr><td>Awareness</td><td>Sponsored Content (video)</td><td>Regulatory Affairs + Agrochemicals industry</td><td>$150-200/mes</td></tr>
+<tr><td>Lead Gen</td><td>Lead Gen Forms</td><td>Director/VP level en empresas +50 empleados agro</td><td>$100-150/mes</td></tr>
+<tr><td>Retargeting</td><td>Message Ads</td><td>Visitantes web + engaged audience</td><td>$50/mes</td></tr>
+</table>
+
+<h3>Ejemplo de Post Org\u00e1nico</h3>
+<div class="ad-copy">
+<div class="headline">\ud83e\udd16 11 agentes de IA. 1 misi\u00f3n: agilizar tu registro regulatorio.</div>
+<div class="desc">En RegulatorIA creamos agentes especializados que leen normativas, analizan dossiers toxicol\u00f3gicos y generan reportes de cumplimiento — todo automatizado.<br><br>El resultado: lo que antes tomaba meses, ahora se resuelve en semanas.<br><br>Si tu empresa agroqu\u00edmica opera en LATAM y quiere acelerar sus registros, hablemos.<br><br>\ud83d\udce9 proyectos@uranoia.cl<br>\ud83c\udf10 regulatoria.uranoia.cl</div>
+</div>
+</div>
+</div>
+
+<!-- Content Marketing -->
+<div class="section-content" id="regulatoria-content">
+<div class="card">
+<h2>Content Marketing — RegulatorIA</h2>
+
+<h3>Blog Topics (Trimestre 1)</h3>
+<table>
+<tr><th>#</th><th>Art\u00edculo</th><th>Formato</th><th>Lead Magnet</th></tr>
+<tr><td>1</td><td>Gu\u00eda definitiva: Registro de agroqu\u00edmicos en Chile 2026</td><td>Long-form (3000 pal.)</td><td>PDF descargable</td></tr>
+<tr><td>2</td><td>Comparativa regulatoria: Chile vs M\u00e9xico vs Colombia</td><td>Infograf\u00eda + texto</td><td>Tabla comparativa PDF</td></tr>
+<tr><td>3</td><td>C\u00f3mo la IA est\u00e1 revolucionando la consultor\u00eda regulatoria</td><td>Caso de estudio</td><td>Webinar grabado</td></tr>
+<tr><td>4</td><td>Los 11 agentes de RegulatorIA explicados</td><td>Serie de posts</td><td>Demo interactiva</td></tr>
+<tr><td>5</td><td>Errores fatales al preparar un dossier regulatorio</td><td>Listicle</td><td>Checklist PDF</td></tr>
+<tr><td>6</td><td>Tendencias regulatorias LATAM para 2026-2027</td><td>An\u00e1lisis</td><td>Reporte anual</td></tr>
+<tr><td>7</td><td>\u00bfQu\u00e9 es la equivalencia t\u00e9cnica en agroqu\u00edmicos?</td><td>Educativo</td><td>Gu\u00eda paso a paso</td></tr>
+<tr><td>8</td><td>COFEPRIS actualizaci\u00f3n: nuevos requisitos para plaguicidas</td><td>Noticia/An\u00e1lisis</td><td>Newsletter</td></tr>
+</table>
+
+<h3>Videos</h3>
+<table>
+<tr><th>Tipo</th><th>Tema</th><th>Duraci\u00f3n</th><th>Plataforma</th></tr>
+<tr><td>Explainer</td><td>"RegulatorIA en 90 segundos"</td><td>90s</td><td>YouTube, LinkedIn, TikTok</td></tr>
+<tr><td>Tutorial</td><td>"C\u00f3mo usar nuestro agente de an\u00e1lisis de dossier"</td><td>5 min</td><td>YouTube</td></tr>
+<tr><td>Webinar</td><td>"Regulaci\u00f3n agroqu\u00edmica LATAM 2026: lo que viene"</td><td>45 min</td><td>YouTube Live + LinkedIn</td></tr>
+<tr><td>Testimonial</td><td>Cliente contando su experiencia</td><td>2 min</td><td>LinkedIn, Web</td></tr>
+</table>
+
+<h3>Lead Magnets</h3>
+<div class="metric-grid">
+<div class="metric-card"><div class="number">\ud83d\udccb</div><div class="label">Checklist: "\u00bfEst\u00e1 listo tu dossier?"</div></div>
+<div class="metric-card"><div class="number">\ud83d\udcca</div><div class="label">Reporte: Regulaci\u00f3n LATAM 2026</div></div>
+<div class="metric-card"><div class="number">\ud83c\udfa5</div><div class="label">Demo: Agentes IA en acci\u00f3n</div></div>
+<div class="metric-card"><div class="number">\ud83d\udcd6</div><div class="label">Ebook: Gu\u00eda de registro por pa\u00eds</div></div>
+</div>
+
+<h3>Email Nurture Sequence</h3>
+<table>
+<tr><th>D\u00eda</th><th>Asunto</th><th>Contenido</th><th>CTA</th></tr>
+<tr><td>0</td><td>"Bienvenido — tu recurso est\u00e1 listo \ud83d\udce5"</td><td>Entrega del lead magnet + intro a RegulatorIA</td><td>Descargar recurso</td></tr>
+<tr><td>3</td><td>"\u00bfSab\u00edas que registrar un agroqu\u00edmico toma 18 meses?"</td><td>Problema + c\u00f3mo IA lo resuelve</td><td>Ver caso de estudio</td></tr>
+<tr><td>7</td><td>"Conoce a los 11 agentes de RegulatorIA"</td><td>Descripci\u00f3n de cada agente y su funci\u00f3n</td><td>Solicitar demo</td></tr>
+<tr><td>14</td><td>"C\u00f3mo [empresa X] aceler\u00f3 su registro 70%"</td><td>Caso de \u00e9xito detallado</td><td>Agendar llamada</td></tr>
+<tr><td>21</td><td>"Oferta especial: Auditor\u00eda regulatoria gratuita"</td><td>Oferta limitada + urgencia</td><td>Agendar auditor\u00eda</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Budget -->
+<div class="section-content" id="regulatoria-budget">
+<div class="card">
+<h2>Presupuesto — RegulatorIA</h2>
+
+<h3>Escenario 1: $1,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:45%;background:var(--reg-color)">Google $450</div>
+<div style="width:20%;background:var(--highlight)">Meta $200</div>
+<div style="width:20%;background:#f39c12">LinkedIn $200</div>
+<div style="width:15%;background:var(--purple)">Content $150</div>
+</div>
+<table>
+<tr><th>Canal</th><th>Monto</th><th>Objetivo</th></tr>
+<tr><td>Google Ads</td><td>$450</td><td>15-25 leads/mes (CPA ~$20-30)</td></tr>
+<tr><td>Meta Ads</td><td>$200</td><td>Awareness + 5-8 leads</td></tr>
+<tr><td>LinkedIn Ads</td><td>$200</td><td>3-5 leads de alta calidad</td></tr>
+<tr><td>Content/Herramientas</td><td>$150</td><td>SEO tools, dise\u00f1o, email</td></tr>
+</table>
+
+<h3>Escenario 2: $1,500 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:40%;background:var(--reg-color)">Google $600</div>
+<div style="width:20%;background:var(--highlight)">Meta $300</div>
+<div style="width:20%;background:#f39c12">LinkedIn $300</div>
+<div style="width:10%;background:var(--purple)">TikTok $150</div>
+<div style="width:10%;background:var(--green)">Content $150</div>
+</div>
+
+<h3>Escenario 3: $2,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:35%;background:var(--reg-color)">Google $700</div>
+<div style="width:17%;background:var(--highlight)">Meta $350</div>
+<div style="width:18%;background:#f39c12">LinkedIn $350</div>
+<div style="width:10%;background:var(--purple)">TikTok $200</div>
+<div style="width:10%;background:var(--green)">Content $200</div>
+<div style="width:10%;background:#2c3e50">Video $200</div>
+</div>
+</div>
+</div>
+
+<!-- KPIs -->
+<div class="section-content" id="regulatoria-kpis">
+<div class="card">
+<h2>KPIs y M\u00e9tricas — RegulatorIA</h2>
+
+<div class="metric-grid">
+<div class="metric-card"><div class="number" style="color:var(--reg-color)">50-80</div><div class="label">Leads/mes (Mes 3)</div></div>
+<div class="metric-card"><div class="number" style="color:var(--green)">5-8%</div><div class="label">Tasa de conversi\u00f3n web</div></div>
+<div class="metric-card"><div class="number" style="color:var(--highlight)">$20-35</div><div class="label">CPA objetivo</div></div>
+<div class="metric-card"><div class="number" style="color:var(--gold)">$4,000</div><div class="label">MRR objetivo Mes 3</div></div>
+</div>
+
+<h3>Metas por Canal</h3>
+<table>
+<tr><th>Canal</th><th>M\u00e9trica</th><th>Mes 1</th><th>Mes 2</th><th>Mes 3</th></tr>
+<tr><td>Google Ads</td><td>Leads</td><td>10-15</td><td>20-30</td><td>30-40</td></tr>
+<tr><td>Google Ads</td><td>CTR</td><td>3%</td><td>4%</td><td>5%+</td></tr>
+<tr><td>Meta Ads</td><td>Leads</td><td>5-8</td><td>10-15</td><td>15-20</td></tr>
+<tr><td>LinkedIn</td><td>Leads</td><td>3-5</td><td>5-8</td><td>8-12</td></tr>
+<tr><td>SEO</td><td>Tr\u00e1fico org\u00e1nico</td><td>+20%</td><td>+50%</td><td>+100%</td></tr>
+<tr><td>Email</td><td>Open Rate</td><td>25%</td><td>30%</td><td>35%</td></tr>
+<tr><td>Email</td><td>Click Rate</td><td>3%</td><td>4%</td><td>5%</td></tr>
+<tr><td>Conversi\u00f3n</td><td>Lead \u2192 Cliente</td><td>5%</td><td>8%</td><td>10%</td></tr>
+</table>
+</div>
+</div>
+
+<!-- 90-day Timeline -->
+<div class="section-content" id="regulatoria-timeline">
+<div class="card">
+<h2>Plan de 90 D\u00edas — RegulatorIA</h2>
+<div class="revenue-target">
+<div class="amount">$3,500 - $4,000</div>
+<div class="subtitle">MRR proyectado Mes 3 — RegulatorIA</div>
+</div>
+
+<div class="timeline">
+<div class="timeline-item"><div class="week">Semana 1-2: Setup</div><div class="tasks">\u2022 Configurar Google Ads + Meta Ads + LinkedIn Ads<br>\u2022 Instalar Google Tag Manager + Pixel Meta + LinkedIn Insight Tag<br>\u2022 Auditor\u00eda SEO t\u00e9cnica completa<br>\u2022 Crear landing pages optimizadas (Consultor\u00eda, Demo, Auditor\u00eda)</div></div>
+<div class="timeline-item"><div class="week">Semana 3-4: Lanzamiento</div><div class="tasks">\u2022 Activar campa\u00f1as Search y Meta TOFU<br>\u2022 Publicar primeros 2 art\u00edculos de blog<br>\u2022 Comenzar posting org\u00e1nico LinkedIn (3x/semana)<br>\u2022 Configurar email automation (secuencia de nurture)<br>\u2022 Proyecci\u00f3n: 5-10 leads</div></div>
+<div class="timeline-item"><div class="week">Semana 5-6: Optimizaci\u00f3n</div><div class="tasks">\u2022 Analizar performance de keywords, pausar underperformers<br>\u2022 A/B test de ad copy y creativos<br>\u2022 Lanzar campa\u00f1as MOFU en Meta<br>\u2022 Publicar caso de estudio<br>\u2022 Proyecci\u00f3n: 15-20 leads acumulados</div></div>
+<div class="timeline-item"><div class="week">Semana 7-8: Escalar</div><div class="tasks">\u2022 Aumentar presupuesto en campa\u00f1as ganadoras<br>\u2022 Lanzar LinkedIn Lead Gen Forms<br>\u2022 Publicar primer webinar<br>\u2022 Activar remarketing Display<br>\u2022 Proyecci\u00f3n: 30-40 leads acumulados, 2-3 clientes</div></div>
+<div class="timeline-item"><div class="week">Semana 9-10: Aceleraci\u00f3n</div><div class="tasks">\u2022 Expandir keywords a nuevos pa\u00edses (M\u00e9xico, Colombia)<br>\u2022 Lanzar campa\u00f1as BOFU en Meta<br>\u2022 Segundo webinar + lead magnet nuevo<br>\u2022 Proyecci\u00f3n: 50-60 leads acumulados, 4-5 clientes</div></div>
+<div class="timeline-item"><div class="week">Semana 11-12: Consolidaci\u00f3n</div><div class="tasks">\u2022 Reporte completo de performance<br>\u2022 Optimizaci\u00f3n CPA final<br>\u2022 Plan de escala para Q2<br>\u2022 Proyecci\u00f3n: 70-80 leads, 6-8 clientes, MRR $3,500-$4,000</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TUNORMA ==================== -->
+<div class="project-content" id="project-tunorma">
+<div class="section-tabs">
+<div class="section-tab active" onclick="switchSection('tunorma','seo')">SEO</div>
+<div class="section-tab" onclick="switchSection('tunorma','google')">Google Ads</div>
+<div class="section-tab" onclick="switchSection('tunorma','meta')">Meta Ads</div>
+<div class="section-tab" onclick="switchSection('tunorma','tiktok')">TikTok</div>
+<div class="section-tab" onclick="switchSection('tunorma','linkedin')">LinkedIn</div>
+<div class="section-tab" onclick="switchSection('tunorma','content')">Content</div>
+<div class="section-tab" onclick="switchSection('tunorma','budget')">Presupuesto</div>
+<div class="section-tab" onclick="switchSection('tunorma','kpis')">KPIs</div>
+<div class="section-tab" onclick="switchSection('tunorma','timeline')">90 D\u00edas</div>
+</div>
+
+<!-- SEO TuNorma -->
+<div class="section-content active" id="tunorma-seo">
+<div class="card">
+<h2>Estrategia SEO — TuNorma</h2>
+<p>Posicionamiento para empresas chilenas buscando cumplir con el DS 594 de condiciones sanitarias y ambientales en lugares de trabajo.</p>
+
+<h3>Palabras Clave Objetivo (30+)</h3>
+<table class="kw-table">
+<tr><th>#</th><th>Keyword</th><th>Vol. Mensual Est.</th><th>Dificultad</th><th>Intent</th></tr>
+<tr><td>1</td><td>decreto supremo 594</td><td>3,200</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>2</td><td>DS 594 chile</td><td>2,800</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>3</td><td>cumplimiento DS 594</td><td>480</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>4</td><td>condiciones sanitarias y ambientales trabajo</td><td>720</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>5</td><td>software cumplimiento normativo chile</td><td>210</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>6</td><td>fiscalizaci\u00f3n SEREMI salud</td><td>590</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>7</td><td>multas DS 594</td><td>390</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>8</td><td>evaluaci\u00f3n riesgos laborales chile</td><td>440</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>9</td><td>iluminaci\u00f3n lugares de trabajo normativa</td><td>350</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>10</td><td>ruido ocupacional DS 594</td><td>280</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>11</td><td>ventilaci\u00f3n lugares trabajo chile</td><td>310</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>12</td><td>agentes qu\u00edmicos trabajo</td><td>260</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>13</td><td>higiene y seguridad laboral chile</td><td>890</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>14</td><td>prevenci\u00f3n riesgos laborales software</td><td>170</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>15</td><td>normativa seguridad ocupacional</td><td>520</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>16</td><td>gesti\u00f3n cumplimiento normativo</td><td>290</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>17</td><td>plataforma cumplimiento regulatorio</td><td>150</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>18</td><td>auditor\u00eda DS 594</td><td>220</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>19</td><td>requisitos ba\u00f1os lugar de trabajo</td><td>410</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>20</td><td>elementos protecci\u00f3n personal normativa</td><td>380</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>21</td><td>comit\u00e9 paritario chile</td><td>640</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>22</td><td>plan emergencia empresa chile</td><td>330</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>23</td><td>protocolo exposici\u00f3n ruido PREXOR</td><td>450</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>24</td><td>PLANESI polvo s\u00edlice</td><td>380</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>25</td><td>protocolo MMC chile</td><td>290</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>26</td><td>normativa sustancias peligrosas trabajo</td><td>240</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>27</td><td>SaaS seguridad laboral</td><td>70</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>28</td><td>checklist DS 594</td><td>180</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>29</td><td>sistema gesti\u00f3n SSO chile</td><td>160</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>30</td><td>ley 16744 accidentes trabajo</td><td>1,100</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>31</td><td>mutual de seguridad cumplimiento</td><td>340</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>32</td><td>automatizar cumplimiento DS 594</td><td>40</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Google Ads TuNorma -->
+<div class="section-content" id="tunorma-google">
+<div class="card">
+<h2>Google Ads — TuNorma</h2>
+<p>Presupuesto: <strong>$400-500 USD/mes</strong> · Mercado: Chile exclusivo</p>
+<h3>Estructura de Campa\u00f1as</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Presupuesto Diario</th><th>Objetivo</th></tr>
+<tr><td>TN - Search DS 594</td><td>$8-10</td><td>Leads directos</td></tr>
+<tr><td>TN - Search Cumplimiento</td><td>$4-6</td><td>Leads informativos</td></tr>
+<tr><td>TN - Display Remarketing</td><td>$2-3</td><td>Reconversi\u00f3n</td></tr>
+</table>
+<h3>Keywords y CPC</h3>
+<table class="kw-table">
+<tr><th>Ad Group</th><th>Keywords</th><th>CPC Est.</th></tr>
+<tr><td>DS 594</td><td>cumplimiento DS 594, software DS 594, auditor\u00eda DS 594, checklist DS 594</td><td>$0.60-1.20</td></tr>
+<tr><td>Seguridad Laboral</td><td>software seguridad laboral, gesti\u00f3n cumplimiento normativo, plataforma SSO</td><td>$0.80-1.50</td></tr>
+<tr><td>Fiscalizaci\u00f3n</td><td>preparar fiscalizaci\u00f3n SEREMI, evitar multas DS 594, cumplimiento SEREMI</td><td>$0.50-1.00</td></tr>
+</table>
+<h3>Anuncios en Espa\u00f1ol</h3>
+<div class="ad-copy">
+<div class="headline">Cumple con el DS 594 Sin Estr\u00e9s | Plataforma SaaS</div>
+<div class="desc">TuNorma automatiza el cumplimiento del DS 594. Checklist inteligente, alertas de vencimiento y reportes para fiscalizaci\u00f3n. Prueba gratis 14 d\u00edas.</div>
+<div class="url">tunorma.cl/prueba-gratis</div>
+</div>
+<div class="ad-copy">
+<div class="headline">\u00bfFiscalizaci\u00f3n de SEREMI? Prep\u00e1rate con TuNorma</div>
+<div class="desc">Evita multas millonarias. Nuestra plataforma te gu\u00eda paso a paso para cumplir cada requisito del DS 594. Dashboard en tiempo real.</div>
+<div class="url">tunorma.cl/ds594</div>
+</div>
+<div class="ad-copy">
+<div class="headline">Multas por DS 594 Cuestan Millones | Previene con TuNorma</div>
+<div class="desc">El 73% de las empresas no cumple todos los requisitos del DS 594. \u00bfLa tuya est\u00e1 lista? Haz tu diagn\u00f3stico gratuito ahora.</div>
+<div class="url">tunorma.cl/diagnostico</div>
+</div>
+</div>
+</div>
+
+<!-- Meta Ads TuNorma -->
+<div class="section-content" id="tunorma-meta">
+<div class="card">
+<h2>Meta Ads — TuNorma</h2>
+<h3>Full-Funnel para Chile</h3>
+<div class="funnel">
+<div class="funnel-stage funnel-tofu">
+<h4 style="color:#fff;margin:0">TOFU — Awareness (40%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Prevencionistas de riesgos, gerentes de RRHH, due\u00f1os de PYMES Chile · 28-55 a\u00f1os</p>
+<p><strong>Creativo:</strong> Video: "3 cosas que SEREMI revisa primero en una fiscalizaci\u00f3n" (formato Reels)</p>
+<p><strong>Copy:</strong> "\u00bfSab\u00edas que una multa por incumplimiento del DS 594 puede superar los $50 millones CLP? Descubre si tu empresa est\u00e1 preparada."</p>
+</div>
+<div class="funnel-stage funnel-mofu">
+<h4 style="color:#fff;margin:0">MOFU — Consideraci\u00f3n (35%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Retargeting video 50% + Lookalike visitantes web</p>
+<p><strong>Creativo:</strong> Carrusel: "Antes vs Despu\u00e9s de usar TuNorma" con m\u00e9tricas reales</p>
+<p><strong>Copy:</strong> "Empresa XYZ pas\u00f3 de 15 no conformidades a 0 en 60 d\u00edas con TuNorma. \u00bfQuieres el mismo resultado?"</p>
+</div>
+<div class="funnel-stage funnel-bofu">
+<h4 style="color:#fff;margin:0">BOFU — Conversi\u00f3n (25%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Retargeting web 30 d\u00edas + engagement ads</p>
+<p><strong>Creativo:</strong> Lead Form: "Diagn\u00f3stico DS 594 gratuito para tu empresa"</p>
+<p><strong>Copy:</strong> "En 5 minutos descubre tu nivel de cumplimiento DS 594. Diagn\u00f3stico gratuito + plan de acci\u00f3n personalizado. Solo este mes."</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TikTok TuNorma -->
+<div class="section-content" id="tunorma-tiktok">
+<div class="card">
+<h2>TikTok — TuNorma</h2>
+<h3>Contenido Org\u00e1nico</h3>
+<table>
+<tr><th>Formato</th><th>Concepto</th><th>Frecuencia</th></tr>
+<tr><td>POV/Storytime</td><td>"POV: SEREMI llega a tu empresa y no cumples el DS 594"</td><td>2x/semana</td></tr>
+<tr><td>Tips r\u00e1pidos</td><td>"3 cosas que debes tener HOY para cumplir el DS 594"</td><td>2x/semana</td></tr>
+<tr><td>Mitos vs Realidad</td><td>"MITO: Solo las f\u00e1bricas necesitan cumplir el DS 594"</td><td>1x/semana</td></tr>
+<tr><td>Antes/Despu\u00e9s</td><td>Transformaci\u00f3n de cumplimiento con TuNorma</td><td>1x/semana</td></tr>
+</table>
+<h3>Hashtags</h3>
+<p><span class="tag">#DS594</span> <span class="tag">#SeguridadLaboral</span> <span class="tag">#TuNorma</span> <span class="tag">#Prevenci\u00f3nDeRiesgos</span> <span class="tag">#CumplimientoChile</span> <span class="tag">#SEREMI</span> <span class="tag">#PymeChile</span> <span class="tag">#SSO</span> <span class="tag">#TrabajoSeguro</span></p>
+</div>
+</div>
+
+<!-- LinkedIn TuNorma -->
+<div class="section-content" id="tunorma-linkedin">
+<div class="card">
+<h2>LinkedIn — TuNorma</h2>
+<h3>Estrategia Org\u00e1nica</h3>
+<table>
+<tr><th>Tipo</th><th>Contenido</th><th>Frecuencia</th></tr>
+<tr><td>Educativo</td><td>Posts sobre cambios regulatorios, tips de cumplimiento</td><td>3x/semana</td></tr>
+<tr><td>Datos duros</td><td>"El X% de empresas chilenas recibe multas por DS 594 cada a\u00f1o"</td><td>1x/semana</td></tr>
+<tr><td>Producto</td><td>Features de TuNorma, demos en video corto</td><td>1x/semana</td></tr>
+</table>
+<h3>Ejemplo de Post</h3>
+<div class="ad-copy">
+<div class="headline">\ud83d\udcca Dato: El 73% de las PYMES chilenas tiene al menos 1 no conformidad con el DS 594.</div>
+<div class="desc">El problema no es falta de voluntad — es falta de herramientas.<br><br>TuNorma convierte el caos del cumplimiento normativo en un dashboard simple: checklist interactivo, alertas autom\u00e1ticas y reportes listos para SEREMI.<br><br>Diagn\u00f3stico gratuito \u2192 tunorma.cl<br>\ud83d\udce7 info@gruporegulatorio.cl</div>
+</div>
+</div>
+</div>
+
+<!-- Content TuNorma -->
+<div class="section-content" id="tunorma-content">
+<div class="card">
+<h2>Content Marketing — TuNorma</h2>
+<h3>Blog Topics</h3>
+<table>
+<tr><th>#</th><th>Art\u00edculo</th><th>Lead Magnet</th></tr>
+<tr><td>1</td><td>"Gu\u00eda completa del DS 594: todo lo que tu empresa debe cumplir en 2026"</td><td>Checklist PDF descargable</td></tr>
+<tr><td>2</td><td>"C\u00f3mo prepararse para una fiscalizaci\u00f3n de SEREMI"</td><td>Template preparaci\u00f3n</td></tr>
+<tr><td>3</td><td>"Las 10 multas m\u00e1s comunes del DS 594 y c\u00f3mo evitarlas"</td><td>Infograf\u00eda</td></tr>
+<tr><td>4</td><td>"PREXOR, PLANESI, TME-EESS: gu\u00eda de protocolos MINSAL"</td><td>Tabla resumen PDF</td></tr>
+<tr><td>5</td><td>"\u00bfCu\u00e1nto cuesta no cumplir? Calculadora de multas DS 594"</td><td>Calculadora interactiva</td></tr>
+<tr><td>6</td><td>"TuNorma vs Excel: por qu\u00e9 un SaaS gana al cumplimiento manual"</td><td>Comparativa PDF</td></tr>
+</table>
+<h3>Email Nurture</h3>
+<table>
+<tr><th>D\u00eda</th><th>Asunto</th><th>CTA</th></tr>
+<tr><td>0</td><td>"Tu checklist DS 594 est\u00e1 listo \ud83d\udccb"</td><td>Descargar</td></tr>
+<tr><td>3</td><td>"Las 3 multas que m\u00e1s duelen por DS 594"</td><td>Leer art\u00edculo</td></tr>
+<tr><td>7</td><td>"Caso real: c\u00f3mo una empresa pas\u00f3 de 15 a 0 no conformidades"</td><td>Ver caso</td></tr>
+<tr><td>14</td><td>"Prueba TuNorma gratis por 14 d\u00edas"</td><td>Activar trial</td></tr>
+<tr><td>21</td><td>"Oferta: 20% descuento primer trimestre"</td><td>Contratar</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Budget TuNorma -->
+<div class="section-content" id="tunorma-budget">
+<div class="card">
+<h2>Presupuesto — TuNorma</h2>
+<h3>Escenario 1: $1,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:45%;background:var(--tun-color)">Google $450</div>
+<div style="width:25%;background:var(--highlight)">Meta $250</div>
+<div style="width:15%;background:#f39c12">LinkedIn $150</div>
+<div style="width:15%;background:var(--purple)">Content $150</div>
+</div>
+<h3>Escenario 2: $1,500 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:40%;background:var(--tun-color)">Google $600</div>
+<div style="width:22%;background:var(--highlight)">Meta $330</div>
+<div style="width:15%;background:#f39c12">LinkedIn $220</div>
+<div style="width:10%;background:var(--purple)">TikTok $150</div>
+<div style="width:13%;background:var(--green)">Content $200</div>
+</div>
+<h3>Escenario 3: $2,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:35%;background:var(--tun-color)">Google $700</div>
+<div style="width:20%;background:var(--highlight)">Meta $400</div>
+<div style="width:15%;background:#f39c12">LinkedIn $300</div>
+<div style="width:10%;background:var(--purple)">TikTok $200</div>
+<div style="width:10%;background:var(--green)">Content $200</div>
+<div style="width:10%;background:#2c3e50">Video $200</div>
+</div>
+</div>
+</div>
+
+<!-- KPIs TuNorma -->
+<div class="section-content" id="tunorma-kpis">
+<div class="card">
+<h2>KPIs — TuNorma</h2>
+<div class="metric-grid">
+<div class="metric-card"><div class="number" style="color:var(--tun-color)">60-100</div><div class="label">Leads/mes (Mes 3)</div></div>
+<div class="metric-card"><div class="number" style="color:var(--green)">8-12%</div><div class="label">Trial conversion rate</div></div>
+<div class="metric-card"><div class="number" style="color:var(--highlight)">$12-20</div><div class="label">CPA objetivo</div></div>
+<div class="metric-card"><div class="number" style="color:var(--gold)">$3,500</div><div class="label">MRR objetivo Mes 3</div></div>
+</div>
+<table>
+<tr><th>Canal</th><th>M\u00e9trica</th><th>Mes 1</th><th>Mes 2</th><th>Mes 3</th></tr>
+<tr><td>Google Ads</td><td>Leads</td><td>15-20</td><td>30-40</td><td>40-55</td></tr>
+<tr><td>Meta Ads</td><td>Leads</td><td>8-12</td><td>15-20</td><td>20-30</td></tr>
+<tr><td>SEO</td><td>Tr\u00e1fico org\u00e1nico</td><td>+25%</td><td>+60%</td><td>+120%</td></tr>
+<tr><td>Trial</td><td>Activaciones</td><td>10</td><td>25</td><td>45</td></tr>
+<tr><td>Trial \u2192 Paid</td><td>Conversi\u00f3n</td><td>15%</td><td>20%</td><td>25%</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Timeline TuNorma -->
+<div class="section-content" id="tunorma-timeline">
+<div class="card">
+<h2>Plan de 90 D\u00edas — TuNorma</h2>
+<div class="revenue-target">
+<div class="amount">$3,000 - $3,500</div>
+<div class="subtitle">MRR proyectado Mes 3 — TuNorma</div>
+</div>
+<div class="timeline">
+<div class="timeline-item"><div class="week">Semana 1-2: Setup</div><div class="tasks">\u2022 Landing page optimizada: "Cumple el DS 594 f\u00e1cil"<br>\u2022 Google Ads + Meta Ads configurados<br>\u2022 Free trial de 14 d\u00edas habilitado<br>\u2022 Lead magnet: Checklist DS 594 interactivo</div></div>
+<div class="timeline-item"><div class="week">Semana 3-4: Lanzamiento</div><div class="tasks">\u2022 Activar campa\u00f1as Search (DS 594 + cumplimiento)<br>\u2022 Meta Ads TOFU: video "\u00bfTu empresa cumple?"<br>\u2022 Blog post 1: Gu\u00eda DS 594<br>\u2022 Proyecci\u00f3n: 10-15 leads, 5 trials</div></div>
+<div class="timeline-item"><div class="week">Semana 5-6: Optimizaci\u00f3n</div><div class="tasks">\u2022 A/B test landing pages y ad copy<br>\u2022 Lanzar MOFU remarketing<br>\u2022 Calculadora de multas interactiva<br>\u2022 Proyecci\u00f3n: 25-35 leads, 12 trials</div></div>
+<div class="timeline-item"><div class="week">Semana 7-8: Escalar</div><div class="tasks">\u2022 Aumentar budget en campa\u00f1as ganadoras<br>\u2022 LinkedIn org\u00e1nico intensivo<br>\u2022 Webinar: "Prep\u00e1rate para SEREMI"<br>\u2022 Proyecci\u00f3n: 50-60 leads, 25 trials, 5 clientes pagados</div></div>
+<div class="timeline-item"><div class="week">Semana 9-10: Aceleraci\u00f3n</div><div class="tasks">\u2022 Campa\u00f1as BOFU Meta + Google<br>\u2022 Programa de referidos (descuento 15%)<br>\u2022 Caso de \u00e9xito publicado<br>\u2022 Proyecci\u00f3n: 75-85 leads, 35 trials, 8 clientes</div></div>
+<div class="timeline-item"><div class="week">Semana 11-12: Consolidaci\u00f3n</div><div class="tasks">\u2022 Onboarding automation para trials<br>\u2022 Upselling features premium<br>\u2022 Plan Q2<br>\u2022 Proyecci\u00f3n: 100+ leads, 45 trials, 11 clientes, MRR $3,000-$3,500</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== SCIENSOLUTIONS ==================== -->
+<div class="project-content" id="project-scien">
+<div class="section-tabs">
+<div class="section-tab active" onclick="switchSection('scien','seo')">SEO</div>
+<div class="section-tab" onclick="switchSection('scien','google')">Google Ads</div>
+<div class="section-tab" onclick="switchSection('scien','meta')">Meta Ads</div>
+<div class="section-tab" onclick="switchSection('scien','tiktok')">TikTok</div>
+<div class="section-tab" onclick="switchSection('scien','linkedin')">LinkedIn</div>
+<div class="section-tab" onclick="switchSection('scien','content')">Content</div>
+<div class="section-tab" onclick="switchSection('scien','budget')">Presupuesto</div>
+<div class="section-tab" onclick="switchSection('scien','kpis')">KPIs</div>
+<div class="section-tab" onclick="switchSection('scien','timeline')">90 D\u00edas</div>
+</div>
+
+<!-- SEO ScienSolutions -->
+<div class="section-content active" id="scien-seo">
+<div class="card">
+<h2>Estrategia SEO — ScienSolutions</h2>
+<p>Posicionamiento para personas buscando ex\u00e1menes cl\u00ednicos a domicilio con resultados potenciados por IA.</p>
+<h3>Palabras Clave Objetivo (30+)</h3>
+<table class="kw-table">
+<tr><th>#</th><th>Keyword</th><th>Vol. Mensual Est.</th><th>Dificultad</th><th>Intent</th></tr>
+<tr><td>1</td><td>ex\u00e1menes de sangre a domicilio</td><td>2,400</td><td><span class="badge badge-med">Media</span></td><td>Transaccional</td></tr>
+<tr><td>2</td><td>ex\u00e1menes cl\u00ednicos a domicilio</td><td>1,800</td><td><span class="badge badge-med">Media</span></td><td>Transaccional</td></tr>
+<tr><td>3</td><td>test PCR domicilio</td><td>1,200</td><td><span class="badge badge-high">Alta</span></td><td>Transaccional</td></tr>
+<tr><td>4</td><td>panel viral domicilio</td><td>320</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>5</td><td>examen de piel con inteligencia artificial</td><td>180</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>6</td><td>dermatoscop\u00eda IA</td><td>110</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>7</td><td>an\u00e1lisis microbioma intestinal</td><td>480</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>8</td><td>test intestinal domicilio</td><td>210</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>9</td><td>ex\u00e1menes de laboratorio en casa</td><td>1,500</td><td><span class="badge badge-med">Media</span></td><td>Transaccional</td></tr>
+<tr><td>10</td><td>diagn\u00f3stico piel IA</td><td>150</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>11</td><td>toma de muestras a domicilio</td><td>2,100</td><td><span class="badge badge-med">Media</span></td><td>Transaccional</td></tr>
+<tr><td>12</td><td>hemograma a domicilio</td><td>680</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>13</td><td>examen de orina a domicilio</td><td>520</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>14</td><td>chequeo m\u00e9dico a domicilio</td><td>890</td><td><span class="badge badge-med">Media</span></td><td>Transaccional</td></tr>
+<tr><td>15</td><td>test covid influenza domicilio</td><td>440</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>16</td><td>laboratorio cl\u00ednico domicilio Santiago</td><td>350</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>17</td><td>DeepSkin an\u00e1lisis piel</td><td>30</td><td><span class="badge badge-low">Baja</span></td><td>Navegacional</td></tr>
+<tr><td>18</td><td>GutCode microbioma</td><td>20</td><td><span class="badge badge-low">Baja</span></td><td>Navegacional</td></tr>
+<tr><td>19</td><td>panel respiratorio domicilio</td><td>290</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>20</td><td>perfil lip\u00eddico domicilio</td><td>380</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>21</td><td>telemedicina ex\u00e1menes</td><td>260</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>22</td><td>salud preventiva ex\u00e1menes</td><td>410</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>23</td><td>dermatolog\u00eda inteligencia artificial</td><td>320</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>24</td><td>ex\u00e1menes preventivos a domicilio</td><td>470</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>25</td><td>test alergias domicilio</td><td>340</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>26</td><td>an\u00e1lisis de deposiciones</td><td>580</td><td><span class="badge badge-med">Media</span></td><td>Informacional</td></tr>
+<tr><td>27</td><td>check up m\u00e9dico en casa</td><td>290</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>28</td><td>laboratorio a domicilio precio</td><td>420</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>29</td><td>inteligencia artificial diagn\u00f3stico m\u00e9dico</td><td>350</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+<tr><td>30</td><td>ex\u00e1menes para empresas domicilio</td><td>230</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>31</td><td>agendar examen sangre casa</td><td>180</td><td><span class="badge badge-low">Baja</span></td><td>Transaccional</td></tr>
+<tr><td>32</td><td>salud digestiva test</td><td>190</td><td><span class="badge badge-low">Baja</span></td><td>Informacional</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Google Ads ScienSolutions -->
+<div class="section-content" id="scien-google">
+<div class="card">
+<h2>Google Ads — ScienSolutions</h2>
+<p>Presupuesto: <strong>$500-600 USD/mes</strong> · Mayor volumen de b\u00fasqueda B2C</p>
+<h3>Campa\u00f1as</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Presupuesto Diario</th><th>Objetivo</th></tr>
+<tr><td>SCI - Search Ex\u00e1menes Domicilio</td><td>$8-10</td><td>Bookings directos</td></tr>
+<tr><td>SCI - Search Panel Viral</td><td>$3-4</td><td>Ventas Panel Viral</td></tr>
+<tr><td>SCI - Search DeepSkin/GutCode</td><td>$3-4</td><td>Ventas IA products</td></tr>
+<tr><td>SCI - Display Remarketing</td><td>$2-3</td><td>Reconversi\u00f3n</td></tr>
+</table>
+<h3>Anuncios</h3>
+<div class="ad-copy">
+<div class="headline">Ex\u00e1menes Cl\u00ednicos a Domicilio | Resultados con IA</div>
+<div class="desc">Agenda tu toma de muestras en casa. Resultados r\u00e1pidos analizados con inteligencia artificial. Panel Viral, DeepSkin, GutCode y m\u00e1s. Agenda hoy.</div>
+<div class="url">sciensolutions.com/agendar</div>
+</div>
+<div class="ad-copy">
+<div class="headline">Panel Viral a Domicilio | COVID + Influenza + M\u00e1s</div>
+<div class="desc">Detecta 20+ virus respiratorios desde tu hogar. Resultados en 24-48 hrs con an\u00e1lisis IA. Sin filas, sin espera. Agenda ahora.</div>
+<div class="url">sciensolutions.com/panel-viral</div>
+</div>
+<div class="ad-copy">
+<div class="headline">An\u00e1lisis de Piel con IA | DeepSkin por ScienSolutions</div>
+<div class="desc">Nuestra IA analiza tu piel con precisi\u00f3n dermatol\u00f3gica. Sin salir de casa. Detecta lunares at\u00edpicos, acn\u00e9, manchas y m\u00e1s. Conoce DeepSkin.</div>
+<div class="url">sciensolutions.com/deepskin</div>
+</div>
+</div>
+</div>
+
+<!-- Meta Ads ScienSolutions -->
+<div class="section-content" id="scien-meta">
+<div class="card">
+<h2>Meta Ads — ScienSolutions</h2>
+<h3>Full-Funnel B2C</h3>
+<div class="funnel">
+<div class="funnel-stage funnel-tofu">
+<h4 style="color:#fff;margin:0">TOFU — Awareness (45%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Personas 25-55, interesadas en salud, bienestar, tecnolog\u00eda · Chile + expansi\u00f3n LATAM</p>
+<p><strong>Creativo:</strong> Reels/Stories: "\u00bfY si pudieras hacerte ex\u00e1menes sin salir de casa?" — mostrando el proceso f\u00e1cil</p>
+<p><strong>Copy:</strong> "Ex\u00e1menes cl\u00ednicos a domicilio con resultados potenciados por IA. Panel Viral, DeepSkin, GutCode. El futuro de la salud ya lleg\u00f3."</p>
+</div>
+<div class="funnel-stage funnel-mofu">
+<h4 style="color:#fff;margin:0">MOFU — Consideraci\u00f3n (30%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Retargeting video + Lookalike compradores</p>
+<p><strong>Creativo:</strong> Carrusel: cada producto (Panel Viral, DeepSkin, GutCode) con beneficio principal</p>
+<p><strong>Copy:</strong> "Mar\u00eda se hizo su Panel Viral desde casa un domingo. El lunes ya ten\u00eda resultados. As\u00ed de f\u00e1cil es ScienSolutions."</p>
+</div>
+<div class="funnel-stage funnel-bofu">
+<h4 style="color:#fff;margin:0">BOFU — Conversi\u00f3n (25%)</h4>
+<p style="margin-top:8px"><strong>Audiencia:</strong> Retargeting web + carrito abandonado</p>
+<p><strong>Creativo:</strong> Oferta directa: "Primera consulta con 20% descuento — Agenda hoy"</p>
+<p><strong>Copy:</strong> "Tu salud no puede esperar. Agenda tu examen a domicilio con 20% de descuento. C\u00f3digo: SALUD20. Solo esta semana."</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TikTok ScienSolutions -->
+<div class="section-content" id="scien-tiktok">
+<div class="card">
+<h2>TikTok — ScienSolutions</h2>
+<p>Canal con mayor potencial B2C. Audiencia salud + bienestar muy activa.</p>
+<h3>Contenido Org\u00e1nico</h3>
+<table>
+<tr><th>Formato</th><th>Concepto</th><th>Frecuencia</th></tr>
+<tr><td>GRWM/Rutina</td><td>"Haci\u00e9ndome ex\u00e1menes sin salir de casa" (experiencia real)</td><td>2x/semana</td></tr>
+<tr><td>Educativo</td><td>"\u00bfQu\u00e9 dice tu microbioma sobre tu salud?" (GutCode)</td><td>2x/semana</td></tr>
+<tr><td>Antes/Despu\u00e9s</td><td>"Mi piel antes vs despu\u00e9s de usar DeepSkin" (an\u00e1lisis IA)</td><td>1x/semana</td></tr>
+<tr><td>Trend jacking</td><td>Adaptar trends virales a salud preventiva</td><td>2x/semana</td></tr>
+<tr><td>Doctor explica</td><td>Profesional explicando resultados de Panel Viral</td><td>1x/semana</td></tr>
+</table>
+<h3>Hashtags</h3>
+<p><span class="tag">#Ex\u00e1menesEnCasa</span> <span class="tag">#SaludConIA</span> <span class="tag">#ScienSolutions</span> <span class="tag">#PanelViral</span> <span class="tag">#DeepSkin</span> <span class="tag">#GutCode</span> <span class="tag">#Microbioma</span> <span class="tag">#SaludPreventiva</span> <span class="tag">#TechSalud</span> <span class="tag">#DomicilioM\u00e9dico</span> <span class="tag">#HealthTok</span> <span class="tag">#BienestarTotal</span></p>
+<h3>TikTok Ads</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Formato</th><th>Objetivo</th><th>Presupuesto</th></tr>
+<tr><td>Brand Awareness</td><td>In-Feed + TopView</td><td>Video Views + Reach</td><td>$150-200/mes</td></tr>
+<tr><td>Conversi\u00f3n</td><td>Spark Ads (UGC style)</td><td>Bookings</td><td>$100-150/mes</td></tr>
+</table>
+</div>
+</div>
+
+<!-- LinkedIn ScienSolutions -->
+<div class="section-content" id="scien-linkedin">
+<div class="card">
+<h2>LinkedIn — ScienSolutions</h2>
+<p>Enfoque B2B: ex\u00e1menes para empresas + credibilidad cient\u00edfica.</p>
+<h3>Estrategia</h3>
+<table>
+<tr><th>Tipo</th><th>Contenido</th><th>Frecuencia</th></tr>
+<tr><td>B2B Corporate</td><td>"Ex\u00e1menes preventivos para tus colaboradores — en su domicilio"</td><td>2x/semana</td></tr>
+<tr><td>Ciencia + IA</td><td>Papers, investigaciones, validaciones de los algoritmos IA</td><td>1x/semana</td></tr>
+<tr><td>Casos empresas</td><td>"C\u00f3mo empresa X mejor\u00f3 la salud de 200 empleados con ScienSolutions"</td><td>2x/mes</td></tr>
+</table>
+<h3>LinkedIn Ads</h3>
+<table>
+<tr><th>Campa\u00f1a</th><th>Targeting</th><th>Presupuesto</th></tr>
+<tr><td>Corporate Health</td><td>HR Directors, Wellness Managers, CEOs PyMEs</td><td>$100-150/mes</td></tr>
+<tr><td>Thought Leadership</td><td>Healthcare professionals, HealthTech</td><td>$50-100/mes</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Content ScienSolutions -->
+<div class="section-content" id="scien-content">
+<div class="card">
+<h2>Content Marketing — ScienSolutions</h2>
+<h3>Blog Topics</h3>
+<table>
+<tr><th>#</th><th>Art\u00edculo</th><th>Lead Magnet</th></tr>
+<tr><td>1</td><td>"Ex\u00e1menes a domicilio: la gu\u00eda completa para 2026"</td><td>Gu\u00eda PDF</td></tr>
+<tr><td>2</td><td>"\u00bfQu\u00e9 es el microbioma y por qu\u00e9 deber\u00edas analizarlo?"</td><td>Quiz interactivo</td></tr>
+<tr><td>3</td><td>"DeepSkin: c\u00f3mo la IA detecta problemas de piel antes que t\u00fa"</td><td>Demo visual</td></tr>
+<tr><td>4</td><td>"Panel Viral: 20+ virus detectados desde tu hogar"</td><td>Infograf\u00eda</td></tr>
+<tr><td>5</td><td>"5 ex\u00e1menes preventivos que deber\u00edas hacerte cada a\u00f1o"</td><td>Checklist salud</td></tr>
+<tr><td>6</td><td>"Salud corporativa: por qu\u00e9 las empresas eligen ex\u00e1menes a domicilio"</td><td>Brochure B2B</td></tr>
+</table>
+<h3>Email Nurture</h3>
+<table>
+<tr><th>D\u00eda</th><th>Asunto</th><th>CTA</th></tr>
+<tr><td>0</td><td>"Bienvenido a ScienSolutions — tu salud, simplificada"</td><td>Explorar servicios</td></tr>
+<tr><td>3</td><td>"\u00bfSab\u00edas que puedes analizar tu microbioma desde casa?"</td><td>Conocer GutCode</td></tr>
+<tr><td>7</td><td>"Tu piel te habla — aprende a escucharla con DeepSkin"</td><td>Probar DeepSkin</td></tr>
+<tr><td>14</td><td>"Temporada de virus: prot\u00e9gete con Panel Viral"</td><td>Agendar Panel Viral</td></tr>
+<tr><td>21</td><td>"20% descuento en tu primer examen — solo esta semana"</td><td>Agendar con descuento</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Budget ScienSolutions -->
+<div class="section-content" id="scien-budget">
+<div class="card">
+<h2>Presupuesto — ScienSolutions</h2>
+<h3>Escenario 1: $1,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:40%;background:var(--sci-color)">Google $400</div>
+<div style="width:30%;background:var(--highlight)">Meta $300</div>
+<div style="width:15%;background:#1DA1F2">TikTok $150</div>
+<div style="width:15%;background:var(--green)">Content $150</div>
+</div>
+<h3>Escenario 2: $1,500 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:35%;background:var(--sci-color)">Google $525</div>
+<div style="width:25%;background:var(--highlight)">Meta $375</div>
+<div style="width:15%;background:#1DA1F2">TikTok $225</div>
+<div style="width:10%;background:#f39c12">LinkedIn $150</div>
+<div style="width:15%;background:var(--green)">Content $225</div>
+</div>
+<h3>Escenario 3: $2,000 USD/mes</h3>
+<div class="budget-bar">
+<div style="width:30%;background:var(--sci-color)">Google $600</div>
+<div style="width:22%;background:var(--highlight)">Meta $440</div>
+<div style="width:15%;background:#1DA1F2">TikTok $300</div>
+<div style="width:10%;background:#f39c12">LinkedIn $200</div>
+<div style="width:13%;background:var(--green)">Content $260</div>
+<div style="width:10%;background:#2c3e50">Video $200</div>
+</div>
+</div>
+</div>
+
+<!-- KPIs ScienSolutions -->
+<div class="section-content" id="scien-kpis">
+<div class="card">
+<h2>KPIs — ScienSolutions</h2>
+<div class="metric-grid">
+<div class="metric-card"><div class="number" style="color:var(--sci-color)">80-120</div><div class="label">Bookings/mes (Mes 3)</div></div>
+<div class="metric-card"><div class="number" style="color:var(--green)">6-10%</div><div class="label">Tasa conversi\u00f3n web</div></div>
+<div class="metric-card"><div class="number" style="color:var(--highlight)">$8-15</div><div class="label">CPA objetivo</div></div>
+<div class="metric-card"><div class="number" style="color:var(--gold)">$3,000</div><div class="label">MRR objetivo Mes 3</div></div>
+</div>
+<table>
+<tr><th>Canal</th><th>M\u00e9trica</th><th>Mes 1</th><th>Mes 2</th><th>Mes 3</th></tr>
+<tr><td>Google Ads</td><td>Bookings</td><td>15-25</td><td>30-45</td><td>45-60</td></tr>
+<tr><td>Meta Ads</td><td>Bookings</td><td>10-15</td><td>20-30</td><td>25-35</td></tr>
+<tr><td>TikTok</td><td>Bookings</td><td>5-8</td><td>10-15</td><td>15-25</td></tr>
+<tr><td>SEO</td><td>Tr\u00e1fico org\u00e1nico</td><td>+30%</td><td>+70%</td><td>+150%</td></tr>
+<tr><td>Ticket promedio</td><td>USD</td><td>$25</td><td>$28</td><td>$30</td></tr>
+</table>
+</div>
+</div>
+
+<!-- Timeline ScienSolutions -->
+<div class="section-content" id="scien-timeline">
+<div class="card">
+<h2>Plan de 90 D\u00edas — ScienSolutions</h2>
+<div class="revenue-target">
+<div class="amount">$2,500 - $3,000</div>
+<div class="subtitle">MRR proyectado Mes 3 — ScienSolutions</div>
+</div>
+<div class="timeline">
+<div class="timeline-item"><div class="week">Semana 1-2: Setup</div><div class="tasks">\u2022 Landing pages por producto: Panel Viral, DeepSkin, GutCode<br>\u2022 Google Ads + Meta Ads configurados<br>\u2022 Pixel + conversiones tracking (agendar examen = conversi\u00f3n)<br>\u2022 Contenido TikTok: grabar primeros 10 videos</div></div>
+<div class="timeline-item"><div class="week">Semana 3-4: Lanzamiento</div><div class="tasks">\u2022 Activar Google Search (ex\u00e1menes domicilio + productos)<br>\u2022 Meta TOFU: Reels awareness<br>\u2022 TikTok org\u00e1nico: 5 videos/semana<br>\u2022 Proyecci\u00f3n: 15-20 bookings</div></div>
+<div class="timeline-item"><div class="week">Semana 5-6: Optimizaci\u00f3n</div><div class="tasks">\u2022 A/B test creativos Meta + Google<br>\u2022 Activar TikTok Ads (Spark Ads)<br>\u2022 Blog: gu\u00edas de salud preventiva<br>\u2022 Proyecci\u00f3n: 35-50 bookings acumulados</div></div>
+<div class="timeline-item"><div class="week">Semana 7-8: Escalar</div><div class="tasks">\u2022 Campa\u00f1as por producto individual<br>\u2022 Influencer micro (salud/bienestar) — 2-3 colaboraciones<br>\u2022 UGC: testimoniales reales de pacientes<br>\u2022 Proyecci\u00f3n: 65-80 bookings, primeros clientes corporativos</div></div>
+<div class="timeline-item"><div class="week">Semana 9-10: Aceleraci\u00f3n</div><div class="tasks">\u2022 BOFU remarketing agresivo<br>\u2022 Programa referidos: "Invita y gana descuento"<br>\u2022 LinkedIn B2B para empresas<br>\u2022 Proyecci\u00f3n: 100-120 bookings acumulados</div></div>
+<div class="timeline-item"><div class="week">Semana 11-12: Consolidaci\u00f3n</div><div class="tasks">\u2022 An\u00e1lisis completo de unit economics<br>\u2022 Expansi\u00f3n geogr\u00e1fica planning<br>\u2022 Plan Q2<br>\u2022 Proyecci\u00f3n: 150+ bookings, MRR $2,500-$3,000</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== CONSOLIDATED SECTION ==================== -->
+<div style="margin-top:40px">
+<div class="card">
+<h2>Resumen Consolidado — Los 3 Proyectos</h2>
+
+<div class="revenue-target" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+<div class="amount">$9,000 - $10,500 USD/mes</div>
+<div class="subtitle">MRR Total Proyectado — Mes 3 (Combinado)</div>
+</div>
+
+<div class="metric-grid">
+<div class="metric-card" style="border-left:4px solid var(--reg-color)"><div class="number">$4,000</div><div class="label">RegulatorIA MRR</div></div>
+<div class="metric-card" style="border-left:4px solid var(--tun-color)"><div class="number">$3,500</div><div class="label">TuNorma MRR</div></div>
+<div class="metric-card" style="border-left:4px solid var(--sci-color)"><div class="number">$3,000</div><div class="label">ScienSolutions MRR</div></div>
+<div class="metric-card" style="border-left:4px solid var(--gold)"><div class="number">$10,500</div><div class="label">Total MRR Target</div></div>
+</div>
+
+<h3>Presupuesto Consolidado por Escenario</h3>
+<table>
+<tr><th>Escenario</th><th>RegulatorIA</th><th>TuNorma</th><th>ScienSolutions</th><th>Total Mensual</th><th>ROI Esperado</th></tr>
+<tr><td><strong>Conservador</strong></td><td>$1,000</td><td>$1,000</td><td>$1,000</td><td><strong>$3,000</strong></td><td>3.0-3.5x</td></tr>
+<tr><td><strong>Moderado</strong></td><td>$1,500</td><td>$1,500</td><td>$1,500</td><td><strong>$4,500</strong></td><td>2.3-2.5x</td></tr>
+<tr><td><strong>Agresivo</strong></td><td>$2,000</td><td>$2,000</td><td>$2,000</td><td><strong>$6,000</strong></td><td>1.7-2.0x</td></tr>
+</table>
+
+<h3>Contacto por Proyecto</h3>
+<table>
+<tr><th>Proyecto</th><th>URL</th><th>Email</th><th>Mercado</th></tr>
+<tr><td><span class="badge badge-reg">RegulatorIA</span></td><td>regulatoria.uranoia.cl</td><td>proyectos@uranoia.cl</td><td>LATAM (Agroqu\u00edmicos)</td></tr>
+<tr><td><span class="badge badge-tun">TuNorma</span></td><td>tunorma.cl / gruporegulatorio.cl</td><td>info@gruporegulatorio.cl</td><td>Chile (Empresas)</td></tr>
+<tr><td><span class="badge badge-sci">ScienSolutions</span></td><td>sciensolutions.com</td><td>contacto@sciensolutions.com</td><td>Chile \u2192 LATAM (B2C + B2B)</td></tr>
+</table>
+</div>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Urano IA</strong> — Estrategia de Marketing Digital LATAM 2026</p>
+<p>Documento generado: Marzo 2026 · Revisi\u00f3n recomendada: Mensual · Meta: $10,000 USD MRR en 90 d\u00edas</p>
+</footer>
+
+<script>
+function switchProject(project) {
+  document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.project-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.project-tab[data-project="${project}"]`).classList.add('active');
+  document.getElementById(`project-${project}`).classList.add('active');
+  const container = document.getElementById(`project-${project}`);
+  container.querySelectorAll('.section-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === 0);
+  });
+  container.querySelectorAll('.section-content').forEach((c, i) => {
+    c.classList.toggle('active', i === 0);
+  });
+}
+
+function switchSection(project, section) {
+  const container = document.getElementById(`project-${project}`);
+  container.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+  container.querySelectorAll('.section-content').forEach(c => c.classList.remove('active'));
+  const tabs = container.querySelectorAll('.section-tab');
+  const sectionId = `${project}-${section}`;
+  document.getElementById(sectionId).classList.add('active');
+  const sectionNames = ['seo','google','meta','tiktok','linkedin','content','budget','kpis','timeline'];
+  const idx = sectionNames.indexOf(section);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+}
+
+document.querySelectorAll('.collapsible').forEach(el => {
+  el.addEventListener('click', () => {
+    el.classList.toggle('open');
+    el.nextElementSibling.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>
