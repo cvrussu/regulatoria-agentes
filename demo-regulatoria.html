@@ -59,6 +59,12 @@
   }
   .dot.active { background: var(--green); transform:scale(1.5); }
 
+  /* ── BRAND CORNER ── */
+  #brand-corner {
+    position:fixed; top:18px; left:24px; z-index:100;
+  }
+  #brand-corner .logo-wrap svg { height:30px; }
+
   /* ── NAV ARROWS ── */
   .nav-btn {
     position:fixed; top:50%; transform:translateY(-50%);
@@ -102,6 +108,23 @@
     0%   { transform:scale(1);   opacity:.6; }
     100% { transform:scale(1.5); opacity:0; }
   }
+
+  /* ── LOGO SVG ── */
+  .logo-wrap { display:inline-flex; align-items:center; }
+  .logo-wrap svg { height:44px; width:auto; }
+  .logo-wrap.sm svg { height:34px; }
+  /* On dark bg: shield white, "Regulator." white, "IA" teal */
+  .logo-dark .shield-border { stroke:#ffffff; }
+  .logo-dark .mol-line,
+  .logo-dark .mol-dot  { stroke:#1B998B; fill:#1B998B; }
+  .logo-dark .reg-text { fill:#ffffff; }
+  .logo-dark .ia-text  { fill:#1B998B; }
+  /* On light bg: original brand colors */
+  .logo-light .shield-border { stroke:#1a3560; }
+  .logo-light .mol-line,
+  .logo-light .mol-dot  { stroke:#1B998B; fill:#1B998B; }
+  .logo-light .reg-text { fill:#1a4731; }
+  .logo-light .ia-text  { fill:#1B998B; }
 
   /* ── GRADIENT TEXT ── */
   .grad-text {
@@ -155,12 +178,7 @@
     background-size: 48px 48px;
   }
   #s1 .content { position:relative; z-index:1; text-align:center; max-width:1000px; }
-  #s1 .logo {
-    font-size:22px; font-weight:900; letter-spacing:-.5px;
-    margin-bottom:36px;
-    animation: fadeUp .7s .1s both;
-  }
-  #s1 .logo span { color:rgba(255,255,255,0.6); font-weight:400; }
+  #s1 .logo { margin-bottom:36px; animation: fadeUp .7s .1s both; }
   #s1 h1 {
     font-size:clamp(40px, 5.5vw, 76px); font-weight:900;
     line-height:1.08; margin-bottom:24px;
@@ -376,7 +394,7 @@
     background-size:48px 48px;
   }
   #s6 .content { position:relative; z-index:1; }
-  #s6 .logo { font-size:20px; font-weight:900; margin-bottom:32px; animation:fadeUp .7s .1s both; }
+  #s6 .logo { margin-bottom:32px; animation:fadeUp .7s .1s both; }
   #s6 h2 {
     font-size:clamp(48px,7vw,90px); font-weight:900; line-height:1.05;
     margin-bottom:16px; animation:fadeUp .7s .25s both;
@@ -396,14 +414,35 @@
 </head>
 <body>
 
+<!-- SVG logo symbol (reused via <use>) -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="logo-symbol" viewBox="0 0 520 120">
+    <path class="shield-border" d="M52 12 L88 24 L88 58 C88 78 72 95 52 104 C32 95 16 78 16 58 L16 24 Z"
+          stroke-width="4" fill="none" stroke-linejoin="round"/>
+    <circle class="mol-dot" cx="52" cy="46" r="4.5"/>
+    <circle class="mol-dot" cx="38" cy="60" r="3.5"/>
+    <circle class="mol-dot" cx="66" cy="60" r="3.5"/>
+    <circle class="mol-dot" cx="43" cy="74" r="3"/>
+    <circle class="mol-dot" cx="63" cy="74" r="3"/>
+    <line class="mol-line" x1="52" y1="50" x2="38" y2="57" stroke-width="2" stroke-linecap="round"/>
+    <line class="mol-line" x1="52" y1="50" x2="66" y2="57" stroke-width="2" stroke-linecap="round"/>
+    <line class="mol-line" x1="38" y1="63" x2="43" y2="71" stroke-width="2" stroke-linecap="round"/>
+    <line class="mol-line" x1="66" y1="63" x2="63" y2="71" stroke-width="2" stroke-linecap="round"/>
+    <line class="mol-line" x1="43" y1="74" x2="63" y2="74" stroke-width="1.5" stroke-linecap="round"/>
+    <text class="reg-text" x="106" y="74" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="52" letter-spacing="-1">Regulator.</text>
+    <text class="ia-text"  x="409" y="74" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="52" letter-spacing="-1">IA</text>
+  </symbol>
+</svg>
+
 <div id="progress-bar"></div>
 <div id="counter"></div>
+<div id="brand-corner" class="logo-wrap logo-dark"><svg><use href="#logo-symbol"/></svg></div>
 
 <!-- ══ SLIDE 1: PORTADA ══ -->
 <section class="slide active" id="s1">
   <div class="grid-bg"></div>
   <div class="content">
-    <div class="logo"><span class="grad-text">Regulator</span><span>.IA</span></div>
+    <div class="logo"><div class="logo-wrap logo-dark"><svg><use href="#logo-symbol"/></svg></div></div>
     <div class="tag"><span class="dot-live"></span> PRIMERA EN CHILE · CONSULTORA AI-FIRST</div>
     <h1>La primera consultora de<br>registro de agroquímicos<br><span class="grad-text-rev">impulsada por IA</span></h1>
     <p class="subtitle">11 agentes de inteligencia artificial especializados trabajan en conjunto para automatizar cada etapa del proceso regulatorio de plaguicidas.</p>
@@ -609,7 +648,7 @@
 <section class="slide" id="s6">
   <div class="grid-bg"></div>
   <div class="content">
-    <div class="logo"><span class="grad-text">Regulator</span>.IA</div>
+    <div class="logo"><div class="logo-wrap logo-dark"><svg><use href="#logo-symbol"/></svg></div></div>
     <div class="tag" style="margin:0 auto 28px"><span class="dot-live"></span> PRIMERA EN CHILE · CONSULTORA AI-FIRST</div>
     <h2>Registra más.<br><span class="grad-text-rev">Espera menos.</span></h2>
     <p class="tagline">La primera consultora de registro de plaguicidas impulsada por IA</p>
@@ -659,6 +698,7 @@
     dotsContainer.children[current].classList.add('active');
     progressBar.style.width = ((current + 1) / total * 100) + '%';
     counter.textContent = (current + 1) + ' / ' + total;
+    updateBrandLogo();
   }
 
   document.getElementById('next').addEventListener('click', () => goTo(current + 1));
@@ -670,6 +710,20 @@
 
   progressBar.style.width = (1 / total * 100) + '%';
   counter.textContent = '1 / ' + total;
+
+  // Light bg slides: 2 (s2) and 4 (s4) → use dark logo; dark bg → white logo
+  const lightSlides = new Set([1, 3]); // 0-indexed: slide 2 = index 1, slide 4 = index 3
+  const brandCorner = document.getElementById('brand-corner');
+  function updateBrandLogo() {
+    if (lightSlides.has(current)) {
+      brandCorner.classList.remove('logo-dark');
+      brandCorner.classList.add('logo-light');
+    } else {
+      brandCorner.classList.remove('logo-light');
+      brandCorner.classList.add('logo-dark');
+    }
+  }
+  updateBrandLogo();
 
   let auto = setInterval(() => goTo(current + 1), 9000);
   ['click','keydown'].forEach(ev =>
