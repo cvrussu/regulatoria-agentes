@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RegulatorIA — Product Demo</title>
+<style>
+  :root {
+    --blue: #0A2463;
+    --green: #1B998B;
+    --light: #F4F7FF;
+    --white: #FFFFFF;
+    --red: #FF6B6B;
+    --purple: #8338EC;
+    --accent: #3A86FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #000;
+    color: var(--white);
+    overflow: hidden;
+  }
+
+  /* ── SLIDES ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    background: var(--green);
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* ── NAV DOTS ── */
+  #dots {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .dot.active {
+    background: var(--green);
+    transform: scale(1.4);
+  }
+
+  /* ── NAV ARROWS ── */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 100;
+    transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.2); }
+  #prev { left: 20px; }
+  #next { right: 20px; }
+
+  /* ── SLIDE COUNTER ── */
+  #counter {
+    position: fixed;
+    top: 20px; right: 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    z-index: 100;
+    letter-spacing: 2px;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 1 — PORTADA
+  ══════════════════════════════════════ */
+  #s1 {
+    background: linear-gradient(135deg, var(--blue) 0%, #1B3A8C 60%, #0D2040 100%);
+    text-align: center;
+  }
+  #s1::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  #s1 .logo-tag {
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+  #s1 h1 {
+    font-size: clamp(48px, 6vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.4s both;
+  }
+  #s1 h1 span { color: var(--green); }
+  #s1 .subtitle {
+    font-size: clamp(18px, 2vw, 26px);
+    color: rgba(255,255,255,0.6);
+    max-width: 700px;
+    line-height: 1.6;
+    animation: fadeUp 0.8s 0.6s both;
+  }
+  #s1 .cta-pill {
+    margin-top: 48px;
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 16px 44px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    animation: fadeUp 0.8s 0.8s both;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 2 — PROBLEMA
+  ══════════════════════════════════════ */
+  #s2 { background: var(--blue); text-align: center; }
+  #s2 .tag {
+    font-size: 13px; letter-spacing: 5px; color: var(--red);
+    font-weight: 700; margin-bottom: 20px;
+    animation: fadeUp 0.6s 0.1s both;
+  }
+  #s2 h2 {
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 800; line-height: 1.2; margin-bottom: 60px;
+    animation: fadeUp 0.6s 0.25s both;
+  }
+  #s2 h2 span { color: var(--red); }
+  .stats-row {
+    display: flex; gap: 40px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.6s 0.4s both;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.07);
+    border-radius: 20px; padding: 40px 52px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-card .number { font-size: clamp(56px, 6vw, 80px); font-weight: 900; }
+  .stat-card .label { font-size: 18px; color: rgba(255,255,255,0.7); margin-top: 8px; line-height: 1.4; }
+  .pain-row {
+    margin-top: 48px;
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.6s 0.55s both;
+  }
+  .pain-pill {
+    background: rgba(255,107,107,0.12);
+    border: 1px solid rgba(255,107,107,0.25);
+    color: rgba(255,255,255,0.75);
+    padding: 10px 24px; border-radius: 50px; font-size: 16px;
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 3 — SOLUCIÓN
+  ══════════════════════════════════════ */
+  #s3 { background: var(--light); color: var(--blue); }
+  #s3 .tag {
+    font-size: 13px; letter-spacing: 5px; color: var(--green);
+    font-weight: 700; margin-bottom: 16px; text-align: center;
+    animation: fadeUp 0.6s 0.1s both;
+  }
+  #s3 h2 {
+    font-size: clamp(32px, 4vw, 58px); font-weight: 800;
+    text-align: center; margin-bottom: 52px;
+    animation: fadeUp 0.6s 0.25s both;
+  }
+  #s3 h2 span { color: var(--green); }
+  .phases {
+    display: flex; gap: 32px; width: 100%;
+  }
+  .phase-card {
+    flex: 1; background: white; border-radius: 24px;
+    padding: 40px 36px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    animation: fadeUp 0.6s both;
+  }
+  .phase-card:nth-child(1) { border-top: 6px solid var(--accent); animation-delay: 0.35s; }
+  .phase-card:nth-child(2) { border-top: 6px solid var(--green); animation-delay: 0.5s; }
+  .phase-card:nth-child(3) { border-top: 6px solid var(--purple); animation-delay: 0.65s; }
+  .phase-card .icon { font-size: 48px; margin-bottom: 20px; }
+  .phase-card h3 { font-size: 26px; font-weight: 700; color: var(--blue); margin-bottom: 12px; }
+  .phase-card p { font-size: 17px; color: #555; line-height: 1.6; }
+  .phase-card .badge {
+    display: inline-block; margin-top: 20px;
+    background: var(--light); padding: 6px 16px;
+    border-radius: 50px; font-size: 13px; font-weight: 600; color: var(--blue);
+  }
+
+  /* ══════════════════════════════════════
+     SLIDE 4 — DIFERENCIADORES
+  ══════════════════════════════════════ */
+  #s4 { background: var(--blue); align-items: flex-start; }
+  #s4 .tag {
+    font-size: 13px; letter-spacing: 5px; color: var(--green);
+    font-weight: 700; margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.1s both;
+  }
+  #s4 h2 {
+    font-size: clamp(36px, 4.5vw, 62px); font-weight: 800; margin-bottom: 44px;
+    animation: fadeUp 0.5s 0.2s both;
+  }
+  .diff-list { display: flex; flex-direction: column; gap: 22px; width: 100%; }
+  .diff-item {
+    display: flex; align-items: center; gap: 28px;
+    background: rgba(255,255,255,0.07);
+    border-left: 4px solid var(--green);
+    border-radius: 0 16px 16px 0;
+    padding: 24px 36px;
+    animation: slideRight 0.6s both;
+  }
+  .diff-item:nth-child(1) { animation-delay: 0.3s; }
+  .diff-item:nth-child(2) { animation-delay: 0.44s; }
+  .diff-item:nth-child(3) { animation-delay: 0.58s; }
+  .diff-item:nth-child(4) { animation-delay: 0.72s; }
+  .diff-item .icon { font-size: 38px; flex-shrink: 0; }
+  .diff-item .text { font-size: 22px; font-weight: 500; line-height: 1.4; }
+  .diff-item .text strong { color: var(--green); }
+
+  /* ══════════════════════════════════════
+     SLIDE 5 — RESULTADOS
+  ══════════════════════════════════════ */
+  #s5 { background: #0D1B2A; text-align: center; }
+  #s5 .tag {
+    font-size: 13px; letter-spacing: 5px; color: var(--green);
+    font-weight: 700; margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.1s both;
+  }
+  #s5 h2 {
+    font-size: clamp(34px, 4vw, 58px); font-weight: 800; margin-bottom: 56px;
+    animation: fadeUp 0.5s 0.25s both;
+  }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 28px; width: 100%; max-width: 900px;
+  }
+  .result-card {
+    background: rgba(27,153,139,0.12);
+    border: 1px solid rgba(27,153,139,0.3);
+    border-radius: 20px; padding: 36px 40px;
+    animation: fadeUp 0.5s both;
+  }
+  .result-card:nth-child(1) { animation-delay: 0.35s; }
+  .result-card:nth-child(2) { animation-delay: 0.48s; }
+  .result-card:nth-child(3) { animation-delay: 0.61s; }
+  .result-card:nth-child(4) { animation-delay: 0.74s; }
+  .result-card .number { font-size: 56px; font-weight: 900; color: var(--green); }
+  .result-card .desc { font-size: 18px; color: rgba(255,255,255,0.7); margin-top: 8px; line-height: 1.4; }
+
+  /* ══════════════════════════════════════
+     SLIDE 6 — CTA FINAL
+  ══════════════════════════════════════ */
+  #s6 {
+    background: linear-gradient(135deg, var(--blue) 0%, #1B3A8C 50%, #0D2040 100%);
+    text-align: center;
+  }
+  #s6::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  #s6 .eyebrow {
+    font-size: 18px; color: var(--green); letter-spacing: 4px;
+    font-weight: 700; margin-bottom: 24px;
+    animation: fadeUp 0.7s 0.2s both;
+  }
+  #s6 h2 {
+    font-size: clamp(52px, 7vw, 96px); font-weight: 900; line-height: 1.05;
+    margin-bottom: 16px;
+    animation: fadeUp 0.7s 0.35s both;
+  }
+  #s6 h2 span { color: var(--green); }
+  #s6 .domain {
+    font-size: 24px; color: rgba(255,255,255,0.5); margin-bottom: 60px;
+    animation: fadeUp 0.7s 0.5s both;
+  }
+  .cta-buttons {
+    display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.65s both;
+  }
+  .btn-primary {
+    background: var(--green); color: white;
+    padding: 20px 52px; border-radius: 60px;
+    font-size: 20px; font-weight: 700; cursor: pointer;
+    border: none; letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(27,153,139,0.4); }
+  .btn-secondary {
+    background: transparent; color: white;
+    padding: 20px 52px; border-radius: 60px;
+    font-size: 20px; font-weight: 600; cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.35);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.07); }
+
+  /* ══════════════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Reset animations when slide becomes active */
+  .slide:not(.active) * { animation: none !important; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="counter"></div>
+
+<!-- SLIDE 1: Portada -->
+<section class="slide active" id="s1">
+  <div class="logo-tag">REGULATORIA · PRODUCT DEMO</div>
+  <h1>Registros regulatorios<br><span>más rápidos con IA</span></h1>
+  <p class="subtitle">Automatizamos todo el ciclo de registro de agroquímicos — desde el expediente hasta la aprobación — reduciendo tiempos hasta en un 60%.</p>
+  <div class="cta-pill">gruporegulatorio.cl</div>
+</section>
+
+<!-- SLIDE 2: El Problema -->
+<section class="slide" id="s2">
+  <div class="tag">EL PROBLEMA</div>
+  <h2>Registrar agroquímicos es<br><span>lento, costoso y complejo</span></h2>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="number" style="color: var(--red)">18</div>
+      <div class="label">meses promedio<br>por registro manual</div>
+    </div>
+    <div class="stat-card">
+      <div class="number" style="color: #FF6B6B">60%</div>
+      <div class="label">de expedientes con<br>errores u omisiones</div>
+    </div>
+    <div class="stat-card">
+      <div class="number" style="color: #FFB347">3x</div>
+      <div class="label">más costo vs.<br>procesos automatizados</div>
+    </div>
+  </div>
+  <div class="pain-row">
+    <div class="pain-pill">⚠️ Documentación incompleta</div>
+    <div class="pain-pill">⚠️ Rechazos regulatorios</div>
+    <div class="pain-pill">⚠️ Equipos saturados</div>
+    <div class="pain-pill">⚠️ Cambios normativos constantes</div>
+  </div>
+</section>
+
+<!-- SLIDE 3: La Solución -->
+<section class="slide" id="s3">
+  <div class="tag" style="color: var(--green)">LA SOLUCIÓN</div>
+  <h2 style="color: var(--blue)">Automatización regulatoria<br>con <span>inteligencia artificial</span></h2>
+  <div class="phases">
+    <div class="phase-card">
+      <div class="icon">🔍</div>
+      <h3>Pre-Registro</h3>
+      <p>La IA analiza los requisitos regulatorios vigentes y prepara automáticamente la documentación necesaria.</p>
+      <span class="badge">Análisis automático</span>
+    </div>
+    <div class="phase-card">
+      <div class="icon">📋</div>
+      <h3>Registro</h3>
+      <p>Generación del expediente completo, validación inteligente de datos y gestión del proceso de envío.</p>
+      <span class="badge">Generación de expedientes</span>
+    </div>
+    <div class="phase-card">
+      <div class="icon">✅</div>
+      <h3>Post-Registro</h3>
+      <p>Monitoreo continuo del estado regulatorio, alertas de vencimiento y actualizaciones normativas.</p>
+      <span class="badge">Compliance continuo</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: Diferenciadores -->
+<section class="slide" id="s4">
+  <div class="tag">POR QUÉ REGULATORIA</div>
+  <h2>Ventajas que nos<br>diferencian</h2>
+  <div class="diff-list">
+    <div class="diff-item">
+      <span class="icon">⚡</span>
+      <span class="text">Procesamiento en paralelo — <strong>múltiples registros simultáneos</strong> sin aumentar el equipo</span>
+    </div>
+    <div class="diff-item">
+      <span class="icon">🌎</span>
+      <span class="text">IA entrenada en normativa de <strong>Chile, LATAM, FAO/WHO</strong> y estándares internacionales</span>
+    </div>
+    <div class="diff-item">
+      <span class="icon">💰</span>
+      <span class="text">Hasta <strong>60% menos costo operativo</strong> vs. equipo regulatorio tradicional</span>
+    </div>
+    <div class="diff-item">
+      <span class="icon">🔒</span>
+      <span class="text">Trazabilidad completa y <strong>auditoría de cada paso</strong> del proceso regulatorio</span>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: Resultados -->
+<section class="slide" id="s5">
+  <div class="tag">RESULTADOS</div>
+  <h2>Impacto real en tu operación</h2>
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="number">−60%</div>
+      <div class="desc">reducción en tiempo<br>de pre-registro</div>
+    </div>
+    <div class="result-card">
+      <div class="number">10x</div>
+      <div class="desc">más registros procesados<br>por el mismo equipo</div>
+    </div>
+    <div class="result-card">
+      <div class="number">99%</div>
+      <div class="desc">exactitud en generación<br>de expedientes</div>
+    </div>
+    <div class="result-card">
+      <div class="number">24/7</div>
+      <div class="desc">monitoreo de cumplimiento<br>sin intervención humana</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: CTA Final -->
+<section class="slide" id="s6">
+  <div class="eyebrow">EMPIEZA HOY</div>
+  <h2>Registra más.<br><span>Espera menos.</span></h2>
+  <div class="domain">www.gruporegulatorio.cl</div>
+  <div class="cta-buttons">
+    <button class="btn-primary">Solicita una Demo</button>
+    <button class="btn-secondary">Prueba Piloto Gratis</button>
+  </div>
+</section>
+
+<!-- DOTS -->
+<div id="dots"></div>
+<button class="nav-btn" id="prev">‹</button>
+<button class="nav-btn" id="next">›</button>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const progressBar = document.getElementById('progress-bar');
+  const counter = document.getElementById('counter');
+  const dotsContainer = document.getElementById('dots');
+
+  // Create dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = (index + total) % total;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + total;
+
+    // Restart animations by re-triggering
+    const el = slides[current];
+    el.classList.remove('active');
+    void el.offsetWidth;
+    el.classList.add('active');
+  }
+
+  document.getElementById('next').addEventListener('click', () => goTo(current + 1));
+  document.getElementById('prev').addEventListener('click', () => goTo(current - 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // Init
+  progressBar.style.width = (1 / total * 100) + '%';
+  counter.textContent = '1 / ' + total;
+
+  // Auto-advance every 8s
+  let autoTimer = setInterval(() => goTo(current + 1), 8000);
+  ['click', 'keydown'].forEach(e => {
+    document.addEventListener(e, () => { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), 8000); });
+  });
+</script>
+</body>
+</html>
