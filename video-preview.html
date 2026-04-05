@@ -577,8 +577,7 @@ window.addEventListener('load', () => {
   goToScene(0);
   sceneStart = performance.now();
   rafId = requestAnimationFrame(loop);
-  // Build orchestrator eagerly after 500ms so it's ready
-  setTimeout(buildOrchestrator, 500);
+  // Orchestrator built on demand when scene 2 activates
 });
 </script>
 </body>
