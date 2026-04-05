@@ -277,97 +277,150 @@ const AGENTS = [
 ];
 
 function buildOrchestrator() {
-  const container = document.getElementById('orch-canvas');
-  if(!container) return;
-  const W = window.innerWidth;
-  const H = window.innerHeight;
+  const s2 = document.getElementById('s2');
+  if(!s2) return;
+  // Clear previous
+  const old = document.getElementById('orch-canvas');
+  if(old) old.remove();
+  
+  // Create canvas element
+  const canvas = document.createElement('canvas');
+  canvas.id = 'orch-canvas';
+  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
+  s2.insertBefore(canvas, s2.firstChild);
+  
+  const W = s2.getBoundingClientRect().width || window.innerWidth;
+  const H = s2.getBoundingClientRect().height || window.innerHeight;
+  canvas.width = W;
+  canvas.height = H;
+  
+  const ctx = canvas.getContext('2d');
   const cx = W/2, cy = H/2;
-  const R = Math.min(W,H) * 0.38;
+  const R = Math.min(W,H) * 0.36;
   const toRad = d => d * Math.PI / 180;
-
-  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('width', W); svg.setAttribute('height', H);
-  svg.style.cssText = 'position:absolute;inset:0;overflow:visible';
-
-  // Connection lines
-  AGENTS.forEach((ag,i) => {
-    const ax = cx + R * Math.cos(toRad(ag.angle));
-    const ay = cy + R * Math.sin(toRad(ag.angle));
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',cx); line.setAttribute('y1',cy);
-    line.setAttribute('x2',ax); line.setAttribute('y2',ay);
-    line.setAttribute('stroke',ag.color);
-    line.setAttribute('stroke-width','1.5');
-    line.setAttribute('stroke-opacity','0.25');
-    line.setAttribute('stroke-dasharray','5 7');
-    line.style.animation = `fadeIn .5s ${i*0.08}s both`;
-    svg.appendChild(line);
-
-    // Particle dot
-    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('r','4');
-    circle.setAttribute('fill', ag.color);
-    circle.setAttribute('opacity','0.7');
-    circle.dataset.cx = cx; circle.dataset.cy = cy;
-    circle.dataset.ax = ax; circle.dataset.ay = ay;
-    circle.dataset.offset = String(i * 0.09);
-    circle.classList.add('particle');
-    svg.appendChild(circle);
-  });
-
-  // Pulse rings
-  for(let k=0;k<2;k++){
-    const pulse = document.createElementNS('http://www.w3.org/2000/svg','circle');
-    pulse.setAttribute('cx',cx); pulse.setAttribute('cy',cy);
-    pulse.setAttribute('r','80'); pulse.setAttribute('fill','none');
-    pulse.setAttribute('stroke','#5AAD2D');
-    pulse.setAttribute('stroke-width',k===0?'1.5':'1');
-    pulse.classList.add('pulse-ring');
-    pulse.style.animationDelay = k*0.4+'s';
-    svg.appendChild(pulse);
-  }
-
-  container.appendChild(svg);
-
-  // Agent nodes (HTML divs for emoji)
-  AGENTS.forEach((ag,i) => {
-    const ax = cx + R * Math.cos(toRad(ag.angle));
-    const ay = cy + R * Math.sin(toRad(ag.angle));
-    const sz = 80;
-    const node = document.createElement('div');
-    node.className = 'agent-node';
-    node.style.cssText = `left:${ax-sz/2}px;top:${ay-sz/2}px;width:${sz}px;height:${sz}px;border-color:${ag.color}66;box-shadow:0 0 14px ${ag.color}33;animation:scaleIn .4s ${0.1+i*0.08}s both`;
-    node.innerHTML = `<span style="font-size:18px">${ag.emoji}</span><span style="font-size:8px;font-weight:800;color:${ag.color};letter-spacing:1px">${ag.name}</span><span style="font-size:7px;color:rgba(255,255,255,.4)">${ag.role}</span>`;
-    container.appendChild(node);
-  });
-
-  // Center orchestrator
-  const orch = document.createElement('div');
-  orch.className = 'orch-center';
-  orch.style.cssText = `left:${cx-65}px;top:${cy-65}px`;
-  orch.innerHTML = `<span style="font-size:10px;letter-spacing:2px;color:#5AAD2D;font-weight:700">ORQUESTADOR</span><span style="font-size:26px;margin:2px 0">🤖</span><span style="font-size:9px;color:rgba(255,255,255,.4)">AI Core</span>`;
-  container.appendChild(orch);
-
-  animateParticles(svg);
-}
-
-function animateParticles(svg) {
-  const particles = svg.querySelectorAll('.particle');
-  let t = 0;
-  function tick() {
-    t += 0.008;
-    particles.forEach(p => {
-      const off = parseFloat(p.dataset.offset||'0');
-      const frac = ((t + off) % 1);
-      const px = parseFloat(p.dataset.cx) + (parseFloat(p.dataset.ax) - parseFloat(p.dataset.cx)) * frac;
-      const py = parseFloat(p.dataset.cy) + (parseFloat(p.dataset.ay) - parseFloat(p.dataset.cy)) * frac;
-      p.setAttribute('cx', px); p.setAttribute('cy', py);
+  
+  let frame = 0;
+  let pulseR = 80;
+  
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    frame++;
+    
+    // Pulse rings
+    const pulseT = (frame % 120) / 120;
+    const pr = 70 + pulseT * 120;
+    const po = (1 - pulseT) * 0.4;
+    ctx.beginPath();
+    ctx.arc(cx, cy, pr, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(90,173,45,${po})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(cx, cy, pr*0.6, 0, Math.PI*2);
+    ctx.strokeStyle = `rgba(90,173,45,${po*0.5})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    // Lines & particles
+    AGENTS.forEach((ag, i) => {
+      const ax = cx + R * Math.cos(toRad(ag.angle));
+      const ay = cy + R * Math.sin(toRad(ag.angle));
+      const color = ag.color;
+      
+      // Line
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(ax, ay);
+      ctx.strokeStyle = color + '44';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 7]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      
+      // Particle
+      const pt = ((frame * 0.008 + i * 0.09) % 1);
+      const px = cx + (ax - cx) * pt;
+      const py = cy + (ay - cy) * pt;
+      ctx.beginPath();
+      ctx.arc(px, py, 4, 0, Math.PI*2);
+      ctx.fillStyle = color + 'CC';
+      ctx.fill();
+      
+      // Agent node circle
+      const progress = Math.min(1, (frame - i*4) / 30);
+      if(progress <= 0) return;
+      ctx.save();
+      ctx.globalAlpha = progress;
+      
+      const nr = 44;
+      // Glow
+      const grad = ctx.createRadialGradient(ax, ay, 0, ax, ay, nr);
+      grad.addColorStop(0, color + '18');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(ax, ay, nr, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      // Border
+      ctx.beginPath();
+      ctx.arc(ax, ay, nr, 0, Math.PI*2);
+      ctx.strokeStyle = color + '88';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // Emoji
+      ctx.font = '20px serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'white';
+      ctx.fillText(ag.emoji, ax, ay - 10);
+      // Name
+      ctx.font = 'bold 9px Inter, sans-serif';
+      ctx.fillStyle = color;
+      ctx.letterSpacing = '1px';
+      ctx.fillText(ag.name, ax, ay + 6);
+      // Role
+      ctx.font = '8px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.fillText(ag.role, ax, ay + 18);
+      
+      ctx.restore();
     });
-    requestAnimationFrame(tick);
+    
+    // Orchestrator center
+    const orchProgress = Math.min(1, frame / 30);
+    ctx.save();
+    ctx.globalAlpha = orchProgress;
+    // Glow
+    const orchGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 75);
+    orchGrad.addColorStop(0, 'rgba(43,90,20,0.8)');
+    orchGrad.addColorStop(1, 'rgba(10,20,10,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 75, 0, Math.PI*2);
+    ctx.fillStyle = orchGrad;
+    ctx.fill();
+    // Border
+    ctx.beginPath();
+    ctx.arc(cx, cy, 65, 0, Math.PI*2);
+    ctx.strokeStyle = '#5AAD2D';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // Label
+    ctx.font = 'bold 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#5AAD2D';
+    ctx.fillText('ORQUESTADOR', cx, cy - 18);
+    ctx.font = '28px serif';
+    ctx.fillText('🤖', cx, cy + 5);
+    ctx.font = '9px Inter, sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText('AI Core', cx, cy + 24);
+    ctx.restore();
+    
+    requestAnimationFrame(draw);
   }
-  tick();
+  
+  draw();
 }
-
 // ──────────────────────────────────────────────
 // ARC COUNTER ANIMATION
 // ──────────────────────────────────────────────
