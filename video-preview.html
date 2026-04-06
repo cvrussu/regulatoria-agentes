@@ -6,25 +6,25 @@
 <title>Regulator.IA — Video Preview</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--g:#5AAD2D;--gd:#2B5A14;--t:#1B998B;--n:#1B2A4A;--dk:#0a140a;--lt:#f8faf6;--or:#ea580c;--bl:#2563eb;--pu:#8338EC}
+:root{--g:#5AAD2D;--gd:#2B5A14;--t:#1B998B;--n:#1B2A4A;--dk:#f0f7ec;--lt:#ffffff;--or:#ea580c;--bl:#2563eb;--pu:#8338EC;--txt:#1B2A4A;--txt2:#4a6055}
 *{margin:0;padding:0;box-sizing:border-box}
-html{height:100%}body{font-family:'Inter',system-ui,sans-serif;background:#000;overflow:hidden;height:100%;margin:0;padding:0;cursor:none;position:fixed;inset:0;width:100%}
-#stage{position:fixed;inset:0;overflow:hidden}
-.scene{position:absolute;inset:0;opacity:0;transition:opacity .05s;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px;overflow:hidden}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f7ec;overflow:hidden;width:100vw;height:100vh;cursor:none}
+#stage{position:relative;width:100%;height:100%;overflow:hidden}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity .05s;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 80px}
 .scene.active{opacity:1}
 /* Progress */
 #prog-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--g),var(--gd));z-index:200;transition:width .1s linear}
 #controls{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:200;align-items:center}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:background .3s,transform .3s}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(27,42,74,.2);cursor:pointer;transition:background .3s,transform .3s}
 .dot.on{background:var(--g);transform:scale(1.5)}
-#play-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-#scene-label{position:fixed;top:16px;right:20px;font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px;z-index:200}
+#play-btn{background:rgba(27,42,74,.08);border:1px solid rgba(27,42,74,.15);color:var(--txt);width:32px;height:32px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#scene-label{position:fixed;top:16px;right:20px;font-size:11px;color:rgba(27,42,74,.35);letter-spacing:2px;z-index:200}
 /* Logo */
 .logo-wrap svg{display:block}
 /* Grid bg */
-.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(90,173,45,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(90,173,45,.04) 1px,transparent 1px);background-size:48px 48px}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(90,173,45,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(90,173,45,.07) 1px,transparent 1px);background-size:48px 48px}
 /* Tag */
-.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(90,173,45,.1);border:1px solid rgba(90,173,45,.3);color:var(--g);font-size:11px;font-weight:700;letter-spacing:4px;padding:6px 16px;border-radius:50px;margin-bottom:18px}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(90,173,45,.12);border:1px solid rgba(90,173,45,.35);color:var(--gd);font-size:11px;font-weight:700;letter-spacing:4px;padding:6px 16px;border-radius:50px;margin-bottom:18px}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pulse-dot 1.4s infinite}
 @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
 /* Transitions */
@@ -48,64 +48,64 @@ html{height:100%}body{font-family:'Inter',system-ui,sans-serif;background:#000;o
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes pulsRing{0%{r:80;opacity:.5}100%{r:160;opacity:0}}
 .pulse-ring{animation:pulsRing 2.2s ease-out infinite;transform-origin:50% 50%}
-
+</style>
 /* ── SCENE 1 PROBLEMA ── */
-#s1{background:radial-gradient(ellipse at 20% 60%,rgba(43,90,20,.2) 0%,transparent 50%),var(--dk)}
+#s1{background:radial-gradient(ellipse at 20% 60%,rgba(90,173,45,.12) 0%,transparent 55%),linear-gradient(160deg,#eef7e8 0%,#f5f9f2 100%)}
 .prob-cards{display:flex;gap:24px;margin-top:40px;width:100%}
-.prob-card{flex:1;background:rgba(255,255,255,.04);border-radius:20px;padding:32px 24px;text-align:center;opacity:0;animation:fadeUp .6s both}
-.prob-card:nth-child(1){animation-delay:.4s;border:1px solid rgba(255,107,107,.2)}
-.prob-card:nth-child(2){animation-delay:.55s;border:1px solid rgba(234,88,12,.2)}
-.prob-card:nth-child(3){animation-delay:.7s;border:1px solid rgba(255,179,71,.2)}
-.prob-card:nth-child(4){animation-delay:.85s;border:1px solid rgba(192,132,252,.2)}
+.prob-card{flex:1;background:#fff;border-radius:20px;padding:32px 24px;text-align:center;opacity:0;animation:fadeUp .6s both;box-shadow:0 4px 20px rgba(27,42,74,.08)}
+.prob-card:nth-child(1){animation-delay:.4s;border-top:4px solid #FF6B6B}
+.prob-card:nth-child(2){animation-delay:.55s;border-top:4px solid #ea580c}
+.prob-card:nth-child(3){animation-delay:.7s;border-top:4px solid #FFB347}
+.prob-card:nth-child(4){animation-delay:.85s;border-top:4px solid #c084fc}
 .prob-icon{font-size:40px;margin-bottom:12px}
 .prob-val{font-size:40px;font-weight:900;font-family:'Inter',sans-serif;line-height:1}
-.prob-sub{font-size:14px;color:rgba(255,255,255,.55);margin-top:8px;line-height:1.4}
+.prob-sub{font-size:14px;color:var(--txt2);margin-top:8px;line-height:1.4}
 /* ── SCENE 2 ORCHESTRATOR ── */
-#s2{background:radial-gradient(ellipse at 30% 50%,rgba(43,90,20,.3) 0%,transparent 60%),var(--dk)}
+#s2{background:radial-gradient(ellipse at 30% 50%,rgba(90,173,45,.15) 0%,transparent 60%),linear-gradient(160deg,#e8f5e0 0%,#f0f7ec 100%)}
 #orch-canvas{position:absolute;inset:0;width:100%;height:100%}
-.orch-center{position:absolute;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(43,90,20,.9),var(--dk));border:2px solid var(--g);display:flex;flex-direction:column;align-items:center;justify-content:center;animation:orbit-pulse 2s infinite;z-index:10;box-shadow:0 0 40px rgba(90,173,45,.4)}
-.orch-center .label{font-size:9px;letter-spacing:2px;color:var(--g);font-weight:700}
+.orch-center{position:absolute;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,#fff,#e8f5e0);border:2.5px solid var(--g);display:flex;flex-direction:column;align-items:center;justify-content:center;animation:orbit-pulse 2s infinite;z-index:10;box-shadow:0 0 40px rgba(90,173,45,.25),0 8px 32px rgba(90,173,45,.15)}
+.orch-center .label{font-size:9px;letter-spacing:2px;color:var(--gd);font-weight:700}
 .orch-center .ico{font-size:30px;margin:4px 0}
 .orch-ring{position:absolute;border-radius:50%;border:1px solid rgba(90,173,45,.15);transform:translate(-50%,-50%);pointer-events:none}
-.agent-node{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(255,255,255,.04),rgba(0,0,0,.5));border:1.5px solid;opacity:0;z-index:10;transition:box-shadow .3s;backdrop-filter:blur(4px)}
+.agent-node{position:absolute;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;border:2px solid;opacity:0;z-index:10;transition:box-shadow .3s;box-shadow:0 4px 16px rgba(27,42,74,.12)}
 .agent-ico{font-size:22px}
 .agent-name{font-size:8px;font-weight:800;letter-spacing:1px;margin-top:2px}
-.agent-role{font-size:7px;color:rgba(255,255,255,.4)}
+.agent-role{font-size:7px;color:var(--txt2)}
 .free-tag{font-size:7px;font-weight:700;padding:1px 6px;border-radius:8px;margin-top:3px}
 /* ── SCENE 3 FASES ── */
-#s3{background:var(--lt);color:#0f1a0a}
-#s3 .tag{color:#5a6b52;background:rgba(90,173,45,.08);border-color:rgba(90,173,45,.2)}
+#s3{background:linear-gradient(160deg,#f5fbf1 0%,#eef7e8 100%);color:var(--txt)}
+#s3 .tag{color:var(--gd);background:rgba(90,173,45,.1);border-color:rgba(90,173,45,.25)}
 .phases-row{display:flex;gap:0;width:100%;margin-top:32px;align-items:stretch}
-.phase-card{flex:1;background:#fff;border-radius:20px;padding:32px 24px;box-shadow:0 4px 32px rgba(0,0,0,.07);opacity:0;animation:fadeUp .5s both}
+.phase-card{flex:1;background:#fff;border-radius:20px;padding:32px 24px;box-shadow:0 4px 32px rgba(27,42,74,.08);opacity:0;animation:fadeUp .5s both}
 .phase-card:nth-child(1){border-top:5px solid var(--g);animation-delay:.3s}
 .phase-card:nth-child(2){border-top:5px solid var(--or);animation-delay:.45s;margin:0 20px}
 .phase-card:nth-child(3){border-top:5px solid var(--bl);animation-delay:.6s}
 .phase-num{font-size:10px;letter-spacing:3px;font-weight:700;margin-bottom:10px}
 .phase-ico{font-size:40px;margin-bottom:14px}
-.phase-title{font-size:22px;font-weight:800;color:#0f1a0a;margin-bottom:10px}
-.phase-desc{font-size:14px;color:#5a6b52;line-height:1.6;margin-bottom:16px}
+.phase-title{font-size:22px;font-weight:800;color:var(--txt);margin-bottom:10px}
+.phase-desc{font-size:14px;color:var(--txt2);line-height:1.6;margin-bottom:16px}
 .agent-tags{display:flex;flex-wrap:wrap;gap:6px}
-.atag{font-size:10px;font-weight:600;padding:3px 10px;border-radius:50px;background:var(--lt)}
+.atag{font-size:10px;font-weight:600;padding:3px 10px;border-radius:50px;background:#f0f7ec;color:var(--txt2)}
 /* ── SCENE 4 RESULTS ── */
-#s4{background:radial-gradient(ellipse at 50% 80%,rgba(43,90,20,.25) 0%,transparent 60%),#0d1b0d}
+#s4{background:radial-gradient(ellipse at 50% 20%,rgba(90,173,45,.18) 0%,transparent 60%),linear-gradient(160deg,#e8f5e0 0%,#f5f9f2 100%)}
 .metrics-row{display:flex;gap:28px;width:100%;margin-top:36px}
-.metric-card{flex:1;border-radius:22px;padding:36px 20px;text-align:center;opacity:0;animation:pop .5s both}
-.metric-card:nth-child(1){animation-delay:.3s;background:rgba(90,173,45,.08);border:1px solid rgba(90,173,45,.25)}
-.metric-card:nth-child(2){animation-delay:.44s;background:rgba(90,173,45,.08);border:1px solid rgba(90,173,45,.25)}
-.metric-card:nth-child(3){animation-delay:.58s;background:rgba(58,134,255,.08);border:1px solid rgba(58,134,255,.25)}
-.metric-card:nth-child(4){animation-delay:.72s;background:rgba(131,56,236,.08);border:1px solid rgba(131,56,236,.25)}
+.metric-card{flex:1;border-radius:22px;padding:36px 20px;text-align:center;opacity:0;animation:pop .5s both;background:#fff;box-shadow:0 4px 24px rgba(27,42,74,.09)}
+.metric-card:nth-child(1){animation-delay:.3s;border-top:4px solid #5AAD2D}
+.metric-card:nth-child(2){animation-delay:.44s;border-top:4px solid #5AAD2D}
+.metric-card:nth-child(3){animation-delay:.58s;border-top:4px solid #3A86FF}
+.metric-card:nth-child(4){animation-delay:.72s;border-top:4px solid #8338EC}
 .arc-wrap{position:relative;display:inline-block;margin-bottom:16px}
 .arc-val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;font-family:'Inter',sans-serif;line-height:1}
-.metric-label{font-size:14px;color:rgba(255,255,255,.6);line-height:1.4}
+.metric-label{font-size:14px;color:var(--txt2);line-height:1.4}
 /* ── SCENE 5 CTA ── */
-#s5{background:radial-gradient(ellipse at 30% 60%,rgba(43,90,20,.4) 0%,transparent 55%),var(--dk);text-align:center}
-#s5 .grid-bg{opacity:.7}
+#s5{background:radial-gradient(ellipse at 50% 40%,rgba(90,173,45,.15) 0%,transparent 60%),linear-gradient(160deg,#f0f7ec 0%,#e8f5e0 100%);text-align:center}
+#s5 .grid-bg{opacity:.5}
 #cta-logo{opacity:0;animation:pop .8s .2s both}
-.cta-tagline{font-size:18px;color:rgba(255,255,255,.5);margin:20px 0 6px;opacity:0;animation:fadeUp .6s .6s both}
-.cta-contact{font-size:13px;color:rgba(255,255,255,.3);margin-bottom:36px;opacity:0;animation:fadeUp .6s .75s both}
+.cta-tagline{font-size:18px;color:var(--txt2);margin:20px 0 6px;opacity:0;animation:fadeUp .6s .6s both}
+.cta-contact{font-size:13px;color:rgba(27,42,74,.45);margin-bottom:36px;opacity:0;animation:fadeUp .6s .75s both}
 .cta-btns{display:flex;gap:16px;justify-content:center;opacity:0;animation:fadeUp .6s .9s both}
-.btn-g{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;padding:16px 44px;border-radius:60px;font-size:17px;font-weight:700;box-shadow:0 8px 28px rgba(90,173,45,.4)}
-.btn-gh{background:transparent;color:rgba(255,255,255,.8);padding:16px 44px;border-radius:60px;font-size:17px;font-weight:600;border:1.5px solid rgba(255,255,255,.2)}
+.btn-g{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;padding:16px 44px;border-radius:60px;font-size:17px;font-weight:700;box-shadow:0 8px 28px rgba(90,173,45,.35)}
+.btn-gh{background:#fff;color:var(--gd);padding:16px 44px;border-radius:60px;font-size:17px;font-weight:600;border:1.5px solid rgba(90,173,45,.3);box-shadow:0 4px 16px rgba(27,42,74,.08)}
 </style>
 </head>
 <body>
@@ -138,23 +138,23 @@ html{height:100%}body{font-family:'Inter',system-ui,sans-serif;background:#000;o
   <div style="position:absolute;top:28px;left:44px;opacity:0;animation:fadeUp .5s .1s both" class="logo-wrap" style="height:36px" id="l1"></div>
   <div style="position:relative;z-index:1;text-align:center;width:100%">
     <div class="tag" style="opacity:0;animation:fadeUp .5s .15s both"><span class="live-dot"></span>EL PROBLEMA</div>
-    <h1 style="font-size:clamp(36px,4.5vw,62px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:8px;opacity:0;animation:fadeUp .6s .25s both">Registrar agroquímicos es<br><span style="background:linear-gradient(135deg,#FF6B6B,#ea580c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">lento, costoso y complejo</span></h1>
+    <h1 style="font-size:clamp(36px,4.5vw,62px);font-weight:900;color:var(--txt);line-height:1.1;margin-bottom:8px;opacity:0;animation:fadeUp .6s .25s both">Registrar agroquímicos es<br><span style="background:linear-gradient(135deg,#FF6B6B,#ea580c);-webkit-background-clip:text;-webkit-text-fill-color:transparent">lento, costoso y complejo</span></h1>
     <div class="prob-cards">
-      <div class="prob-card"><div class="prob-icon">⏱️</div><div class="prob-val" style="color:#FF6B6B">18</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">meses</div><div class="prob-sub">por registro manual</div></div>
-      <div class="prob-card"><div class="prob-icon">❌</div><div class="prob-val" style="color:#ea580c">60%</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">de expedientes</div><div class="prob-sub">con errores u omisiones</div></div>
-      <div class="prob-card"><div class="prob-icon">👥</div><div class="prob-val" style="color:#FFB347">3×</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">más costo</div><div class="prob-sub">vs. procesos automatizados</div></div>
-      <div class="prob-card"><div class="prob-icon">📋</div><div class="prob-val" style="color:#c084fc">∞</div><div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px">cambios</div><div class="prob-sub">normativos constantes</div></div>
+      <div class="prob-card"><div class="prob-icon">⏱️</div><div class="prob-val" style="color:#FF6B6B">18</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">meses</div><div class="prob-sub">por registro manual</div></div>
+      <div class="prob-card"><div class="prob-icon">❌</div><div class="prob-val" style="color:#ea580c">60%</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">de expedientes</div><div class="prob-sub">con errores u omisiones</div></div>
+      <div class="prob-card"><div class="prob-icon">👥</div><div class="prob-val" style="color:#d97706">3×</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">más costo</div><div class="prob-sub">vs. procesos automatizados</div></div>
+      <div class="prob-card"><div class="prob-icon">📋</div><div class="prob-val" style="color:#9333ea">∞</div><div style="font-size:11px;color:var(--txt2);margin-top:2px">cambios</div><div class="prob-sub">normativos constantes</div></div>
     </div>
   </div>
 </section>
 
 <!-- SCENE 2: ORQUESTADOR -->
 <section class="scene" id="s2">
-  <div id="orch-canvas" style="position:absolute;inset:0;width:100%;height:100%"></div>
+  <svg id="orch-canvas" style="position:absolute;inset:0"></svg>
   <div style="position:absolute;top:28px;left:44px" class="logo-wrap" id="l2"></div>
   <div style="position:absolute;top:36px;left:0;right:0;text-align:center;z-index:20">
     <div class="tag" style="opacity:0;animation:fadeUp .5s .1s both"><span class="live-dot"></span>ECOSISTEMA DE AGENTES</div>
-    <div style="font-size:clamp(28px,3.5vw,46px);font-weight:900;color:#fff;opacity:0;animation:fadeUp .5s .25s both">Un orquestador. <span style="background:linear-gradient(135deg,#5AAD2D,#8edc4f);-webkit-background-clip:text;-webkit-text-fill-color:transparent">11 agentes.</span></div>
+    <div style="font-size:clamp(28px,3.5vw,46px);font-weight:900;color:var(--txt);opacity:0;animation:fadeUp .5s .25s both">Un orquestador. <span style="background:linear-gradient(135deg,#2B5A14,#5AAD2D);-webkit-background-clip:text;-webkit-text-fill-color:transparent">11 agentes.</span></div>
   </div>
 </section>
 
@@ -179,12 +179,12 @@ html{height:100%}body{font-family:'Inter',system-ui,sans-serif;background:#000;o
   <div style="position:absolute;top:28px;left:44px" class="logo-wrap" id="l4"></div>
   <div style="position:relative;z-index:1;width:100%;text-align:center">
     <div class="tag" style="opacity:0;animation:fadeUp .5s .1s both"><span class="live-dot"></span>RESULTADOS</div>
-    <h2 style="font-size:clamp(28px,4vw,50px);font-weight:900;color:#fff;margin-bottom:4px;opacity:0;animation:fadeUp .5s .22s both">Impacto real en tu operación</h2>
+    <h2 style="font-size:clamp(28px,4vw,50px);font-weight:900;color:var(--txt);margin-bottom:4px;opacity:0;animation:fadeUp .5s .22s both">Impacto real en tu operación</h2>
     <div class="metrics-row">
-      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/><circle id="arc1" cx="55" cy="55" r="46" fill="none" stroke="#5AAD2D" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#5AAD2D" id="v1">0%</div></div><div class="metric-label">reducción<br>de tiempos</div></div>
-      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/><circle id="arc2" cx="55" cy="55" r="46" fill="none" stroke="#5AAD2D" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#5AAD2D" id="v2">0x</div></div><div class="metric-label">más registros<br>por equipo</div></div>
-      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/><circle id="arc3" cx="55" cy="55" r="46" fill="none" stroke="#3A86FF" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#3A86FF" id="v3">0%</div></div><div class="metric-label">exactitud en<br>expedientes</div></div>
-      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="8"/><circle id="arc4" cx="55" cy="55" r="46" fill="none" stroke="#8338EC" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#8338EC" id="v4">0</div></div><div class="metric-label">monitoreo<br>automatizado</div></div>
+      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(27,42,74,.08)" stroke-width="8"/><circle id="arc1" cx="55" cy="55" r="46" fill="none" stroke="#5AAD2D" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#5AAD2D" id="v1">0%</div></div><div class="metric-label">reducción<br>de tiempos</div></div>
+      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(27,42,74,.08)" stroke-width="8"/><circle id="arc2" cx="55" cy="55" r="46" fill="none" stroke="#5AAD2D" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#5AAD2D" id="v2">0x</div></div><div class="metric-label">más registros<br>por equipo</div></div>
+      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(27,42,74,.08)" stroke-width="8"/><circle id="arc3" cx="55" cy="55" r="46" fill="none" stroke="#3A86FF" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#3A86FF" id="v3">0%</div></div><div class="metric-label">exactitud en<br>expedientes</div></div>
+      <div class="metric-card"><div class="arc-wrap"><svg width="110" height="110"><circle cx="55" cy="55" r="46" fill="none" stroke="rgba(27,42,74,.08)" stroke-width="8"/><circle id="arc4" cx="55" cy="55" r="46" fill="none" stroke="#8338EC" stroke-width="8" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90 55 55)"/></svg><div class="arc-val" style="color:#8338EC" id="v4">0</div></div><div class="metric-label">monitoreo<br>automatizado</div></div>
     </div>
   </div>
 </section>
@@ -252,9 +252,10 @@ const LOGO_DARK = `<svg viewBox="0 0 520 120" width="200" height="48" xmlns="htt
 </svg>`;
 
 // Inject logos
+// All scenes now have light backgrounds → use dark logo
 ['l1','l2','l3','l4'].forEach(id => {
   const el = document.getElementById(id);
-  if(el) el.innerHTML = LOGO_WHITE;
+  if(el) el.innerHTML = LOGO_DARK;
 });
 const ctaLogo = document.getElementById('cta-logo');
 if(ctaLogo) ctaLogo.innerHTML = LOGO_DARK.replace('width="200"','width="240"').replace('height="48"','height="58"');
@@ -277,150 +278,97 @@ const AGENTS = [
 ];
 
 function buildOrchestrator() {
-  const s2 = document.getElementById('s2');
-  if(!s2) return;
-  // Clear previous
-  const old = document.getElementById('orch-canvas');
-  if(old) old.remove();
-  
-  // Create canvas element
-  const canvas = document.createElement('canvas');
-  canvas.id = 'orch-canvas';
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%';
-  s2.insertBefore(canvas, s2.firstChild);
-  
-  const W = s2.getBoundingClientRect().width || window.innerWidth;
-  const H = s2.getBoundingClientRect().height || window.innerHeight;
-  canvas.width = W;
-  canvas.height = H;
-  
-  const ctx = canvas.getContext('2d');
+  const container = document.getElementById('orch-canvas');
+  if(!container) return;
+  const W = container.offsetWidth || 860;
+  const H = container.offsetHeight || 560;
   const cx = W/2, cy = H/2;
-  const R = Math.min(W,H) * 0.36;
+  const R = Math.min(W,H) * 0.38;
   const toRad = d => d * Math.PI / 180;
-  
-  let frame = 0;
-  let pulseR = 80;
-  
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    frame++;
-    
-    // Pulse rings
-    const pulseT = (frame % 120) / 120;
-    const pr = 70 + pulseT * 120;
-    const po = (1 - pulseT) * 0.4;
-    ctx.beginPath();
-    ctx.arc(cx, cy, pr, 0, Math.PI*2);
-    ctx.strokeStyle = `rgba(90,173,45,${po})`;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(cx, cy, pr*0.6, 0, Math.PI*2);
-    ctx.strokeStyle = `rgba(90,173,45,${po*0.5})`;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    
-    // Lines & particles
-    AGENTS.forEach((ag, i) => {
-      const ax = cx + R * Math.cos(toRad(ag.angle));
-      const ay = cy + R * Math.sin(toRad(ag.angle));
-      const color = ag.color;
-      
-      // Line
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(ax, ay);
-      ctx.strokeStyle = color + '44';
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([5, 7]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      
-      // Particle
-      const pt = ((frame * 0.008 + i * 0.09) % 1);
-      const px = cx + (ax - cx) * pt;
-      const py = cy + (ay - cy) * pt;
-      ctx.beginPath();
-      ctx.arc(px, py, 4, 0, Math.PI*2);
-      ctx.fillStyle = color + 'CC';
-      ctx.fill();
-      
-      // Agent node circle
-      const progress = Math.min(1, (frame - i*4) / 30);
-      if(progress <= 0) return;
-      ctx.save();
-      ctx.globalAlpha = progress;
-      
-      const nr = 44;
-      // Glow
-      const grad = ctx.createRadialGradient(ax, ay, 0, ax, ay, nr);
-      grad.addColorStop(0, color + '18');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.beginPath();
-      ctx.arc(ax, ay, nr, 0, Math.PI*2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-      // Border
-      ctx.beginPath();
-      ctx.arc(ax, ay, nr, 0, Math.PI*2);
-      ctx.strokeStyle = color + '88';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      // Emoji
-      ctx.font = '20px serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle = 'white';
-      ctx.fillText(ag.emoji, ax, ay - 10);
-      // Name
-      ctx.font = 'bold 9px Inter, sans-serif';
-      ctx.fillStyle = color;
-      ctx.letterSpacing = '1px';
-      ctx.fillText(ag.name, ax, ay + 6);
-      // Role
-      ctx.font = '8px Inter, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.4)';
-      ctx.fillText(ag.role, ax, ay + 18);
-      
-      ctx.restore();
-    });
-    
-    // Orchestrator center
-    const orchProgress = Math.min(1, frame / 30);
-    ctx.save();
-    ctx.globalAlpha = orchProgress;
-    // Glow
-    const orchGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 75);
-    orchGrad.addColorStop(0, 'rgba(43,90,20,0.8)');
-    orchGrad.addColorStop(1, 'rgba(10,20,10,0)');
-    ctx.beginPath();
-    ctx.arc(cx, cy, 75, 0, Math.PI*2);
-    ctx.fillStyle = orchGrad;
-    ctx.fill();
-    // Border
-    ctx.beginPath();
-    ctx.arc(cx, cy, 65, 0, Math.PI*2);
-    ctx.strokeStyle = '#5AAD2D';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    // Label
-    ctx.font = 'bold 10px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#5AAD2D';
-    ctx.fillText('ORQUESTADOR', cx, cy - 18);
-    ctx.font = '28px serif';
-    ctx.fillText('🤖', cx, cy + 5);
-    ctx.font = '9px Inter, sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.fillText('AI Core', cx, cy + 24);
-    ctx.restore();
-    
-    requestAnimationFrame(draw);
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.style.cssText = 'position:absolute;inset:0;overflow:visible';
+
+  // Connection lines
+  AGENTS.forEach((ag,i) => {
+    const ax = cx + R * Math.cos(toRad(ag.angle));
+    const ay = cy + R * Math.sin(toRad(ag.angle));
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',cx); line.setAttribute('y1',cy);
+    line.setAttribute('x2',ax); line.setAttribute('y2',ay);
+    line.setAttribute('stroke',ag.color);
+    line.setAttribute('stroke-width','1.5');
+    line.setAttribute('stroke-opacity','0.25');
+    line.setAttribute('stroke-dasharray','5 7');
+    line.style.animation = `fadeIn .5s ${i*0.08}s both`;
+    svg.appendChild(line);
+
+    // Particle dot
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('r','4');
+    circle.setAttribute('fill', ag.color);
+    circle.setAttribute('opacity','0.7');
+    circle.dataset.cx = cx; circle.dataset.cy = cy;
+    circle.dataset.ax = ax; circle.dataset.ay = ay;
+    circle.dataset.offset = String(i * 0.09);
+    circle.classList.add('particle');
+    svg.appendChild(circle);
+  });
+
+  // Pulse rings
+  for(let k=0;k<2;k++){
+    const pulse = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    pulse.setAttribute('cx',cx); pulse.setAttribute('cy',cy);
+    pulse.setAttribute('r','80'); pulse.setAttribute('fill','none');
+    pulse.setAttribute('stroke','#5AAD2D');
+    pulse.setAttribute('stroke-width',k===0?'1.5':'1');
+    pulse.classList.add('pulse-ring');
+    pulse.style.animationDelay = k*0.4+'s';
+    svg.appendChild(pulse);
   }
-  
-  draw();
+
+  container.appendChild(svg);
+
+  // Agent nodes (HTML divs for emoji)
+  AGENTS.forEach((ag,i) => {
+    const ax = cx + R * Math.cos(toRad(ag.angle));
+    const ay = cy + R * Math.sin(toRad(ag.angle));
+    const sz = 80;
+    const node = document.createElement('div');
+    node.className = 'agent-node';
+    node.style.cssText = `left:${ax-sz/2}px;top:${ay-sz/2}px;width:${sz}px;height:${sz}px;border-color:${ag.color}66;box-shadow:0 0 14px ${ag.color}33;animation:scaleIn .4s ${0.1+i*0.08}s both`;
+    node.innerHTML = `<span style="font-size:18px">${ag.emoji}</span><span style="font-size:8px;font-weight:800;color:${ag.color};letter-spacing:1px">${ag.name}</span><span style="font-size:7px;color:rgba(27,42,74,.45)">${ag.role}</span>`;
+    container.appendChild(node);
+  });
+
+  // Center orchestrator
+  const orch = document.createElement('div');
+  orch.className = 'orch-center';
+  orch.style.cssText = `left:${cx-65}px;top:${cy-65}px`;
+  orch.innerHTML = `<span style="font-size:10px;letter-spacing:2px;color:#2B5A14;font-weight:700">ORQUESTADOR</span><span style="font-size:26px;margin:2px 0">🤖</span><span style="font-size:9px;color:rgba(27,42,74,.45)">AI Core</span>`;
+  container.appendChild(orch);
+
+  animateParticles(svg);
 }
+
+function animateParticles(svg) {
+  const particles = svg.querySelectorAll('.particle');
+  let t = 0;
+  function tick() {
+    t += 0.008;
+    particles.forEach(p => {
+      const off = parseFloat(p.dataset.offset||'0');
+      const frac = ((t + off) % 1);
+      const px = parseFloat(p.dataset.cx) + (parseFloat(p.dataset.ax) - parseFloat(p.dataset.cx)) * frac;
+      const py = parseFloat(p.dataset.cy) + (parseFloat(p.dataset.ay) - parseFloat(p.dataset.cy)) * frac;
+      p.setAttribute('cx', px); p.setAttribute('cy', py);
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+
 // ──────────────────────────────────────────────
 // ARC COUNTER ANIMATION
 // ──────────────────────────────────────────────
@@ -630,7 +578,8 @@ window.addEventListener('load', () => {
   goToScene(0);
   sceneStart = performance.now();
   rafId = requestAnimationFrame(loop);
-  // Orchestrator built on demand when scene 2 activates
+  // Build orchestrator eagerly after 500ms so it's ready
+  setTimeout(buildOrchestrator, 500);
 });
 </script>
 </body>
